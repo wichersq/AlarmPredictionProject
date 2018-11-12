@@ -42,7 +42,8 @@ import java.util.ArrayList;
          *
          * @param object changed object
          */
-        public void notifyListener(Object object) {
+        private void notifyListener(Object object) {
+            System.out.println("hello");
             for (Listener l : listeners) {
                 l.update(object);
             }

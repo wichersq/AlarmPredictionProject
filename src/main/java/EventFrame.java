@@ -14,13 +14,13 @@ import java.awt.*;
          * Constructor
          * @param size  size of the frame
          */
-        public EventFrame(int size) {
+        public EventFrame(EventModel model, int size) {
             super.setLayout(new BorderLayout());
             super.setBounds(0, 0, size, size);
             setDefaultLookAndFeelDecorated(true);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             panel = new UserPanel( size * 3 / 4);
-            model = new EventModel();
+            this.model = model;
             controller = new Controller(panel,model);
 
             add(panel, BorderLayout.CENTER);

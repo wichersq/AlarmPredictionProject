@@ -8,28 +8,32 @@ public class ResultFrame extends JFrame implements Listener{
     JPanel panel;
     public ResultFrame(EventModel model, int size){
         super.setLayout(new FlowLayout());
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
         super.setBounds(0, 0, size, size);
-        this.add(panel);
         setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.model = model;
-        model.addListener(this);
+
         createEvenList ();
-        panel.add(textArea, BorderLayout.CENTER);
+
+        this.model = model;
+        this.model.addListener(this);
+
         setVisible(true);
     }
     public void createEvenList (){
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        this.add(panel);
         textArea = new JTextArea();
+        panel.add(textArea, BorderLayout.CENTER);
     }
 
 
     @Override
     public void update(Object ob) {
+        System.out.println("hello");
+
         ArrayList<CalendaEvent> calendarList = model.getEvents();
         for(CalendaEvent event: calendarList){
-            System.out.println("hello");
             textArea.setText(event.toString());
         }
     }

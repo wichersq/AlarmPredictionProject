@@ -16,13 +16,14 @@ import java.util.ArrayList;
             this.userInput = userInput;
             this.model = model;
             userInput.addListener(this);
+//            responseToConfirmation();
 
         }
 //TODO: WRITE FACTORY CLASS to find out EventWithoutPlaceInfo or EventWithPlaceInfo
-      private void handleEvent(){
-//            if ()
-                model.addEvent(new EventWithoutPlaceInfo());
-      }
+      private void handleEvent(ChangedObject ob){
+
+        }
+
 
         /**
          * notifies all listener
@@ -36,11 +37,15 @@ import java.util.ArrayList;
         }
         private void responseToConfirmation(){
             userInput.addActionSaveButton(ActionEvent ->{
-                model.addEvent(new EventWithoutPlaceInfo());
+                model.addEvent(new EventWithPlaceInfo());
+                System.out.println("Save Button Click");
+
+
             });
 
             userInput.addActionCancelButton(ActionEvent ->{
                 userInput.setBackToDefault();
+                System.out.println("Cancel Button Click");
             });
 
 //            userInput.addActionEditButton(ActionEvent ->{
@@ -50,9 +55,13 @@ import java.util.ArrayList;
         }
 
         public void update(Object ob) {
-            handleEvent();
-            userInput.popUpMessage();
+            if(ob.getClass().equals(ChangedObject.class)) {
+                handleEvent((ChangedObject) ob);
+            }
             responseToConfirmation();
+            userInput.popUpMessage();
+
+
         }
     }
 
