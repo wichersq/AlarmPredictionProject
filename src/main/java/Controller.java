@@ -1,7 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
-    /**
+/**
      * A model keeps track all Shape value
      */
     public class Controller implements Listener{
@@ -9,6 +10,7 @@ import java.util.ArrayList;
         private ArrayList<CalendaEvent> events;
         private UserPanel userInput;
         private EventModel model;
+        private CalendaEvent currentEvent;
 
         public Controller(UserPanel userInput, EventModel model){
             events = new ArrayList<CalendaEvent>();
@@ -21,7 +23,13 @@ import java.util.ArrayList;
         }
 //TODO: WRITE FACTORY CLASS to find out EventWithoutPlaceInfo or EventWithPlaceInfo
       private void handleEvent(ChangedObject ob){
-
+           String addressFrom = ob.getAddressFrom();
+           String addressTo = ob.getAddressTo();
+           String name = ob.getName();
+           GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
+           Transportation transport = new Bike(35);
+           double importantScale = ob.getImportantScale();
+           currentEvent = new CalendaEvent(addressFrom, addressTo,name,ob.getArrivalDateTime(), transport,importantScale);
         }
 
 
@@ -37,7 +45,7 @@ import java.util.ArrayList;
         }
         private void responseToConfirmation(){
             userInput.addActionSaveButton(ActionEvent ->{
-                model.addEvent(new EventWithPlaceInfo());
+                model.addEvent(currentEvent);
                 System.out.println("Save Button Click");
 
 

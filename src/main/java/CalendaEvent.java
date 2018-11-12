@@ -11,7 +11,7 @@ public class CalendaEvent {
     private double importantScale;
     private double getReadySecond;
     private double travelTime;
-    public CalendaEvent(){}
+
     public CalendaEvent(
             String addressFrom, String addressTo, String name,
             GregorianCalendar arrivalDateTime, Transportation transport, double importantScale) {
