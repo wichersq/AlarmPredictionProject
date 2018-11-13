@@ -6,6 +6,7 @@ public class ResultFrame extends JFrame implements Listener{
     JTextArea textArea;
     EventModel model;
     JPanel panel;
+
     public ResultFrame(EventModel model, int size){
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size, size);
@@ -27,11 +28,8 @@ public class ResultFrame extends JFrame implements Listener{
         panel.add(textArea, BorderLayout.CENTER);
     }
 
-
     @Override
     public void update(Object ob) {
-        System.out.println("hello");
-
         ArrayList<CalendaEvent> calendarList = model.getEvents();
         for(CalendaEvent event: calendarList){
             textArea.setText(event.toString());

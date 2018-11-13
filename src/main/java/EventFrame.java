@@ -22,7 +22,6 @@ import java.awt.*;
             panel = new UserPanel( size * 3 / 4);
             this.model = model;
             controller = new Controller(panel,model);
-
             add(panel, BorderLayout.CENTER);
 //            addButtonsToBox();
             add(box, BorderLayout.NORTH);

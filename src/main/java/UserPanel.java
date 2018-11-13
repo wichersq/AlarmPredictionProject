@@ -1,33 +1,28 @@
 //import javafx.scene.control.DatePicker;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.InvalidObjectException;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
  * ShapePanel class displays the shapes
  */
 public class UserPanel extends JPanel {
-    private Box textFieldBox = Box.createVerticalBox();
-    private Box checkBox = Box.createVerticalBox();
-
+    private Box textFieldBox;
+    private Box checkBox;
     private JTextField addressFrom;
     private JTextField addressTo;
     private JTextField placeName;
-    private JTextField date;
-    private JTextField time;
-
+    private JFormattedTextField date;
+    private JFormattedTextField time;
     private JSlider importantScale;
-    //        private EventModel model;
     private JButton processButton;
     private ArrayList<Listener> listeners;
-    private Controller controller;
-    //        private DatePicker datePicker;
     private JRadioButton driveJB;
     private JRadioButton bikeJB;
     private JRadioButton walkJB;
@@ -36,6 +31,7 @@ public class UserPanel extends JPanel {
     private JButton cancelButton;
     private JButton editButton;
 
+    private GregorianCalendar eventDate;
 
     /**
      * Constructor
@@ -61,51 +57,70 @@ public class UserPanel extends JPanel {
     private void addButtons() {
         processButton = new JButton("Add ");
         this.add(processButton, BorderLayout.WEST);
-        processButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ActionEvent) {
-                notifyListener(gatherInfo());
+        processButton.addActionListener(ActionEvent -> {
+            try {
+                createDateTime(date.getText(), time.getText());
+                ChangedObject changeOb = gatherInfo();
+                notifyListener(changeOb);
+            } catch (NumberFormatException e) {
+                popUpWarningMessage();
             }
         });
     }
+
 
     private ChangedObject gatherInfo() {
         String from = addressFrom.getText();
         String to = addressTo.getText();
         String name = placeName.getText();
-//            String[] tempString = dateTime.getText().split(",");
-        String dateOfEvent = "Date";
-//                    tempString[0];
-        String arrivalTime = "Time";
-//                    tempString[1];
-        GregorianCalendar date = new GregorianCalendar() ;
-        try {
-            date = createdDate(dateOfEvent, arrivalTime);
-        }catch(InvalidObjectException e){
-            System.out.println("Print wrong type please type in again");
-        }
         String trans = transportPick();
         int scale = importantScale.getValue();
-        return new ChangedObject(from, to, name, date, trans, scale);
+
+        return new ChangedObject(from, to, name, eventDate, trans, scale);
     }
 
-    private GregorianCalendar createdDate(String convertingDate, String covertingTime)
-            throws InvalidObjectException {
+    private void createDateTextField() {
+        MaskFormatter dateMask = null;
+        try {
+            dateMask = new MaskFormatter("##/##/####");
+            dateMask.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date = new JFormattedTextField(dateMask);
+
+    }
+
+    private void createTimeTextField() {
+        MaskFormatter timeMask = null;
+        try {
+            timeMask = new MaskFormatter("##:##");
+            timeMask.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        time = new JFormattedTextField(timeMask);
+    }
+
+    private void createDateTime(String convertingDate, String convertingTime)
+            throws NumberFormatException {
         String[] dateArr = convertingDate.split("/");
-        String[] timeArr = covertingTime.split(":");
-        if(dateArr.length != 3) {
-            throw new InvalidObjectException("Invalid Date");
-        }
-        if(timeArr.length == 2) {
-            throw new InvalidObjectException("Invalid Time");
-        }
         int month = Integer.parseInt(dateArr[0]);
         int date = Integer.parseInt(dateArr[1]);
         int year = Integer.parseInt(dateArr[2]);
+
+        String[] timeArr = convertingTime.split(":");
         int hour = Integer.parseInt(timeArr[0]);
         int min = Integer.parseInt(timeArr[1]);
-        GregorianCalendar newCal = new GregorianCalendar(year,month,date,hour,min);
-        return newCal;
+
+        eventDate = new GregorianCalendar(year, month, date, hour, min);
+
+        if (eventDate.before(Calendar.getInstance())){
+            throw new NumberFormatException("Date Invalid");
+        }
     }
+
 
     public void setBackToDefault() {
         driveJB.setSelected(true);
@@ -115,6 +130,15 @@ public class UserPanel extends JPanel {
         date.setText("");
         time.setText("");
         importantScale.setValue(0);
+    }
+
+    private void popUpWarningMessage() {
+        JDialog.setDefaultLookAndFeelDecorated(true);
+        JOptionPane.showConfirmDialog(null,
+                "The Time is Invalid. Please try again", "Invalid Event Time",
+                JOptionPane.DEFAULT_OPTION);
+        date.setText("");
+        time.setText("");
     }
 
     private String transportPick() {
@@ -142,52 +166,59 @@ public class UserPanel extends JPanel {
      * Adds a mouse listener for the panel
      */
     private void allocateTextFields() {
-        JLabel from = new JLabel("From:");
         addressFrom = new JTextField();
-
-        JLabel to = new JLabel("To:");
         addressTo = new JTextField();
-
-        JLabel nameLabel = new JLabel("Place Name:");
         placeName = new JTextField();
+        createDateTextField();
+        createTimeTextField();
+        addTextFieldsToBox();
+    }
 
-        JLabel dateLabel = new JLabel("Date(mm/dd/yyyy): ");
-        date = new JTextField();
-
-        JLabel timeLabel = new JLabel("Time(hh:mm): ");
-        time = new JTextField();
-
-        textFieldBox.add(from);
+    private void addTextFieldsToBox() {
+        textFieldBox = Box.createVerticalBox();
+        textFieldBox.add(new JLabel("From:"));
         textFieldBox.add(addressFrom);
 
-        textFieldBox.add(to);
+        textFieldBox.add(new JLabel("To:"));
         textFieldBox.add(addressTo);
 
-        textFieldBox.add(nameLabel);
+        textFieldBox.add(new JLabel("Place Name:"));
         textFieldBox.add(placeName);
-
-        textFieldBox.add(dateLabel);
+        textFieldBox.add(new JLabel("Date(mm/dd/yyyy): "));
         textFieldBox.add(date);
-
-        textFieldBox.add(timeLabel);
+        textFieldBox.add(new JLabel("Time(hh:mm): "));
         textFieldBox.add(time);
     }
 
     private void allocateCheckBox() {
+        checkBox = Box.createVerticalBox();
+        ButtonGroup group = new ButtonGroup();
+
         driveJB = new JRadioButton("Drive");
-        driveJB.setSelected(true);
         bikeJB = new JRadioButton("Bike");
         walkJB = new JRadioButton("Walk");
         transitJB = new JRadioButton("Transit");
-        ButtonGroup group = new ButtonGroup();
+
+        driveJB.setSelected(true);
+
+
         group.add(bikeJB);
         group.add(driveJB);
         group.add(walkJB);
         group.add(transitJB);
+
         checkBox.add(driveJB);
         checkBox.add(bikeJB);
         checkBox.add(walkJB);
         checkBox.add(transitJB);
+    }
+
+    public void addActionDateTextField(ActionListener e) {
+        date.addActionListener(e);
+    }
+
+    public void addActionTimeTextField(ActionListener e) {
+        date.addActionListener(e);
     }
 
 
@@ -243,4 +274,5 @@ public class UserPanel extends JPanel {
         JOptionPane.showOptionDialog(null, "Put Result Here", "Recommend Ready Time",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttonList, saveButton);
     }
+
 }

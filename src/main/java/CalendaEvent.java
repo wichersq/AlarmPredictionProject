@@ -1,5 +1,7 @@
-import java.sql.Time;
-import java.util.Date;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import java.util.GregorianCalendar;
 
 public class CalendaEvent {
@@ -14,13 +16,15 @@ public class CalendaEvent {
 
     public CalendaEvent(
             String addressFrom, String addressTo, String name,
-            GregorianCalendar arrivalDateTime, Transportation transport, double importantScale) {
+            GregorianCalendar arrivalDateTime, Transportation transport, double importantScale, int travelTime) {
         this.addressFrom = addressFrom;
         this.addressTo = addressTo;
         this.name = name;
         this.arrivalDateTime = arrivalDateTime;
         this.transport = transport;
         this.importantScale = importantScale;
+        this.travelTime = travelTime;
+        setTotalTime();
     }
 
     public String toString() {
@@ -28,30 +32,35 @@ public class CalendaEvent {
         System.out.println("addressTo" + addressTo);
         System.out.println("transport" + transport.toString());
         System.out.println("getFormatTime" +  getFormatTime());
-        System.out.println("getTotalTime" + getTotalTime());
+        System.out.println("getTotalTime" + getReadySecond);
 
-        return String.format("Time , Date: \nOrigin: %s\nDestination: %s\nTravel by: %s\nRecommended Time:%s (%d before the event)",
-                addressFrom, addressTo, transport.toString(), getFormatTime(), getTotalTime());
+        return String.format("Time , Date: \nOrigin: %s\nDestination: %s\nTravel by: %s\nRecommended Time:%s (%d minutes before the event)",
+                addressFrom, addressTo, transport.toString(), getFormatTime(), (int) getReadySecond/60);
     }
-
+    //TODO: calculate and format the alarm time by adding it to the event time
     public String getFormatTime() {
-        //TODO: calculate and format the alarm time by adding it to the event time
-        return "hi";
+        GregorianCalendar alarmTime = (GregorianCalendar)arrivalDateTime.clone();
+        alarmTime.add(Calendar.SECOND, (int) - getReadySecond );
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy HH:mm");
+        dateTimeFormat.format(alarmTime.getTime());
+        return dateTimeFormat.format(alarmTime.getTime());
     }
 
     protected double calculateImportantEvent() {
-        return importantScale * 60 * 60;
+        return importantScale;
     }
 
-    public int getTotalTime() {
+    private void setTotalTime() {
         getReadySecond = calculateImportantEvent() + transport.getTotalTimeTravel();
-        return 458;
     }
 
     public void editReadyTime(double adjustMin) {
         getReadySecond += adjustMin;
     }
 
+//    public void setTravelTime(double duration ){
+//
+//    }
     //    public String getOrigin(){return addressFrom;}
 //    public String getDestination(){return addressTo;}
 //    public String getOrigin(){return addressFrom;}

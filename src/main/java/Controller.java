@@ -1,4 +1,4 @@
-import java.awt.event.ActionEvent;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -22,14 +22,14 @@ import java.util.GregorianCalendar;
 
         }
 //TODO: WRITE FACTORY CLASS to find out EventWithoutPlaceInfo or EventWithPlaceInfo
-      private void handleEvent(ChangedObject ob){
+      private void pullDataRequest(ChangedObject ob){
            String addressFrom = ob.getAddressFrom();
            String addressTo = ob.getAddressTo();
            String name = ob.getName();
            GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
            Transportation transport = new Bike(35);
            double importantScale = ob.getImportantScale();
-           currentEvent = new CalendaEvent(addressFrom, addressTo,name,ob.getArrivalDateTime(), transport,importantScale);
+           currentEvent = new CalendaEvent(addressFrom, addressTo,name,arrivalDateTime, transport,importantScale,35);
         }
 
 
@@ -43,7 +43,7 @@ import java.util.GregorianCalendar;
                 l.update(object);
             }
         }
-        private void responseToConfirmation(){
+       private void responseToConfirmation(){
             userInput.addActionSaveButton(ActionEvent ->{
                 model.addEvent(currentEvent);
                 System.out.println("Save Button Click");
@@ -64,12 +64,10 @@ import java.util.GregorianCalendar;
 
         public void update(Object ob) {
             if(ob.getClass().equals(ChangedObject.class)) {
-                handleEvent((ChangedObject) ob);
+                pullDataRequest((ChangedObject) ob);
             }
             responseToConfirmation();
             userInput.popUpMessage();
-
-
         }
     }
 

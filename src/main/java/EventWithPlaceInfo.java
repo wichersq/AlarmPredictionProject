@@ -5,8 +5,8 @@ public class EventWithPlaceInfo extends CalendaEvent {
 
 
     public EventWithPlaceInfo(String addressFrom, String addressTo, String name,
-                              GregorianCalendar arrivalDateTime, Transportation transport, double importantScale, double averageRating){
-        super(addressFrom,addressTo,name,arrivalDateTime,transport,importantScale);
+                              GregorianCalendar arrivalDateTime, Transportation transport, double importantScale, int travelTime, double averageRating){
+        super(addressFrom,addressTo,name,arrivalDateTime,transport,importantScale, 34);
         this.averageRating = averageRating;
 
     }
