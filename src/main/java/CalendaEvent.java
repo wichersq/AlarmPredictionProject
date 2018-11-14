@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 public class CalendaEvent {
     private String addressFrom;
@@ -74,6 +75,5 @@ public class CalendaEvent {
                 arrivalDateTime.equals(comparingEvent.arrivalDateTime) &&
                 transport.equals(comparingEvent.transport));
     }
-
-
+    
 }
