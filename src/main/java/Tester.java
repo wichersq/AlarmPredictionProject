@@ -2,8 +2,8 @@ public class Tester {
 
     public static void main(String[] args) {
         EventModel model = new EventModel();
-        new EventFrame(model,500);
-        new ResultFrame(model,500);
+        new UserInputFrame(model,500);
+        new OutputPanelTemp(model,500);
 
 //            CarShape car = new CarShape(10,10,50);
 //            JFrame frame = new JFrame();

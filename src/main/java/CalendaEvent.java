@@ -29,11 +29,11 @@ public class CalendaEvent {
     }
 
     public String toString() {
-        System.out.println("addressFrom " + addressFrom);
-        System.out.println("addressTo" + addressTo);
-        System.out.println("transport" + transport.toString());
-        System.out.println("getFormatTime" +  getFormatTime());
-        System.out.println("getTotalTime" + getReadySecond);
+//        System.out.println("addressFrom " + addressFrom);
+//        System.out.println("addressTo" + addressTo);
+//        System.out.println("transport" + transport.toString());
+//        System.out.println("getFormatTime" +  getFormatTime());
+//        System.out.println("getTotalTime" + getReadySecond);
 
         return String.format("Time , Date: \nOrigin: %s\nDestination: %s\nTravel by: %s\nRecommended Time:%s (%d minutes before the event)",
                 addressFrom, addressTo, transport.toString(), getFormatTime(), (int) getReadySecond/60);
@@ -75,5 +75,5 @@ public class CalendaEvent {
                 arrivalDateTime.equals(comparingEvent.arrivalDateTime) &&
                 transport.equals(comparingEvent.transport));
     }
-    
+
 }

@@ -4,7 +4,7 @@ import java.awt.*;
     /**
      * ShapeFrame contain box of buttons and panel
      */
-    public class EventFrame extends JFrame {
+    public class UserInputFrame extends JFrame {
         private Box box = Box.createHorizontalBox();
         private EventModel model;
         private UserPanel panel;
@@ -14,7 +14,7 @@ import java.awt.*;
          * Constructor
          * @param size  size of the frame
          */
-        public EventFrame(EventModel model, int size) {
+        public UserInputFrame(EventModel model, int size) {
             super.setLayout(new BorderLayout());
             super.setBounds(0, 0, size, size);
             setDefaultLookAndFeelDecorated(true);

@@ -1,21 +1,20 @@
-public class Walk implements Transportation {
-    final static int TRAVEL_TIME_PER_BREAK = 90 *60;
+public class Biking implements Transportation {
+    final static int TRAVEL_TIME_PER_BREAK = 60*60;
     private double durationInSec;
-    public Walk(int duration){
+    public Biking(int duration){
         durationInSec = duration;
     }
     public double calculateBreakTime() {
         double numOfBreak = Math.floor(durationInSec/TRAVEL_TIME_PER_BREAK);
-        return numOfBreak * BREAK_TIME;
+        return numOfBreak* BREAK_TIME;
     }
 
     public double getTotalTimeTravel(){
         return calculateBreakTime() + READY_SEC + durationInSec;
     }
 
-    public String toString(){
-        return "Walk";
-    }
+    public String toString(){return "Biking";}
+
     public boolean equals(Object other){
         return(other.getClass().equals(this));
     }

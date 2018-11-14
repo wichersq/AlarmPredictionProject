@@ -1,7 +1,7 @@
-public class Drive implements Transportation {
+public class Driving implements Transportation {
     final static int TRAVEL_TIME_PER_BREAK = 120 *60;
     private double durationInSec;
-    public Drive(int duration){
+    public Driving(int duration){
         durationInSec = duration;
     }
     public double calculateBreakTime() {
@@ -14,7 +14,7 @@ public class Drive implements Transportation {
     }
 
     public String toString(){
-        return "Drive";
+        return "Driving";
     }
     public boolean equals(Object other){
         return(other.getClass().equals(this));

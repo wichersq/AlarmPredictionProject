@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ResultFrame extends JFrame implements Listener{
+public class OutputPanelTemp extends JFrame implements Listener{
     JTextArea textArea;
     EventModel model;
     JPanel panel;
 
-    public ResultFrame(EventModel model, int size){
+    public OutputPanelTemp(EventModel model, int size){
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size, size);
         setDefaultLookAndFeelDecorated(true);

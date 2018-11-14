@@ -119,6 +119,8 @@ public class UserPanel extends JPanel {
         if (eventDate.before(Calendar.getInstance())){
             throw new NumberFormatException("Date Invalid");
         }
+        //TOdO: check to see if the same date is occupied.
+        //TODO: check the date again.
     }
 
 
@@ -144,13 +146,13 @@ public class UserPanel extends JPanel {
     private String transportPick() {
 
         if (bikeJB.isSelected()) {
-            return "BIKE";
+            return "BIKING";
         } else if (driveJB.isSelected()) {
-            return "DRIVE";
+            return "DRIVING";
         } else if (walkJB.isSelected()) {
-            return "WALK";
+            return "WALKING";
         } else
-            return "TRANSIT";
+            return "TRANSITING";
     }
 
     /**
@@ -194,9 +196,9 @@ public class UserPanel extends JPanel {
         checkBox = Box.createVerticalBox();
         ButtonGroup group = new ButtonGroup();
 
-        driveJB = new JRadioButton("Drive");
-        bikeJB = new JRadioButton("Bike");
-        walkJB = new JRadioButton("Walk");
+        driveJB = new JRadioButton("Driving");
+        bikeJB = new JRadioButton("Biking");
+        walkJB = new JRadioButton("Walking");
         transitJB = new JRadioButton("Transit");
 
         driveJB.setSelected(true);
