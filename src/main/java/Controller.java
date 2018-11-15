@@ -44,6 +44,9 @@ public class Controller implements Listener {
             l.update(object);
         }
     }
+    public boolean checkIfTimeOccupied(String dateTime){
+        return model.isTimeOccupied(dateTime);
+    }
 
     private void responseToConfirmation() {
         userInput.addActionSaveButton(ActionEvent -> {

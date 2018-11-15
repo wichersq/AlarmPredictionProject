@@ -30,7 +30,7 @@ public class UserPanel extends JPanel {
     private JButton saveButton;
     private JButton cancelButton;
     private JButton editButton;
-
+    private Controller controller;
     private GregorianCalendar eventDate;
 
     /**
@@ -40,8 +40,8 @@ public class UserPanel extends JPanel {
      */
     public UserPanel(int size) {
         listeners = new ArrayList<Listener>();
-        super.setSize(size, size);
 //            controller.addListener(this);
+        this.controller = controller;
         this.setLayout(new BorderLayout());
         allocateTextFields();
         allocateCheckBox();
@@ -114,9 +114,9 @@ public class UserPanel extends JPanel {
         int hour = Integer.parseInt(timeArr[0]);
         int min = Integer.parseInt(timeArr[1]);
 
-        eventDate = new GregorianCalendar(year, month, date, hour, min);
+        eventDate = new GregorianCalendar(year, month - 1, date, hour, min);
 
-        if (eventDate.before(Calendar.getInstance())){
+        if (eventDate.before(Calendar.getInstance()) || controller.checkIfTimeOccupied(eventDate.toString())) {
             throw new NumberFormatException("Date Invalid");
         }
         //TOdO: check to see if the same date is occupied.
@@ -137,7 +137,7 @@ public class UserPanel extends JPanel {
     private void popUpWarningMessage() {
         JDialog.setDefaultLookAndFeelDecorated(true);
         JOptionPane.showConfirmDialog(null,
-                "The Time is Invalid. Please try again", "Invalid Event Time",
+                "The time is invalid or already occupied. Please try different time", "Invalid Event Time",
                 JOptionPane.DEFAULT_OPTION);
         date.setText("");
         time.setText("");

@@ -59,6 +59,10 @@ public class CalendaEvent {
         getReadySecond += adjustMin;
     }
 
+    public String getDateandTime(){
+        return arrivalDateTime.toString();
+    }
+
 //    public void setTravelTime(double duration ){
 //
 //    }

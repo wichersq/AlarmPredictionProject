@@ -1,14 +1,16 @@
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 
-    /**
+/**
      * A model keeps track all Shape value
      */
     public class EventModel{
         private ArrayList<Listener> listeners;
-        private ArrayList<CalendaEvent> events;
+        private HashMap<String,CalendaEvent> events;
 
         public EventModel(){
-            events = new ArrayList<CalendaEvent>();
+            events = new HashMap<String,CalendaEvent>();
             listeners = new ArrayList<Listener>();
         }
         /**
@@ -25,10 +27,12 @@ import java.util.ArrayList;
          * @param s the adding shape
          */
         public void addEvent  (CalendaEvent s){
-            events.add(s);
+            events.put(s.getDateandTime(),s);
             notifyListener(s);
         }
-
+        public boolean isTimeOccupied(String dateTime){
+            return events.containsKey(dateTime);
+        }
         /**
          * Gets list of shapes
          * @return  a list of shapes
