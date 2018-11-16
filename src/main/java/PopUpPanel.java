@@ -8,6 +8,7 @@ import javax.swing.event.ChangeListener;
 public class PopUpPanel extends JPanel {
 
 	private JLabel text;
+	private JLabel timeText;
 	private JSlider slider;
 	private JButton cancelButton;
 	private JButton editButton;
@@ -18,8 +19,10 @@ public class PopUpPanel extends JPanel {
 		
 		Box sliderBox = Box.createVerticalBox();
 		text = new JLabel();
-		text.setText("You can slide to modify the given time recommendation:");
-
+		text.setText("You can slide to modify the given time recommendation:");	
+		timeText = new JLabel();
+		timeText.setText("Time adjust: 0");
+		
 		slider = new JSlider(JSlider.HORIZONTAL, -30, 30, 0);
 		slider.setMinorTickSpacing(2);
 		slider.setMajorTickSpacing(10);
@@ -27,6 +30,7 @@ public class PopUpPanel extends JPanel {
 		slider.setPaintLabels(true);
 		sliderBox.add(text);
 		sliderBox.add(slider);
+		sliderBox.add(timeText);
 		add(sliderBox, BorderLayout.NORTH);
 
 		Box buttonsBox = Box.createHorizontalBox();
@@ -37,6 +41,12 @@ public class PopUpPanel extends JPanel {
 		buttonsBox.add(cancelButton);
 		buttonsBox.add(editButton);
 		add(buttonsBox, BorderLayout.SOUTH);
+		
+		slider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				timeText.setText("Time adjust: " + slider.getValue());
+			}
+		});
 	}
 
 	public void addActionEditButton(ActionListener e) {
@@ -55,4 +65,6 @@ public class PopUpPanel extends JPanel {
 	public int getTimeSliderValue() {
 		return slider.getValue();
 	}
+	
+	
 }
