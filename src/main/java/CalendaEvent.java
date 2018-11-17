@@ -3,7 +3,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 
 public class CalendaEvent {
     private String addressFrom;
@@ -12,8 +11,10 @@ public class CalendaEvent {
     private GregorianCalendar arrivalDateTime;
     private Transportation transport;
     private double importantScale;
-    private double getReadySecond;
+    private int getReadyMins;
     private double travelTime;
+    private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy HH:mm");
+
 
     public CalendaEvent(
             String addressFrom, String addressTo, String name,
@@ -29,40 +30,39 @@ public class CalendaEvent {
     }
 
     public String toString() {
-//        System.out.println("addressFrom " + addressFrom);
-//        System.out.println("addressTo" + addressTo);
-//        System.out.println("transport" + transport.toString());
-//        System.out.println("getFormatTime" +  getFormatTime());
-//        System.out.println("getTotalTime" + getReadySecond);
-
-        return String.format("Time , Date: \nOrigin: %s\nDestination: %s\nTravel by: %s\nRecommended Time:%s (%d minutes before the event)",
-                addressFrom, addressTo, transport.toString(), getFormatTime(), (int) getReadySecond/60);
+        return String.format("Date and Time:\t%s\nOrigin:\t%s\nDestination:\t%s\nTravel by:\t%s\n%s",
+                getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getAlarmString());
     }
     //TODO: calculate and format the alarm time by adding it to the event time
-    public String getFormatTime() {
+    public String getAlarmFormatTime() {
         GregorianCalendar alarmTime = (GregorianCalendar)arrivalDateTime.clone();
-        alarmTime.add(Calendar.SECOND, (int) - getReadySecond );
-        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy HH:mm");
-        dateTimeFormat.format(alarmTime.getTime());
+        alarmTime.add(Calendar.MINUTE, (int) -getReadyMins);
         return dateTimeFormat.format(alarmTime.getTime());
+    }
+
+    public String getArrivalFormatTime(){
+        return dateTimeFormat.format(arrivalDateTime.getTime());
     }
 
     protected double calculateImportantEvent() {
         return importantScale;
     }
 
-    private void setTotalTime() {
-        getReadySecond = calculateImportantEvent() + transport.getTotalTimeTravel();
+    protected void setTotalTime() {
+        getReadyMins = (int) (importantScale + transport.getTotalTimeTravel());
     }
 
     public void editReadyTime(double adjustMin) {
-        getReadySecond += adjustMin;
+        getReadyMins += adjustMin;
     }
 
-    public String getDateandTime(){
-        return arrivalDateTime.toString();
+    public int getReadyTime(){
+        return getReadyMins;
     }
 
+    public String getAlarmString(){
+        return String.format("Recommended Time: %s (%d minutes before the event)", getAlarmFormatTime(), getReadyMins);
+    }
 //    public void setTravelTime(double duration ){
 //
 //    }

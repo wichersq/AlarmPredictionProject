@@ -1,4 +1,5 @@
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -11,8 +12,10 @@ public class Controller implements Listener {
     private UserPanel userInput;
     private EventModel model;
     private CalendaEvent currentEvent;
+    private PopUpPanel popUp;
 
     public Controller(UserPanel userInput, EventModel model) {
+        popUp = new PopUpPanel(this);
         events = new ArrayList<CalendaEvent>();
         listeners = new ArrayList<Listener>();
         this.userInput = userInput;
@@ -30,36 +33,47 @@ public class Controller implements Listener {
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
         double importantScale = ob.getImportantScale();
         Transportation transport = TransportationFactory.getTransport(ob.getTransport(), 35);
-        currentEvent = new CalendaEvent(addressFrom, addressTo, name, arrivalDateTime, transport, importantScale, 35);
+//        double rating = -1 if no rating
+        currentEvent = CalendaEventFactory.createEvenType(addressFrom, addressTo, name, arrivalDateTime, transport, importantScale, 35 , -2);
+        popUpMessage(currentEvent.getAlarmString());
     }
 
 
     /**
      * notifies all listener
      *
-     * @param object changed object
      */
-    public void notifyListener(Object object) {
-        for (Listener l : listeners) {
-            l.update(object);
-        }
+    private void popUpMessage(String alarmStr) {
+        popUp.showPopUp(alarmStr);
     }
+
+    public void adjustReadyTime(int changingTime){
+        currentEvent.editReadyTime(changingTime);
+        String alarmStr = currentEvent.getAlarmString();
+        popUp.showPopUp(alarmStr);
+    }
+
     public boolean checkIfTimeOccupied(String dateTime){
         return model.isTimeOccupied(dateTime);
     }
 
     private void responseToConfirmation() {
-        userInput.addActionSaveButton(ActionEvent -> {
-            model.addEvent(currentEvent);
+        popUp.addActionSaveButton(ActionEvent -> {
+            CalendaEvent event = currentEvent;
+            model.addEvent(event);
             System.out.println("Save Button Click");
-
-
         });
 
-        userInput.addActionCancelButton(ActionEvent -> {
+        popUp.addActionCancelButton(ActionEvent -> {
+            popUp.setVisible(false);
             userInput.setBackToDefault();
             System.out.println("Cancel Button Click");
         });
+
+        popUp.addActionEditButton(ActionEvent -> {
+            popUp.setVisible(false);
+        });
+
 
 //            userInput.addActionEditButton(ActionEvent ->{
 //
@@ -72,7 +86,7 @@ public class Controller implements Listener {
             pullDataRequest((ChangedObject) ob);
         }
         responseToConfirmation();
-        userInput.popUpMessage();
+//        userInput.popUpMessage();
     }
 }
 

@@ -41,7 +41,6 @@ public class UserPanel extends JPanel {
     public UserPanel(int size) {
         listeners = new ArrayList<Listener>();
 //            controller.addListener(this);
-        this.controller = controller;
         this.setLayout(new BorderLayout());
         allocateTextFields();
         allocateCheckBox();
@@ -53,6 +52,8 @@ public class UserPanel extends JPanel {
         cancelButton = new JButton("Cancel");
         editButton = new JButton("Edit");
     }
+
+
 
     private void addButtons() {
         processButton = new JButton("Add ");
@@ -115,6 +116,7 @@ public class UserPanel extends JPanel {
         int min = Integer.parseInt(timeArr[1]);
 
         eventDate = new GregorianCalendar(year, month - 1, date, hour, min);
+        System.out.println(eventDate);
 
         if (eventDate.before(Calendar.getInstance()) || controller.checkIfTimeOccupied(eventDate.toString())) {
             throw new NumberFormatException("Date Invalid");
@@ -161,7 +163,11 @@ public class UserPanel extends JPanel {
      * @param l adding listener
      */
     public void addListener(Listener l) {
+
         listeners.add(l);
+        if(l.getClass() == Controller.class){
+            this.controller = (Controller) l;
+        }
     }
 
     /**
@@ -245,11 +251,11 @@ public class UserPanel extends JPanel {
         }
     }
 
-    private void confirmToListener() {
-        for (Listener l : listeners) {
-//            l.update();
-        }
-    }
+//    private void confirmToListener() {
+//        for (Listener l : listeners) {
+////            l.update();
+//        }
+//    }
 
     public void addActionEditButton(ActionListener e) {
         editButton.addActionListener(e);

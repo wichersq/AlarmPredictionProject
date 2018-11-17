@@ -1,70 +1,97 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-public class PopUpPanel extends JPanel {
 
-	private JLabel text;
-	private JLabel timeText;
-	private JSlider slider;
-	private JButton cancelButton;
-	private JButton editButton;
-	private JButton saveButton;
+public class PopUpPanel extends JFrame {
 
-	public PopUpPanel() {
-		setLayout(new BorderLayout());
-		
-		Box sliderBox = Box.createVerticalBox();
-		text = new JLabel();
-		text.setText("You can slide to modify the given time recommendation:");	
-		timeText = new JLabel();
-		timeText.setText("Time adjust: 0");
-		
-		slider = new JSlider(JSlider.HORIZONTAL, -30, 30, 0);
-		slider.setMinorTickSpacing(2);
-		slider.setMajorTickSpacing(10);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		sliderBox.add(text);
-		sliderBox.add(slider);
-		sliderBox.add(timeText);
-		add(sliderBox, BorderLayout.NORTH);
+    private JLabel text;
+    private JSlider slider;
+    private JButton cancelButton = new JButton("Cancel");
+    private JButton editButton = new JButton("Edit");
+    private JButton saveButton = new JButton("Save Time");
+    private JButton adjustTime = new JButton("Adjust Ready Time");
+    private JPanel panel = new JPanel();
+    private JTextField tf;
+    private Box buttonsBox = Box.createHorizontalBox();
+    private Box sliderBox = Box.createVerticalBox();
+    private Controller controller;
 
-		Box buttonsBox = Box.createHorizontalBox();
-		saveButton = new JButton("Save Time");
-		cancelButton = new JButton("Cancel");
-		editButton = new JButton("Edit");
-		buttonsBox.add(saveButton);
-		buttonsBox.add(cancelButton);
-		buttonsBox.add(editButton);
-		add(buttonsBox, BorderLayout.SOUTH);
-		
-		slider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				timeText.setText("Time adjust: " + slider.getValue());
-			}
-		});
-	}
 
-	public void addActionEditButton(ActionListener e) {
-		editButton.addActionListener(e);
-	}
+    public PopUpPanel(Controller controller) {
+        this.controller = controller;
+        allocateButtons();
+        createSlider();
+        panel.setLayout(new BorderLayout());
+        panel.setBounds(0, 0, 300, 100);
+        panel.add(sliderBox, BorderLayout.CENTER);
+        panel.add(buttonsBox, BorderLayout.SOUTH);
+        setDefaultLookAndFeelDecorated(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new FlowLayout());
+        this.add(panel, BorderLayout.CENTER);
+        super.setBounds(0, 0, 500, 200);
+    }
 
-	public void addActionSaveButton(ActionListener e) {
-		saveButton.addActionListener(e);
-	}
+    private void allocateButtons() {
+        cancelButton = new JButton("Cancel");
 
-	public void addActionCancelButton(ActionListener e) {
-		System.out.println("Adding cancel listner");
-		cancelButton.addActionListener(e);
-	}
-	
-	public int getTimeSliderValue() {
-		return slider.getValue();
-	}
-	
-	
+        editButton = new JButton("Edit");
+
+        saveButton = new JButton("Save Time");
+        adjustTime = new JButton("Adjust Ready Time");
+        cancelButton.addActionListener(ActionEvent -> {
+
+        });
+
+        adjustTime.addActionListener(ActionEvent -> {
+            int adjustingTime = slider.getValue();
+            if (adjustingTime != 0) {
+                controller.adjustReadyTime(adjustingTime);
+            }
+            slider.setValue(0);
+        });
+
+
+        buttonsBox.add(saveButton);
+        buttonsBox.add(editButton);
+        buttonsBox.add(cancelButton);
+        buttonsBox.add(adjustTime);
+    }
+
+    private void createSlider() {
+        tf = new JTextField("Recommended Alarm Time: ");
+        text = new JLabel("Adjusting your ready time:");
+        slider = new JSlider(JSlider.HORIZONTAL, -30, 30, 0);
+        slider.setMinorTickSpacing(2);
+        slider.setMajorTickSpacing(10);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        sliderBox.add(tf);
+        sliderBox.add(text);
+        sliderBox.add(slider);
+    }
+
+
+    public void showPopUp(String alarmStr) {
+        tf.setText(alarmStr);
+        setVisible(true);
+    }
+
+    public void addActionEditButton(ActionListener e) {
+        editButton.addActionListener(e);
+    }
+
+    public void addActionSaveButton(ActionListener e) {
+        saveButton.addActionListener(e);
+    }
+
+    public void addActionCancelButton(ActionListener e) {
+
+        cancelButton.addActionListener(e);
+
+    }
+
 }
+

@@ -1,6 +1,6 @@
 public interface Transportation {
-    final static int READY_SEC = 45*60;
-    final static int BREAK_TIME = 30*60;
+    final static int READY_MIN = 45;
+    final static int BREAK_TIME_MIN = 30;
     double calculateBreakTime();
     double getTotalTimeTravel();
     String toString();
