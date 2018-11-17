@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 public class PopUpPanel extends JFrame {
@@ -17,6 +19,7 @@ public class PopUpPanel extends JFrame {
     private Box buttonsBox = Box.createHorizontalBox();
     private Box sliderBox = Box.createVerticalBox();
     private Controller controller;
+    private JLabel timeText;
 
 
     public PopUpPanel(Controller controller) {
@@ -62,15 +65,20 @@ public class PopUpPanel extends JFrame {
 
     private void createSlider() {
         tf = new JTextField("Recommended Alarm Time: ");
+        timeText = new JLabel();
+        timeText.setText("Time adjust: 0");
         text = new JLabel("Adjusting your ready time:");
         slider = new JSlider(JSlider.HORIZONTAL, -30, 30, 0);
+        slider.addChangeListener(e -> timeText.setText("Time adjust: " + slider.getValue()));
         slider.setMinorTickSpacing(2);
         slider.setMajorTickSpacing(10);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         sliderBox.add(tf);
         sliderBox.add(text);
+        sliderBox.add(timeText);
         sliderBox.add(slider);
+
     }
 
 
