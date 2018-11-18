@@ -8,10 +8,10 @@ import java.util.Map;
  */
 public class EventModel {
     private ArrayList<Listener> listeners;
-    private HashMap<String, CalendaEvent> events;
+    private HashMap<String, CalendarEvent> events;
 
     public EventModel() {
-        events = new HashMap<String, CalendaEvent>();
+        events = new HashMap<String, CalendarEvent>();
         listeners = new ArrayList<Listener>();
     }
 
@@ -29,7 +29,7 @@ public class EventModel {
      *
      * @param s the adding shape
      */
-    public void addEvent(CalendaEvent s) {
+    public void addEvent(CalendarEvent s) {
         events.put(s.getArrivalFormatTime(), s);
         notifyListener(s);
     }
@@ -44,14 +44,14 @@ public class EventModel {
      *
      * @return a list of shapes
      */
-    public ArrayList<CalendaEvent> getEventList() {
-        return (ArrayList<CalendaEvent>) events.clone();
+    public ArrayList<CalendarEvent> getEventList() {
+        return (ArrayList<CalendarEvent>) events.clone();
     }
 
     public ArrayList<String> getEvents(){
-        CalendaEvent event;
+        CalendarEvent event;
         ArrayList<String> eventList = new ArrayList<>();
-        Iterator<Map.Entry<String,CalendaEvent>> iterator = events.entrySet().iterator();
+        Iterator<Map.Entry<String, CalendarEvent>> iterator = events.entrySet().iterator();
         while (iterator.hasNext()) {
             event = iterator.next().getValue();
             eventList.add(event.toString());

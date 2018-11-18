@@ -1,5 +1,4 @@
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -8,15 +7,15 @@ import java.util.GregorianCalendar;
  */
 public class Controller implements Listener {
     private ArrayList<Listener> listeners;
-    private ArrayList<CalendaEvent> events;
+    private ArrayList<CalendarEvent> events;
     private UserPanel userInput;
     private EventModel model;
-    private CalendaEvent currentEvent;
+    private CalendarEvent currentEvent;
     private PopUpPanel popUp;
 
     public Controller(UserPanel userInput, EventModel model) {
         popUp = new PopUpPanel(this);
-        events = new ArrayList<CalendaEvent>();
+        events = new ArrayList<CalendarEvent>();
         listeners = new ArrayList<Listener>();
         this.userInput = userInput;
         this.model = model;
@@ -34,7 +33,8 @@ public class Controller implements Listener {
         double importantScale = ob.getImportantScale();
         Transportation transport = TransportationFactory.getTransport(ob.getTransport(), 35);
 //        double rating = -1 if no rating
-        currentEvent = CalendaEventFactory.createEvenType(addressFrom, addressTo, name, arrivalDateTime, transport, importantScale, 35 , -2);
+        currentEvent = CalendarEventFactory.createEvenType(addressFrom, addressTo, name,
+                arrivalDateTime, transport, importantScale , -2);
         popUpMessage(currentEvent.getAlarmString());
     }
 
@@ -59,9 +59,10 @@ public class Controller implements Listener {
 
     private void responseToConfirmation() {
         popUp.addActionSaveButton(ActionEvent -> {
-            CalendaEvent event = currentEvent;
+            CalendarEvent event = currentEvent;
             model.addEvent(event);
-            System.out.println("Save Button Click");
+            userInput.setBackToDefault();
+            popUp.setVisible(false);
         });
 
         popUp.addActionCancelButton(ActionEvent -> {

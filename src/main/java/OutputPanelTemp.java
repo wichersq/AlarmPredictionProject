@@ -31,8 +31,13 @@ public class OutputPanelTemp extends JFrame implements Listener{
     @Override
     public void update(Object ob) {
         ArrayList<String> calendarList = model.getEvents();
+        StringBuilder strBuilder = new StringBuilder();
+        int index = 0;
         for(String event: calendarList){
-            textArea.setText(event);
+            index ++;
+            strBuilder.append(String.format("\n\nEvent %d:\n",index));
+            strBuilder.append(event);
         }
+        textArea.setText(strBuilder.toString());
     }
 }

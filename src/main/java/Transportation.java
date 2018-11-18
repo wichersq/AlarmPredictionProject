@@ -1,7 +1,12 @@
-public interface Transportation {
-    final static int READY_MIN = 45;
+public abstract class Transportation {
     final static int BREAK_TIME_MIN = 30;
-    double calculateBreakTime();
-    double getTotalTimeTravel();
-    String toString();
+    protected int durationInSec;
+    Transportation(int duration){
+        durationInSec = duration;
+    }
+    abstract double calculateBreakTime();
+    public double getTotalTimeTravel(){
+        return calculateBreakTime() + durationInSec/60;
+        }
+    public abstract String toString();
 }

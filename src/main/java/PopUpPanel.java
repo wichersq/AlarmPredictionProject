@@ -15,7 +15,7 @@ public class PopUpPanel extends JFrame {
     private JButton saveButton = new JButton("Save Time");
     private JButton adjustTime = new JButton("Adjust Ready Time");
     private JPanel panel = new JPanel();
-    private JTextField tf;
+    private JTextArea tf;
     private Box buttonsBox = Box.createHorizontalBox();
     private Box sliderBox = Box.createVerticalBox();
     private Controller controller;
@@ -64,7 +64,7 @@ public class PopUpPanel extends JFrame {
     }
 
     private void createSlider() {
-        tf = new JTextField("Recommended Alarm Time: ");
+        tf = new JTextArea("Recommended Alarm Time: ");
         timeText = new JLabel();
         timeText.setText("Time adjust: 0");
         text = new JLabel("Adjusting your ready time:");

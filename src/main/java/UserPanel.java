@@ -13,6 +13,7 @@ import java.util.GregorianCalendar;
  * ShapePanel class displays the shapes
  */
 public class UserPanel extends JPanel {
+    private ArrayList<Listener> listeners;
     private Box textFieldBox;
     private Box checkBox;
     private JTextField addressFrom;
@@ -22,7 +23,6 @@ public class UserPanel extends JPanel {
     private JFormattedTextField time;
     private JSlider importantScale;
     private JButton processButton;
-    private ArrayList<Listener> listeners;
     private JRadioButton driveJB;
     private JRadioButton bikeJB;
     private JRadioButton walkJB;
@@ -116,12 +116,10 @@ public class UserPanel extends JPanel {
         int min = Integer.parseInt(timeArr[1]);
 
         eventDate = new GregorianCalendar(year, month - 1, date, hour, min);
-        System.out.println(eventDate);
-
         if (eventDate.before(Calendar.getInstance()) || controller.checkIfTimeOccupied(eventDate.toString())) {
             throw new NumberFormatException("Date Invalid");
         }
-        //TOdO: check to see if the same date is occupied.
+        //TODO: check to see if the same date is occupied.
         //TODO: check the date again.
     }
 
@@ -133,7 +131,7 @@ public class UserPanel extends JPanel {
         placeName.setText("");
         date.setText("");
         time.setText("");
-        importantScale.setValue(0);
+        importantScale.setValue(3);
     }
 
     private void popUpWarningMessage() {
@@ -146,7 +144,6 @@ public class UserPanel extends JPanel {
     }
 
     private String transportPick() {
-
         if (bikeJB.isSelected()) {
             return "BIKING";
         } else if (driveJB.isSelected()) {
@@ -154,7 +151,7 @@ public class UserPanel extends JPanel {
         } else if (walkJB.isSelected()) {
             return "WALKING";
         } else
-            return "TRANSITING";
+            return "TRANSIT";
     }
 
     /**
@@ -231,7 +228,7 @@ public class UserPanel extends JPanel {
 
 
     private void addSlider() {
-        importantScale = new JSlider(JSlider.HORIZONTAL, 0, 5, 0);
+        importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6,3);
         importantScale.setMinorTickSpacing(1);
         importantScale.setMajorTickSpacing(1);
         importantScale.setPaintTicks(true);

@@ -1,9 +1,9 @@
-public class Transit implements Transportation {
+public class Transit extends Transportation {
     final static int TRAVEL_TIME_PER_BREAK = 4*60;
 
     private double durationInSec;
     public Transit(int duration){
-        durationInSec = duration;
+        super(duration);
     }
 
     public double calculateBreakTime() {
@@ -12,7 +12,7 @@ public class Transit implements Transportation {
     }
 
     public double getTotalTimeTravel(){
-        return calculateBreakTime() + READY_MIN + + durationInSec;
+        return calculateBreakTime()  + durationInSec/60;
     }
 
     public String toString(){
