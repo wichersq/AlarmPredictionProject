@@ -1,16 +1,15 @@
-//import javafx.scene.control.DatePicker;
+
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * ShapePanel class displays the shapes
+ * 
  */
 public class UserPanel extends JPanel {
     private ArrayList<Listener> listeners;
@@ -215,14 +214,6 @@ public class UserPanel extends JPanel {
         checkBox.add(transitJB);
     }
 
-    public void addActionDateTextField(ActionListener e) {
-        date.addActionListener(e);
-    }
-
-    public void addActionTimeTextField(ActionListener e) {
-        date.addActionListener(e);
-    }
-
 
     private void addSlider() {
         importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6,3);
@@ -231,11 +222,7 @@ public class UserPanel extends JPanel {
         importantScale.setPaintTicks(true);
         importantScale.setPaintLabels(true);
         add(importantScale, BorderLayout.SOUTH);
-//            importantScale.addChangeListener(ChangeListener -> {
-//                int knobValue = importantScale.getValue();
-////            car.update(knobValue - baseValue);
-////            label.repaint();
-//            });
+
     }
 
 
@@ -245,36 +232,7 @@ public class UserPanel extends JPanel {
         }
     }
 
-//    private void confirmToListener() {
-//        for (Listener l : listeners) {
-////            l.update();
-//        }
-//    }
 
-    public void addActionEditButton(ActionListener e) {
-        editButton.addActionListener(e);
-    }
 
-    public void addActionSaveButton(ActionListener e) {
-        saveButton.addActionListener(e);
-
-    }
-
-    public void addActionCancelButton(ActionListener e) {
-        cancelButton.addActionListener(e);
-
-    }
-
-    public void popUpMessage() {
-        JButton[] buttonList = {saveButton, cancelButton, editButton};
-//        JSlider addMoreTime = new JSlider();
-        Box messageBox = Box.createVerticalBox();
-        messageBox.add(saveButton);
-        messageBox.add(cancelButton);
-//        messageBox.add(addMoreTime);
-        JDialog.setDefaultLookAndFeelDecorated(true);
-        JOptionPane.showOptionDialog(null, "Put Result Here", "Recommend Ready Time",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, buttonList, saveButton);
-    }
 
 }
