@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 /**
  * A model keeps track all Shape value
@@ -48,7 +46,7 @@ public class EventModel {
         return (ArrayList<CalendarEvent>) events.clone();
     }
 
-    public ArrayList<String> getEvents(){
+    public ArrayList<String> getEvents() {
         CalendarEvent event;
         ArrayList<String> eventList = new ArrayList<>();
         Iterator<Map.Entry<String, CalendarEvent>> iterator = events.entrySet().iterator();
@@ -68,6 +66,46 @@ public class EventModel {
         System.out.println("hello");
         for (Listener l : listeners) {
             l.update(object);
+        }
+    }
+
+    private void writeEventsToFile() {
+        Iterator<Map.Entry<String, CalendarEvent>> iter = events.entrySet().iterator();
+        try {
+            FileOutputStream fileOut = new FileOutputStream("Biking.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            while (iter.hasNext()) {
+                out.writeObject(iter.next().getValue());
+            }
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+
+    private void readEventFromFile(String filePath) {
+        CalendarEvent event;
+        try {
+            FileInputStream fileInput = new FileInputStream(filePath);
+            ObjectInputStream inputStream = new ObjectInputStream(fileInput);
+            while (true) {
+                try {
+                    event = (CalendarEvent) inputStream.readObject();
+                    if (event != null)
+                        events.put(event.getArrivalFormatTime(), event);
+
+                } catch (EOFException eof) {
+                    break;
+                }
+            }
+            inputStream.close();
+            fileInput.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (ClassNotFoundException e2) {
+            e2.printStackTrace();
         }
     }
 }

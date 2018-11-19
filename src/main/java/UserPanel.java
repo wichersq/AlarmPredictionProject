@@ -40,7 +40,6 @@ public class UserPanel extends JPanel {
      */
     public UserPanel(int size) {
         listeners = new ArrayList<Listener>();
-//            controller.addListener(this);
         this.setLayout(new BorderLayout());
         allocateTextFields();
         allocateCheckBox();
@@ -119,8 +118,6 @@ public class UserPanel extends JPanel {
         if (eventDate.before(Calendar.getInstance()) || controller.checkIfTimeOccupied(eventDate.toString())) {
             throw new NumberFormatException("Date Invalid");
         }
-        //TODO: check to see if the same date is occupied.
-        //TODO: check the date again.
     }
 
 

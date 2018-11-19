@@ -1,16 +1,13 @@
 public class Driving extends Transportation {
-    final static int TRAVEL_TIME_PER_BREAK = 120;
+    private final static int TRAVEL_SEC_PER_BREAK = 2*60*60;
+
 
     public Driving(int duration){
         super(duration);
     }
-    public double calculateBreakTime() {
-        double numOfBreak = Math.floor(durationInSec/TRAVEL_TIME_PER_BREAK);
+    protected double calculateBreakTime() {
+        double numOfBreak = Math.floor(durationInSec/ TRAVEL_SEC_PER_BREAK);
         return numOfBreak * BREAK_TIME_MIN;
-    }
-
-    public double getTotalTimeTravel(){
-        return calculateBreakTime() + durationInSec;
     }
 
     public String toString(){
