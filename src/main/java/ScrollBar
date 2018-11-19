@@ -1,0 +1,18 @@
+package main_java;
+import javax.swing.*;
+
+public class ScrollBar {
+	
+	public static void main(String[] args){
+		JFrame window = new JFrame("Restult Frame");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		String[] events = {"event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5", "event1", "event2", "event3", "event4", "event5"};
+		JList eventList = new JList(events);
+		JScrollPane scroll = new JScrollPane(eventList);
+		window.add(scroll);
+		window.setSize(500,500);
+		window.setVisible(true);
+		window.setLocationRelativeTo(null);
+	}
+}
+//This class has a scroll bar and title for the JFrame
