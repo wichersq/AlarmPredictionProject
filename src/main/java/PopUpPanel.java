@@ -23,6 +23,7 @@ public class PopUpPanel extends JFrame {
 
 
     public PopUpPanel(Controller controller) {
+    		setTitle("Ready Time");
         this.controller = controller;
         allocateButtons();
         createSlider();
