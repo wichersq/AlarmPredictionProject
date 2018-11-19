@@ -44,9 +44,6 @@ public class PopUpPanel extends JFrame {
 
         saveButton = new JButton("Save Time");
         adjustTime = new JButton("Adjust Ready Time");
-        cancelButton.addActionListener(ActionEvent -> {
-
-        });
 
         adjustTime.addActionListener(ActionEvent -> {
             int adjustingTime = slider.getValue();
@@ -55,8 +52,6 @@ public class PopUpPanel extends JFrame {
             }
             slider.setValue(0);
         });
-
-
         buttonsBox.add(saveButton);
         buttonsBox.add(editButton);
         buttonsBox.add(cancelButton);
@@ -96,10 +91,15 @@ public class PopUpPanel extends JFrame {
     }
 
     public void addActionCancelButton(ActionListener e) {
-
         cancelButton.addActionListener(e);
-
     }
+
+//    public void popUpMessage() {
+//        //        messageBox.add(addMoreTime);
+//        JDialog.setDefaultLookAndFeelDecorated(true);
+//        JOptionPane.showOptionDialog(null, "The event is saved", "Confirmation",
+//                JOptionPane.NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,null,null);
+//    }
 
 }
 

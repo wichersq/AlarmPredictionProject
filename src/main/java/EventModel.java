@@ -85,7 +85,7 @@ public class EventModel {
     }
 
 
-    private void readEventFromFile(String filePath) {
+    public void readEventFromFile(String filePath) {
         CalendarEvent event;
         try {
             FileInputStream fileInput = new FileInputStream(filePath);

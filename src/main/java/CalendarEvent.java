@@ -36,7 +36,7 @@ public class CalendarEvent  implements Serializable {
 
     public String toString() {
         return String.format("Date and Time:\t%s\nOrigin:\t%s\nDestination:\t%s\n" +
-                        "Travel by:\t%s\n%s\n",
+                        "Travel by:\t%s\n%s\n\n",
                         getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getAlarmString());
     }
     //TODO: calculate and format the alarm time by adding it to the event time

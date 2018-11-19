@@ -11,14 +11,12 @@ public class OutputPanelTemp extends JFrame implements Listener{
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size, size);
         setDefaultLookAndFeelDecorated(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createEvenList ();
-
         this.model = model;
         this.model.addListener(this);
-
-        setVisible(true);
+        setVisible(false);
+        textArea.setEditable(false);
     }
     public void createEvenList (){
         panel = new JPanel();
@@ -28,16 +26,20 @@ public class OutputPanelTemp extends JFrame implements Listener{
         panel.add(textArea, BorderLayout.CENTER);
     }
 
-    @Override
-    public void update(Object ob) {
+    public void updateTextList(){
         ArrayList<String> calendarList = model.getEvents();
         StringBuilder strBuilder = new StringBuilder();
         int index = 0;
         for(String event: calendarList){
             index ++;
-            strBuilder.append(String.format("\n\nEvent %d:\n",index));
+            strBuilder.append(String.format("Event %d:\n",index));
             strBuilder.append(event);
         }
         textArea.setText(strBuilder.toString());
+    }
+
+    @Override
+    public void update(Object ob) {
+        updateTextList();
     }
 }

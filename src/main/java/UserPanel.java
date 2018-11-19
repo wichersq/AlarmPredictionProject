@@ -3,32 +3,34 @@
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * 
+ *
  */
 public class UserPanel extends JPanel {
     private ArrayList<Listener> listeners;
     private Box textFieldBox;
     private Box checkBox;
+    private Box buttonBox;
+    private Box sliderBox;
     private JTextField addressFrom;
     private JTextField addressTo;
     private JTextField placeName;
     private JFormattedTextField date;
     private JFormattedTextField time;
     private JSlider importantScale;
-    private JButton processButton;
+    private JButton addButton;
+    private JButton showButton;
     private JRadioButton driveJB;
     private JRadioButton bikeJB;
     private JRadioButton walkJB;
     private JRadioButton transitJB;
-    private JButton saveButton;
-    private JButton cancelButton;
-    private JButton editButton;
     private Controller controller;
     private GregorianCalendar eventDate;
 
@@ -46,17 +48,17 @@ public class UserPanel extends JPanel {
         this.add(checkBox, BorderLayout.EAST);
         addSlider();
         addButtons();
-        saveButton = new JButton("Save Time");
-        cancelButton = new JButton("Cancel");
-        editButton = new JButton("Edit");
+
     }
 
-
-
     private void addButtons() {
-        processButton = new JButton("Add ");
-        this.add(processButton, BorderLayout.WEST);
-        processButton.addActionListener(ActionEvent -> {
+        buttonBox = Box.createHorizontalBox();
+        addButton = new JButton("Add ");
+        showButton = new JButton("Show List");
+        buttonBox.add(addButton);
+        buttonBox.add(showButton);
+        add(buttonBox, BorderLayout.SOUTH);
+        addButton.addActionListener(ActionEvent -> {
             try {
                 createDateTime(date.getText(), time.getText());
                 ChangedObject changeOb = gatherInfo();
@@ -174,6 +176,7 @@ public class UserPanel extends JPanel {
         createTimeTextField();
         addTextFieldsToBox();
     }
+    public void addActionShowButton(ActionListener e){showButton.addActionListener(e);}
 
     private void addTextFieldsToBox() {
         textFieldBox = Box.createVerticalBox();
@@ -216,12 +219,15 @@ public class UserPanel extends JPanel {
 
 
     private void addSlider() {
+        sliderBox = Box.createVerticalBox();
         importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6,3);
         importantScale.setMinorTickSpacing(1);
         importantScale.setMajorTickSpacing(1);
         importantScale.setPaintTicks(true);
         importantScale.setPaintLabels(true);
-        add(importantScale, BorderLayout.SOUTH);
+        sliderBox.add(new JLabel("Importance Scale"));
+        sliderBox.add(importantScale);
+        add(sliderBox, BorderLayout.CENTER);
 
     }
 

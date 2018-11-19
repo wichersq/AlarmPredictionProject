@@ -12,16 +12,17 @@ public class Controller implements Listener {
     private EventModel model;
     private CalendarEvent currentEvent;
     private PopUpPanel popUp;
+    private OutputPanelTemp outputPanel;
 
-    public Controller(UserPanel userInput, EventModel model) {
+    public Controller(UserPanel userInput, EventModel model, OutputPanelTemp outputPanel) {
+        this.outputPanel = outputPanel;
         popUp = new PopUpPanel(this);
         events = new ArrayList<CalendarEvent>();
         listeners = new ArrayList<Listener>();
         this.userInput = userInput;
         this.model = model;
         userInput.addListener(this);
-//            responseToConfirmation();
-
+        responseToConfirmation();
     }
 
     //TODO: WRITE FACTORY CLASS to find out EventWithoutPlaceInfo or EventWithPlaceInfo
@@ -34,35 +35,38 @@ public class Controller implements Listener {
         Transportation transport = TransportationFactory.getTransport(ob.getTransport(), 35);
 //        double rating = -1 if no rating
         currentEvent = CalendarEventFactory.createEvenType(addressFrom, addressTo, name,
-                arrivalDateTime, transport, importantScale , -2);
+                arrivalDateTime, transport, importantScale, -2);
         popUpMessage(currentEvent.getAlarmString());
     }
 
 
     /**
      * notifies all listener
-     *
      */
     private void popUpMessage(String alarmStr) {
         popUp.showPopUp(alarmStr);
     }
 
-    public void adjustReadyTime(int changingTime){
+    public void adjustReadyTime(int changingTime) {
         currentEvent.editReadyTime(changingTime);
         String alarmStr = currentEvent.getAlarmString();
         popUp.showPopUp(alarmStr);
     }
 
-    public boolean checkIfTimeOccupied(String dateTime){
+    public boolean checkIfTimeOccupied(String dateTime) {
         return model.isTimeOccupied(dateTime);
     }
+//TODO: need to check file existence.
+    private void retriveInfomation(){model.readEventFromFile("CalendarEvents.se");}
 
+    //TODO: Write a method to make sure information will be saved after closing
     private void responseToConfirmation() {
         popUp.addActionSaveButton(ActionEvent -> {
             CalendarEvent event = currentEvent;
             model.addEvent(event);
             userInput.setBackToDefault();
             popUp.setVisible(false);
+            outputPanel.setVisible(true);
         });
 
         popUp.addActionCancelButton(ActionEvent -> {
@@ -75,10 +79,11 @@ public class Controller implements Listener {
             popUp.setVisible(false);
         });
 
+        userInput.addActionShowButton(ActionEvent -> {
+            outputPanel.updateTextList();
+            outputPanel.setVisible(true);
+        });
 
-//            userInput.addActionEditButton(ActionEvent ->{
-//
-//            });
 
     }
 
