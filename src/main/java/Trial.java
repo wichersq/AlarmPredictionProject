@@ -4,8 +4,11 @@ import java.util.GregorianCalendar;
 public class Trial {
 
     public static void main(String[] args) {
-        EventModel model = new EventModel();
-        new UserInputFrame(model, 500, new OutputPanelTemp(model, 500));
+        String filePath = "CalendarEvent.se";
+        EventModel model = new EventModel(filePath);
+        UserPanel userInput = new UserPanel(500);
+        OutputFrameTemp outputPanel = new OutputFrameTemp(model,500);
+        Controller controller = new Controller( userInput, model, outputPanel);
 
         CalendarEvent e = new CalendarEvent("511 Walker Dr, Apt3, Mountain View, CA 94043",
                 "1401 N Shoreline Blvd, Mountain View, CA 94043", "Computer History Museum",

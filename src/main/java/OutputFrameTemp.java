@@ -2,16 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class OutputPanelTemp extends JFrame implements Listener{
+public class OutputFrameTemp extends JFrame implements Listener{
     JTextArea textArea;
     EventModel model;
     JPanel panel;
 
-    public OutputPanelTemp(EventModel model, int size){
+    public OutputFrameTemp(EventModel model, int size){
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size, size);
         setDefaultLookAndFeelDecorated(true);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         createEvenList ();
         this.model = model;
         this.model.addListener(this);

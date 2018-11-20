@@ -1,6 +1,4 @@
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -14,9 +12,9 @@ public class Controller implements Listener {
     private EventModel model;
     private CalendarEvent currentEvent;
     private PopUpPanel popUp;
-    private OutputPanelTemp outputPanel;
+    private OutputFrameTemp outputPanel;
 
-    public Controller(UserPanel userInput, EventModel model, OutputPanelTemp outputPanel) {
+    public Controller(UserPanel userInput, EventModel model, OutputFrameTemp outputPanel) {
         this.outputPanel = outputPanel;
         popUp = new PopUpPanel(this);
         events = new ArrayList<CalendarEvent>();
@@ -60,7 +58,7 @@ public class Controller implements Listener {
 
     //TODO: need to check file existence.
     private void restoreInformation(){
-        model.readEventFromFile("CalendarEvents.se");
+        model.restoreEventsFromFile();
     }
 
 

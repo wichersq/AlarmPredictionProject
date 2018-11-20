@@ -7,11 +7,13 @@ import java.util.*;
 public class EventModel {
     private ArrayList<Listener> listeners;
     private HashMap<String, CalendarEvent> events;
-    private File file;
+    private String filePath;
 
-    public EventModel() {
+    public EventModel(String filePath) {
         events = new HashMap<String, CalendarEvent>();
         listeners = new ArrayList<Listener>();
+        this.filePath = filePath;
+//        restoreEventsFromFile();
     }
 
     /**
@@ -71,10 +73,10 @@ public class EventModel {
         }
     }
 
-    private void writeEventsToFile() {
+    private void saveEventsToFile() {
         Iterator<Map.Entry<String, CalendarEvent>> iter = events.entrySet().iterator();
         try {
-            FileOutputStream fileOut = new FileOutputStream("Biking.ser");
+            FileOutputStream fileOut = new FileOutputStream(filePath);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             while (iter.hasNext()) {
                 out.writeObject(iter.next().getValue());
@@ -86,8 +88,8 @@ public class EventModel {
         }
     }
 
-
-    public void readEventFromFile(String filePath) {
+//TODO: needs to check if file exists before reading the event from file: it threw FileNotFoundException
+    public void restoreEventsFromFile() {
         CalendarEvent event;
         try {
             FileInputStream fileInput = new FileInputStream(filePath);

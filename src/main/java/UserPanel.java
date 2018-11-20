@@ -12,7 +12,8 @@ import java.util.GregorianCalendar;
 /**
  *
  */
-public class UserPanel extends JPanel {
+public class UserPanel extends JFrame {
+    private JPanel panel;
     private ArrayList<Listener> listeners;
     private Box textFieldBox;
     private Box checkBox;
@@ -39,12 +40,24 @@ public class UserPanel extends JPanel {
      * @param size size of the panel
      */
     public UserPanel(int size) {
+        super.setLayout(new BorderLayout());
+        super.setBounds(0, 0, size, size);
+        setDefaultLookAndFeelDecorated(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         listeners = new ArrayList<Listener>();
-        this.setLayout(new BorderLayout());
+        createPanel();
+        this.add(panel);
+        add(panel, BorderLayout.CENTER);
+        setVisible(true);
+    }
+
+    private void createPanel() {
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
         allocateTextFields();
         allocateCheckBox();
-        this.add(textFieldBox, BorderLayout.NORTH);
-        this.add(checkBox, BorderLayout.EAST);
+        panel.add(textFieldBox, BorderLayout.NORTH);
+        panel.add(checkBox, BorderLayout.EAST);
         addSlider();
         addButtons();
 
@@ -56,7 +69,7 @@ public class UserPanel extends JPanel {
         showButton = new JButton("Show List");
         buttonBox.add(addButton);
         buttonBox.add(showButton);
-        add(buttonBox, BorderLayout.SOUTH);
+        panel.add(buttonBox, BorderLayout.SOUTH);
         addButton.addActionListener(ActionEvent -> {
             try {
                 createDateTime(date.getText(), time.getText());
@@ -159,7 +172,7 @@ public class UserPanel extends JPanel {
     public void addListener(Listener l) {
 
         listeners.add(l);
-        if(l.getClass() == Controller.class){
+        if (l.getClass() == Controller.class) {
             this.controller = (Controller) l;
         }
     }
@@ -175,7 +188,10 @@ public class UserPanel extends JPanel {
         createTimeTextField();
         addTextFieldsToBox();
     }
-    public void addActionShowButton(ActionListener e){showButton.addActionListener(e);}
+
+    public void addActionShowButton(ActionListener e) {
+        showButton.addActionListener(e);
+    }
 
     private void addTextFieldsToBox() {
         textFieldBox = Box.createVerticalBox();
@@ -219,7 +235,7 @@ public class UserPanel extends JPanel {
 
     private void addSlider() {
         sliderBox = Box.createVerticalBox();
-        importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6,3);
+        importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6, 3);
         importantScale.setMinorTickSpacing(1);
         importantScale.setMajorTickSpacing(1);
         importantScale.setPaintTicks(true);
@@ -236,8 +252,6 @@ public class UserPanel extends JPanel {
             l.update(object);
         }
     }
-
-
 
 
 }
