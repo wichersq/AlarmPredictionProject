@@ -8,13 +8,13 @@ import java.util.GregorianCalendar;
 public class Controller implements Listener {
     private ArrayList<Listener> listeners;
     private ArrayList<CalendarEvent> events;
-    private UserPanel userInput;
+    private UserInputFrame userInput;
     private EventModel model;
     private CalendarEvent currentEvent;
     private PopUpPanel popUp;
     private OutputFrameTemp outputPanel;
 
-    public Controller(UserPanel userInput, EventModel model, OutputFrameTemp outputPanel) {
+    public Controller(UserInputFrame userInput, EventModel model, OutputFrameTemp outputPanel) {
         this.outputPanel = outputPanel;
         popUp = new PopUpPanel(this);
         events = new ArrayList<CalendarEvent>();

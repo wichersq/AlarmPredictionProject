@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 /**
  *
  */
-public class UserPanel extends JFrame {
+public class UserInputFrame extends JFrame {
     private JPanel panel;
     private ArrayList<Listener> listeners;
     private Box textFieldBox;
@@ -39,7 +39,7 @@ public class UserPanel extends JFrame {
      *
      * @param size size of the panel
      */
-    public UserPanel(int size) {
+    public UserInputFrame(int size) {
         super.setLayout(new BorderLayout());
         super.setBounds(0, 0, size, size);
         setDefaultLookAndFeelDecorated(true);
