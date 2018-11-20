@@ -60,7 +60,8 @@ public class CalendarEvent  implements Serializable {
 
     public void editReadyTime(double adjustMin) {
         recommendedReadyMin += adjustMin;
-        alarmTime.add(Calendar.MINUTE, -recommendedReadyMin);
+        alarmTime.add(Calendar.MINUTE, - (int) adjustMin);
+        System.out.println(getAlarmFormatTime());
     }
 
     public int getTravelTime(){
@@ -69,9 +70,9 @@ public class CalendarEvent  implements Serializable {
 
     public String getAlarmString(){
         return String.format("Travel Estimation Duration: %d %s" +
-                "\nRecommended Time: %s \n%d minutes before the event",
+                "\nAlarm Time: %s \n%d minutes %s the event",
                 travelTime, travelTime > 1? "minutes" : "minute",
-                getAlarmFormatTime(), recommendedReadyMin);
+                getAlarmFormatTime(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
     }
 //    public void setTravelTime(double duration ){
 //    }

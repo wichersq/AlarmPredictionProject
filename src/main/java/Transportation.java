@@ -7,6 +7,7 @@ public abstract class Transportation  implements Serializable {
     Transportation(int duration){
         durationInSec = duration;
         setTotalMinTravel();
+        System.out.println(totalMinTravel);
     }
     abstract double calculateBreakTime();
 

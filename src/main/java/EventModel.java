@@ -7,6 +7,7 @@ import java.util.*;
 public class EventModel {
     private ArrayList<Listener> listeners;
     private HashMap<String, CalendarEvent> events;
+    private File file;
 
     public EventModel() {
         events = new HashMap<String, CalendarEvent>();
@@ -36,6 +37,7 @@ public class EventModel {
         return events.containsKey(dateTime);
 
     }
+
 
     /**
      * Gets list of shapes

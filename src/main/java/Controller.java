@@ -1,4 +1,6 @@
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -24,15 +26,13 @@ public class Controller implements Listener {
         userInput.addListener(this);
         responseToConfirmation();
     }
-
-    //TODO: WRITE FACTORY CLASS to find out EventWithoutPlaceInfo or EventWithPlaceInfo
     private void pullDataRequest(ChangedObject ob) {
         String addressFrom = ob.getAddressFrom();
         String addressTo = ob.getAddressTo();
         String name = ob.getName();
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
         double importantScale = ob.getImportantScale();
-        Transportation transport = TransportationFactory.getTransport(ob.getTransport(), 35);
+        Transportation transport = TransportationFactory.getTransport(ob.getTransport(), 35*60);
 //        double rating = -1 if no rating
         currentEvent = CalendarEventFactory.createEvenType(addressFrom, addressTo, name,
                 arrivalDateTime, transport, importantScale, -2);
@@ -56,8 +56,14 @@ public class Controller implements Listener {
     public boolean checkIfTimeOccupied(String dateTime) {
         return model.isTimeOccupied(dateTime);
     }
-//TODO: need to check file existence.
-    private void retriveInfomation(){model.readEventFromFile("CalendarEvents.se");}
+
+
+    //TODO: need to check file existence.
+    private void restoreInformation(){
+        model.readEventFromFile("CalendarEvents.se");
+    }
+
+
 
     //TODO: Write a method to make sure information will be saved after closing
     private void responseToConfirmation() {
