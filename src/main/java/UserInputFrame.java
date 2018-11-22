@@ -59,7 +59,7 @@ public class UserInputFrame extends JFrame {
                 int i = JOptionPane.showConfirmDialog(null, "Are you sure want to close?", null, JOptionPane.YES_OPTION);
                 System.out.println(i);
                 if (i == JOptionPane.YES_OPTION) {
-                    controller.saveEventToFile();
+                    controller.saveEventsToFile();
                     System.exit(0);
                 }else{
                 }

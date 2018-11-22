@@ -1,9 +1,8 @@
-
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 /**
- * A model keeps track all Shape value
+ *
  */
 public class Controller implements Listener {
     private ArrayList<Listener> listeners;
@@ -11,18 +10,19 @@ public class Controller implements Listener {
     private UserInputFrame userInput;
     private EventModel model;
     private CalendarEvent currentEvent;
-    private PopUpPanel popUp;
+    private PopUpFrame popUp;
     private OutputFrame outputPanel;
 
     public Controller(UserInputFrame userInput, EventModel model, OutputFrame outputPanel) {
         this.outputPanel = outputPanel;
-        popUp = new PopUpPanel(this);
+        popUp = new PopUpFrame(this);
         events = new ArrayList<CalendarEvent>();
         listeners = new ArrayList<Listener>();
         this.userInput = userInput;
         this.model = model;
         userInput.addListener(this);
-        responseToConfirmation();
+        responseToButtonOfPopUp();
+        responseToButtonUserInput();
     }
     private void pullDataRequest(ChangedObject ob) {
         String addressFrom = ob.getAddressFrom();
@@ -38,9 +38,7 @@ public class Controller implements Listener {
     }
 
 
-    /**
-     * notifies all listener
-     */
+
     private void popUpMessage(String alarmStr) {
         popUp.showPopUp(alarmStr);
     }
@@ -56,15 +54,11 @@ public class Controller implements Listener {
     }
 
 
-    //TODO: need to check file existence.
-    public void saveEventToFile(){
+    public void saveEventsToFile(){
         model.saveEventsToFile();
     }
 
-
-
-    //TODO: Write a method to make sure information will be saved after closing
-    private void responseToConfirmation() {
+    private void responseToButtonOfPopUp() {
         popUp.addActionSaveButton(ActionEvent -> {
             CalendarEvent event = currentEvent;
             model.addEvent(event);
@@ -76,26 +70,23 @@ public class Controller implements Listener {
         popUp.addActionCancelButton(ActionEvent -> {
             popUp.setVisible(false);
             userInput.setBackToDefault();
-            System.out.println("Cancel Button Click");
         });
 
         popUp.addActionEditButton(ActionEvent -> {
             popUp.setVisible(false);
         });
-
+    }
+    private void responseToButtonUserInput(){
         userInput.addActionShowButton(ActionEvent -> {
             outputPanel.updateTextList();
             outputPanel.setVisible(true);
         });
-
-
     }
 
     public void update(Object ob) {
         if (ob.getClass().equals(ChangedObject.class)) {
             pullDataRequest((ChangedObject) ob);
         }
-        responseToConfirmation();
 //        userInput.popUpMessage();
     }
 }

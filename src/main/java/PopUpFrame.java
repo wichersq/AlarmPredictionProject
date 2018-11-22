@@ -6,7 +6,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-public class PopUpPanel extends JFrame {
+public class PopUpFrame extends JFrame {
 
     private JLabel text;
     private JSlider slider;
@@ -22,7 +22,7 @@ public class PopUpPanel extends JFrame {
     private JLabel timeText;
 
 
-    public PopUpPanel(Controller controller) {
+    public PopUpFrame(Controller controller) {
     		setTitle("Ready Time");
         this.controller = controller;
         allocateButtons();
@@ -80,6 +80,7 @@ public class PopUpPanel extends JFrame {
 
     public void showPopUp(String alarmStr) {
         tf.setText(alarmStr);
+        slider.setValue(0);
         setVisible(true);
     }
 
