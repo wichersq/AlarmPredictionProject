@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class OutputPanelTemp extends JFrame implements Listener{
+public class OutputFrame extends JFrame implements Listener{
     JTextArea textArea;
     EventModel model;
     JPanel panel;
     
-    public OutputPanelTemp(EventModel model, int size){
+    public OutputFrame(EventModel model, int size){
     		setTitle("Scheduled Events");
     		super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size, size);

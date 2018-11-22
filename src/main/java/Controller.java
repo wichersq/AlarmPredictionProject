@@ -12,9 +12,9 @@ public class Controller implements Listener {
     private EventModel model;
     private CalendarEvent currentEvent;
     private PopUpPanel popUp;
-    private OutputFrameTemp outputPanel;
+    private OutputFrame outputPanel;
 
-    public Controller(UserInputFrame userInput, EventModel model, OutputFrameTemp outputPanel) {
+    public Controller(UserInputFrame userInput, EventModel model, OutputFrame outputPanel) {
         this.outputPanel = outputPanel;
         popUp = new PopUpPanel(this);
         events = new ArrayList<CalendarEvent>();
