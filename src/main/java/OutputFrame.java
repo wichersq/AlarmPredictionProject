@@ -10,8 +10,8 @@ public class OutputFrame extends JFrame implements Listener{
     JPanel panel;
     
     public OutputFrame(EventModel model, int size){
-    		setTitle("Scheduled Events");
-    		super.setLayout(new FlowLayout());
+        setTitle("Scheduled Events");
+        super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size, size);
         setDefaultLookAndFeelDecorated(true);
 //      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

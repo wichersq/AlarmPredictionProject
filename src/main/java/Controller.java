@@ -57,8 +57,8 @@ public class Controller implements Listener {
 
 
     //TODO: need to check file existence.
-    private void restoreInformation(){
-        model.restoreEventsFromFile();
+    public void saveEventToFile(){
+        model.saveEventsToFile();
     }
 
 

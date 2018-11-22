@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,33 +43,85 @@ public class UserInputFrame extends JFrame {
         super.setLayout(new BorderLayout());
         super.setBounds(0, 0, size, size);
         setDefaultLookAndFeelDecorated(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         listeners = new ArrayList<Listener>();
         createPanel();
-        this.add(panel);
+        addCloseWindowOption();
         add(panel, BorderLayout.CENTER);
         setVisible(true);
+
+    }
+
+
+    private void addCloseWindowOption() {
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                int i = JOptionPane.showConfirmDialog(null, "Are you sure want to close?", null, JOptionPane.YES_OPTION);
+                System.out.println(i);
+                if (i == JOptionPane.YES_OPTION) {
+                    controller.saveEventToFile();
+                    System.exit(0);
+                }else{
+                }
+            }
+        });
     }
 
     private void createPanel() {
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        allocateTextFields();
-        allocateCheckBox();
+        createTextFields();
+        createCheckBox();
+        createSliderBar();
+        createButtons();
         panel.add(textFieldBox, BorderLayout.NORTH);
         panel.add(checkBox, BorderLayout.EAST);
-        addSlider();
-        addButtons();
+        panel.add(sliderBox, BorderLayout.CENTER);
+        panel.add(buttonBox, BorderLayout.SOUTH);
+    }
+    private void createCheckBox() {
+        checkBox = Box.createVerticalBox();
+        ButtonGroup group = new ButtonGroup();
+
+        driveJB = new JRadioButton("Driving");
+        bikeJB = new JRadioButton("Biking");
+        walkJB = new JRadioButton("Walking");
+        transitJB = new JRadioButton("Transit");
+
+        driveJB.setSelected(true);
+
+
+        group.add(bikeJB);
+        group.add(driveJB);
+        group.add(walkJB);
+        group.add(transitJB);
+
+        checkBox.add(driveJB);
+        checkBox.add(bikeJB);
+        checkBox.add(walkJB);
+        checkBox.add(transitJB);
+    }
+
+
+    private void createSliderBar() {
+        sliderBox = Box.createVerticalBox();
+        importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6, 3);
+        importantScale.setMinorTickSpacing(1);
+        importantScale.setMajorTickSpacing(1);
+        importantScale.setPaintTicks(true);
+        importantScale.setPaintLabels(true);
+        sliderBox.add(new JLabel("Importance Scale"));
+        sliderBox.add(importantScale);
+
 
     }
 
-    private void addButtons() {
+    private void createButtons() {
         buttonBox = Box.createHorizontalBox();
         addButton = new JButton("Add ");
         showButton = new JButton("Show List");
         buttonBox.add(addButton);
         buttonBox.add(showButton);
-        panel.add(buttonBox, BorderLayout.SOUTH);
         addButton.addActionListener(ActionEvent -> {
             try {
                 createDateTime(date.getText(), time.getText());
@@ -178,7 +232,7 @@ public class UserInputFrame extends JFrame {
     /**
      * Adds a mouse listener for the panel
      */
-    private void allocateTextFields() {
+    private void createTextFields() {
         addressFrom = new JTextField();
         addressTo = new JTextField();
         placeName = new JTextField();
@@ -207,42 +261,7 @@ public class UserInputFrame extends JFrame {
         textFieldBox.add(time);
     }
 
-    private void allocateCheckBox() {
-        checkBox = Box.createVerticalBox();
-        ButtonGroup group = new ButtonGroup();
 
-        driveJB = new JRadioButton("Driving");
-        bikeJB = new JRadioButton("Biking");
-        walkJB = new JRadioButton("Walking");
-        transitJB = new JRadioButton("Transit");
-
-        driveJB.setSelected(true);
-
-
-        group.add(bikeJB);
-        group.add(driveJB);
-        group.add(walkJB);
-        group.add(transitJB);
-
-        checkBox.add(driveJB);
-        checkBox.add(bikeJB);
-        checkBox.add(walkJB);
-        checkBox.add(transitJB);
-    }
-
-
-    private void addSlider() {
-        sliderBox = Box.createVerticalBox();
-        importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6, 3);
-        importantScale.setMinorTickSpacing(1);
-        importantScale.setMajorTickSpacing(1);
-        importantScale.setPaintTicks(true);
-        importantScale.setPaintLabels(true);
-        sliderBox.add(new JLabel("Importance Scale"));
-        sliderBox.add(importantScale);
-        add(sliderBox, BorderLayout.CENTER);
-
-    }
 
 
     private void notifyListener(ChangedObject object) {

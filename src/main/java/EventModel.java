@@ -73,7 +73,7 @@ public class EventModel {
         }
     }
 
-    private void saveEventsToFile() {
+    public void saveEventsToFile() {
         Iterator<Map.Entry<String, CalendarEvent>> iter = events.entrySet().iterator();
         try {
             FileOutputStream fileOut = new FileOutputStream(file.getName());
@@ -106,6 +106,8 @@ public class EventModel {
             }
             inputStream.close();
             fileInput.close();
+        }catch (EOFException e) {
+            return;
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (ClassNotFoundException e2) {
@@ -121,7 +123,7 @@ public class EventModel {
     private void maybeCreateFile(String fileName) {
         this.file = new File(fileName);
         if (file.exists()) {
-//            restoreEventsFromFile();
+            restoreEventsFromFile();
         }
     }
 }
