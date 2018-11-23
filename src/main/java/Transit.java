@@ -11,7 +11,7 @@ public class Transit extends Transportation {
 
 
     public String toString(){
-        return "Transit";
+        return "TRANSIT";
     }
 
     public boolean equals(Object other){

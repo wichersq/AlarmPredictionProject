@@ -1,4 +1,3 @@
-import java.awt.event.ActionEvent;
 import java.util.GregorianCalendar;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -9,8 +8,9 @@ public class ReadyTimeCalc implements Runnable {
     private OutputFrame outputPanel;
     private CalendarEvent currentEvent;
     private Controller controller;
+
     public ReadyTimeCalc(EventModel model, OutputFrame outputPanel,
-                         LinkedBlockingQueue<ChangedObject> sharedQueue, Controller controller){
+                         LinkedBlockingQueue<ChangedObject> sharedQueue, Controller controller) {
         this.controller = controller;
         this.popUp = new PopUpFrame();
         this.sharedQueue = sharedQueue;
@@ -19,36 +19,50 @@ public class ReadyTimeCalc implements Runnable {
         responseToButtonOfPopUp();
     }
 
-    private void pullDataRequest(ChangedObject ob) {
-        String addressFrom = ob.getAddressFrom();
-        String addressTo = ob.getAddressTo();
-        String name = ob.getName();
-        GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
-        double importantScale = ob.getImportantScale();
-        Transportation transport = TransportationFactory.getTransport(ob.getTransport(), 35 * 60);
-        System.out.println(transport);
-//        double rating = -1 if no rating
-        currentEvent = CalendarEventFactory.createEvenType(addressFrom, addressTo, name,
-                arrivalDateTime, transport, importantScale, -2);
-        popUp.showPopUp(currentEvent.getAlarmString());
-    }
-
     @Override
     public void run() {
-        System.out.println("Consumer start");
         while (true) {
             try {
                 ChangedObject event = sharedQueue.take();
                 pullDataRequest(event);
             } catch (InterruptedException e) {
-                System.out.println("Consumer Interrupted");
+                e.printStackTrace();
             }
         }
     }
 
+    private void pullDataRequest(ChangedObject ob) {
+        GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
+        double importantScale = ob.getImportantScale();
+
+        //TODO: This will need Api Key to run
+//        DataRequest.pullMapRequest(ob.getAddressFrom(), ob.getAddressTo(),
+//                        ob.getTransport(), arrivalDateTime);
+//        String destName = DataRequest.getDestName();
+//        String originName = DataRequest.getOriginName();
+//        long durationSec = DataRequest.getDurationSec();
+//        double rating = (double) DataRequest.getRating();
+//        String startAddress = DataRequest.getStartAddress();
+//        String endAddress = DataRequest.getEndAddress();
+
+        //TODO: this is for example
+        String destName = "570 N Shoreline Blvd";
+        String originName = "189 Central Ave";
+        long durationSec = 286;
+        double rating = 0.0;
+        String startAddress = "189 Central Ave, Mountain View, CA 94043, USA";
+        String endAddress = "570 N Shoreline Blvd, Mountain View, CA 94043, USA";
+
+        Transportation transport = TransportationFactory.createTransport(ob.getTransport(), (int) durationSec);
+        currentEvent = CalendarEventFactory.createEvenType(startAddress,
+                endAddress, ob.getName(), originName, destName, arrivalDateTime,
+                transport, importantScale, rating);
+        popUp.showPopUp(currentEvent.getEventInfo());
+    }
+
     public void adjustReadyTime(int changingTime) {
         currentEvent.editReadyTime(changingTime);
-        String alarmStr = currentEvent.getAlarmString();
+        String alarmStr = currentEvent.getEventInfo();
         popUp.showPopUp(alarmStr);
     }
 
@@ -69,12 +83,12 @@ public class ReadyTimeCalc implements Runnable {
             popUp.setVisible(false);
         });
 
-        popUp.addActionAdjustButton(ActionEvent ->{
-                int adjustingTime = popUp.getSliderValue();
-                if (adjustingTime != 0) {
-                    adjustReadyTime(adjustingTime);
-                }
-            });
+        popUp.addActionAdjustButton(ActionEvent -> {
+            int adjustingTime = popUp.getSliderValue();
+            if (adjustingTime != 0) {
+                adjustReadyTime(adjustingTime);
+            }
+        });
     }
 
 }

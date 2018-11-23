@@ -11,7 +11,7 @@ public class Biking extends Transportation {
         return numOfBreak* BREAK_TIME_MIN;
     }
 
-    public String toString(){return "Biking";}
+    public String toString(){return "BIKING";}
 
     public boolean equals(Object other){
         return(other.getClass().equals(this));

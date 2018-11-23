@@ -5,11 +5,13 @@ import java.util.Calendar;
 
 import java.util.GregorianCalendar;
 
-public class CalendarEvent  implements Serializable {
+public class CalendarEvent implements Serializable {
     protected int DEFAULT_PREPARE_MIN = 30;
     protected String addressFrom;
     protected String addressTo;
-    protected String name;
+    protected String eventName;
+    protected String originName;
+    protected String destName;
     protected GregorianCalendar arrivalDateTime;
     protected GregorianCalendar alarmTime;
     protected Transportation transport;
@@ -20,15 +22,18 @@ public class CalendarEvent  implements Serializable {
     protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
 
 
-    public CalendarEvent(String addressFrom, String addressTo, String name,
-                         GregorianCalendar arrivalDateTime, Transportation transport, double importantScale) {
+    public CalendarEvent(String addressFrom, String addressTo, String eventName,
+                         String originName, String destName, GregorianCalendar arrivalDateTime,
+                         Transportation transport, double importantScale) {
         this.addressFrom = addressFrom;
         this.addressTo = addressTo;
-        this.name = name;
+        this.eventName = eventName;
+        this.originName = originName;
+        this.destName = destName;
         this.arrivalDateTime = arrivalDateTime;
         this.transport = transport;
         this.importantScale = importantScale;
-        this.travelTime = (int) transport.getTotalMinTravel();
+        this.travelTime = transport.getTotalMinTravel();
         calPrepareTime();
         setTotalTime();
 
@@ -37,52 +42,50 @@ public class CalendarEvent  implements Serializable {
     public String toString() {
 //        return String.format("Date and Time:\t%s\nOrigin:\t%s\nDestination:\t%s\n" +
 //                        "Travel by:\t%s\n%s\n\n",
-//                        getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getAlarmString());
-    	
-    	return String.format("---%s---\n%s  -->  %s\n" +
-                "%s  %s  ",
-                getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getAlarmString());
+//                        getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getEventInfo());
+
+        return String.format("---%s---\n%s  -->  %s\n" +
+                        "Alarm at:%s  ",
+                getArrivalFormatTime(), originName, destName, getAlarmFormatTime());
 
     }
+
     //TODO: calculate and format the alarm time by adding it to the event time
     public String getAlarmFormatTime() {
         return dateTimeFormat.format(alarmTime.getTime());
     }
 
-    public String getArrivalFormatTime(){
+    public String getArrivalFormatTime() {
         return dateTimeFormat.format(arrivalDateTime.getTime());
     }
 
     protected void calPrepareTime() {
-        preparingTime = DEFAULT_PREPARE_MIN + (int)importantScale*5;
+        preparingTime = DEFAULT_PREPARE_MIN + (int) importantScale * 5;
     }
 
     protected void setTotalTime() {
         recommendedReadyMin = preparingTime + travelTime;
-        alarmTime = (GregorianCalendar)arrivalDateTime.clone();
-        alarmTime.add(Calendar.MINUTE, - recommendedReadyMin);
+        alarmTime = (GregorianCalendar) arrivalDateTime.clone();
+        alarmTime.add(Calendar.MINUTE, -recommendedReadyMin);
     }
+
     public void editReadyTime(double adjustMin) {
         recommendedReadyMin += adjustMin;
-        alarmTime.add(Calendar.MINUTE, - (int) adjustMin);
+        alarmTime.add(Calendar.MINUTE, -(int) adjustMin);
         System.out.println(getAlarmFormatTime());
     }
 
-    public int getTravelTime(){
+    public int getTravelTime() {
         return travelTime;
     }
 
-    public String getAlarmString(){
-    	 return String.format("%d %s" +
-                 "\nAlarm: %s \n%d minutes %s",
-                 travelTime, travelTime > 1? "minutes" : "minute",
-                 getAlarmFormatTime(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
+    public String getEventInfo(){
+        return String.format("Travel Duration: %d %s" +
+                        "\nAlarm Time: %s \n%d minutes %s the event",
+                travelTime, travelTime > 1? "minutes" : "minute",
+                getAlarmFormatTime(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
     }
-//    public void setTravelTime(double duration ){
-//    }
-//    public String getOrigin(){return addressFrom;}
-//    public String getDestination(){return addressTo;}
-//    public String getOrigin(){return addressFrom;}
+
     public boolean equals(Object other) {
         if (!(other instanceof CalendarEvent)) {
             return false;
@@ -93,43 +96,5 @@ public class CalendarEvent  implements Serializable {
                 arrivalDateTime.equals(comparingEvent.arrivalDateTime) &&
                 transport.equals(comparingEvent.transport));
     }
-
-
-//    /**
-//     A helper method to write a rectangular shape.
-//     @param out the stream onto which to write the shape
-//     @param s the shape to write
-//     */
-//    private static void writeTransportation(ObjectOutputStream out,
-//                                              RectangularShape s)
-//            throws IOException
-//    {
-//        out.writeDouble(s.getX());
-//        out.writeDouble(s.getY());
-//        out.writeDouble(s.getWidth());
-//        out.writeDouble(s.getHeight());
-//    }
-//
-//    private void readObject(ObjectInputStream inputStream) throws ClassNotFoundException, IOException {
-//        //always perform the default de-serialization first
-//        inputStream.defaultReadObject();
-//
-//        //make defensive copy of the mutable Date field
-//        dateOpened = new Date(dateOpened.getTime());
-//
-//        //ensure that object state has not been corrupted or tampered with maliciously
-//        validateState();
-//    }
-//
-//    /**
-//     * This is the default implementation of writeObject.
-//     * Customise if necessary.
-//     */
-//    private void writeObject(ObjectOutputStream outputStream) throws IOException {
-//        //perform the default serialization for all non-transient, non-static fields
-//        outputStream.defaultWriteObject();
-//    }
-
-
 
 }

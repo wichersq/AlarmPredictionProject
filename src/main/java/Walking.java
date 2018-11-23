@@ -11,7 +11,7 @@ public class Walking extends Transportation {
     }
 
     public String toString(){
-        return "Walking";
+        return "WALKING";
     }
     public boolean equals(Object other){
         return(other.getClass().equals(this));

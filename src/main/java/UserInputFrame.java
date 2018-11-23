@@ -23,7 +23,7 @@ public class UserInputFrame extends JFrame {
     private Box sliderBox;
     private JTextField addressFrom;
     private JTextField addressTo;
-    private JTextField placeName;
+    private JTextField eventName;
     private JFormattedTextField date;
     private JFormattedTextField time;
     private JSlider importantScale;
@@ -63,7 +63,7 @@ public class UserInputFrame extends JFrame {
                 if (i == JOptionPane.YES_OPTION) {
                     controller.saveEventsToFile();
                     System.exit(0);
-                }else{
+                } else {
                 }
             }
         });
@@ -81,6 +81,7 @@ public class UserInputFrame extends JFrame {
         panel.add(sliderBox, BorderLayout.CENTER);
         panel.add(buttonBox, BorderLayout.SOUTH);
     }
+
     private void createCheckBox() {
         checkBox = Box.createVerticalBox();
         ButtonGroup group = new ButtonGroup();
@@ -139,7 +140,7 @@ public class UserInputFrame extends JFrame {
     private ChangedObject gatherInfo() {
         String from = addressFrom.getText();
         String to = addressTo.getText();
-        String name = placeName.getText();
+        String name = eventName.getText();
         String trans = transportPick();
         int scale = importantScale.getValue();
 
@@ -192,20 +193,20 @@ public class UserInputFrame extends JFrame {
         driveJB.setSelected(true);
         addressFrom.setText("");
         addressTo.setText("");
-        placeName.setText("");
+        eventName.setText("");
         date.setText("");
         time.setText("");
         importantScale.setValue(3);
-        Method setValueMethod = null;
         try {
-        	setValueMethod = this.getClass().getClass().getDeclaredMethod("setValue", int.class);
-        	} catch (SecurityException e) { }
-        	  catch (NoSuchMethodException e) {  }
-        try {
-        	setValueMethod.invoke(importantScale, 3);
-        	} catch (IllegalArgumentException e) {  }
-        	  catch (IllegalAccessException e) {  }
-        	  catch (InvocationTargetException e) { }      
+            Method setValueMethod = importantScale.getClass().getDeclaredMethod("setValue", int.class);
+            setValueMethod.invoke(importantScale, 3);
+        } catch (NoSuchMethodException x) {
+            x.printStackTrace();
+        } catch (IllegalAccessException x) {
+            x.printStackTrace();
+        } catch (InvocationTargetException x) {
+            x.printStackTrace();
+        }
     }
 
     private void popUpWarningMessage() {
@@ -242,12 +243,13 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Adds a mouse listener for the panel
+     *
+     *
      */
     private void createTextFields() {
         addressFrom = new JTextField();
         addressTo = new JTextField();
-        placeName = new JTextField();
+        eventName = new JTextField();
         createDateTextField();
         createTimeTextField();
         addTextFieldsToBox();
@@ -259,22 +261,23 @@ public class UserInputFrame extends JFrame {
 
     private void addTextFieldsToBox() {
         textFieldBox = Box.createVerticalBox();
+
+        textFieldBox.add(new JLabel("Event Name:"));
+        textFieldBox.add(eventName);
+
         textFieldBox.add(new JLabel("From:"));
         textFieldBox.add(addressFrom);
 
         textFieldBox.add(new JLabel("To:"));
         textFieldBox.add(addressTo);
 
-        textFieldBox.add(new JLabel("Place Name:"));
-        textFieldBox.add(placeName);
+
         textFieldBox.add(new JLabel("Date(mm/dd/yyyy): "));
         textFieldBox.add(date);
+
         textFieldBox.add(new JLabel("Time(hh:mm): "));
         textFieldBox.add(time);
     }
-
-
-
 
     private void notifyListener(ChangedObject object) {
         for (Listener l : listeners) {

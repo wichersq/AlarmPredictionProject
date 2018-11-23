@@ -11,7 +11,7 @@ public class Driving extends Transportation {
     }
 
     public String toString(){
-        return "Driving";
+        return "DRIVING";
     }
     public boolean equals(Object other){
         return(other.getClass().equals(this));
