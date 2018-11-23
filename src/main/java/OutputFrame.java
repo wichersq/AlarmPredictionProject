@@ -4,38 +4,45 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class OutputFrame extends JFrame implements Listener{
-    JTextArea textArea;
-    EventModel model;
-    JPanel panel;
-    
-    public OutputFrame(EventModel model, int size){
+public class OutputFrame extends JFrame implements Listener {
+    private JTextArea textArea;
+    private EventModel model;
+    private JPanel panel;
+    private JScrollPane scrollPane;
+
+    public OutputFrame(EventModel model, int size) {
         setTitle("Scheduled Events");
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size, size);
         setDefaultLookAndFeelDecorated(true);
 //      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        createEvenList ();
+        createEventListPanel();
         this.model = model;
-        this.model.addListener(this);
+        model.addListener(this);
         setVisible(false);
-        textArea.setEditable(false);
-        
+        setResizable(false);
+        this.add(panel, BorderLayout.CENTER);
     }
-    public void createEvenList (){
+
+    public void createEventListPanel() {
         panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        this.add(panel);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         textArea = new JTextArea();
-        panel.add(textArea, BorderLayout.CENTER);
-	}
-	public void updateTextList(){
+        textArea.setEditable(false);
+        scrollPane =new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(400, 400));
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+
+    }
+
+    public void updateTextList() {
         ArrayList<String> calendarList = model.getEvents();
         StringBuilder strBuilder = new StringBuilder();
         int index = 0;
-        for(String event: calendarList){
-            index ++;
-            strBuilder.append(String.format("Event %d:\n",index));
+        for (String event : calendarList) {
+            index++;
+            strBuilder.append(String.format("Event %d:\n", index));
             strBuilder.append(event);
         }
         textArea.setText(strBuilder.toString());

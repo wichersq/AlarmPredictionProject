@@ -2,18 +2,17 @@ import java.io.*;
 import java.util.*;
 
 /**
- * A model keeps track all Shape value
+ * A model keeps track all events' values
  */
 public class EventModel {
     private ArrayList<Listener> listeners;
-    private HashMap<String, CalendarEvent> events;
+    private TreeMap<String, CalendarEvent> events;
     private File file;
 
     public EventModel(String filePath) {
-        events = new HashMap<String, CalendarEvent>();
+        events = new TreeMap<String, CalendarEvent>();
         listeners = new ArrayList<Listener>();
         maybeCreateFile(filePath);
-//        restoreEventsFromFile();
     }
 
     /**
@@ -34,17 +33,13 @@ public class EventModel {
         events.put(s.getArrivalFormatTime(), s);
         notifyListener(s);
     }
-
     public boolean isTimeOccupied(String dateTime) {
         return events.containsKey(dateTime);
-
     }
-
-
     /**
-     * Gets list of shapes
+     * Gets list of events
      *
-     * @return a list of shapes
+     * @return a copy of list of events
      */
     public ArrayList<CalendarEvent> getEventList() {
         return (ArrayList<CalendarEvent>) events.clone();
@@ -67,7 +62,6 @@ public class EventModel {
      * @param object changed object
      */
     private void notifyListener(Object object) {
-        System.out.println("hello");
         for (Listener l : listeners) {
             l.update(object);
         }

@@ -1,6 +1,4 @@
-import sun.plugin.javascript.navig4.Link;
-
-import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Tester {
 
@@ -9,10 +7,9 @@ public class Tester {
         EventModel model = new EventModel(filePath);
         UserInputFrame userInput = new UserInputFrame(500);
         OutputFrame outputPanel = new OutputFrame(model,500);
-        Controller controller = new Controller( userInput, model, outputPanel);
-        LinkedList<Integer> list = new LinkedList<>();
-        Thread thread = new Thread(new ConsumerThread(list));
-        Thread thread2 = new Thread(new ProducerThread(list));
-
+        LinkedBlockingQueue<ChangedObject> list = new LinkedBlockingQueue<>();
+        Controller controller = new Controller( userInput, model, outputPanel, list);
+        Thread thread = new Thread(new ReadyTimeCalc(model, outputPanel,list, controller));
+        thread.start();
     }
 }

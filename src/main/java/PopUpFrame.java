@@ -1,9 +1,6 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 
 public class PopUpFrame extends JFrame {
@@ -13,18 +10,16 @@ public class PopUpFrame extends JFrame {
     private JButton cancelButton = new JButton("Cancel");
     private JButton editButton = new JButton("Edit");
     private JButton saveButton = new JButton("Save Time");
-    private JButton adjustTime = new JButton("Adjust Ready Time");
+    private JButton adjustButton = new JButton("Adjust Ready Time");
     private JPanel panel = new JPanel();
     private JTextArea tf;
     private Box buttonsBox = Box.createHorizontalBox();
     private Box sliderBox = Box.createVerticalBox();
-    private Controller controller;
     private JLabel timeText;
 
 
-    public PopUpFrame(Controller controller) {
+    public PopUpFrame() {
     		setTitle("Ready Time");
-        this.controller = controller;
         allocateButtons();
         createSlider();
         panel.setLayout(new BorderLayout());
@@ -44,23 +39,16 @@ public class PopUpFrame extends JFrame {
         editButton = new JButton("Edit");
 
         saveButton = new JButton("Save Time");
-        adjustTime = new JButton("Adjust Ready Time");
-
-        adjustTime.addActionListener(ActionEvent -> {
-            int adjustingTime = slider.getValue();
-            if (adjustingTime != 0) {
-                controller.adjustReadyTime(adjustingTime);
-            }
-            slider.setValue(0);
-        });
+        adjustButton = new JButton("Adjust Ready Time");
         buttonsBox.add(saveButton);
         buttonsBox.add(editButton);
         buttonsBox.add(cancelButton);
-        buttonsBox.add(adjustTime);
+        buttonsBox.add(adjustButton);
     }
 
     private void createSlider() {
         tf = new JTextArea("Recommended Alarm Time: ");
+        tf.setEditable(false);
         timeText = new JLabel();
         timeText.setText("Time adjust: 0");
         text = new JLabel("Adjusting your ready time:");
@@ -77,11 +65,15 @@ public class PopUpFrame extends JFrame {
 
     }
 
-
     public void showPopUp(String alarmStr) {
         tf.setText(alarmStr);
         slider.setValue(0);
         setVisible(true);
+    }
+    public int getSliderValue(){
+        int value = slider.getValue();
+        slider.setValue(0);
+        return value;
     }
 
     public void addActionEditButton(ActionListener e) {
@@ -95,7 +87,9 @@ public class PopUpFrame extends JFrame {
     public void addActionCancelButton(ActionListener e) {
         cancelButton.addActionListener(e);
     }
-
+    public void addActionAdjustButton(ActionListener e) {
+        adjustButton.addActionListener(e);
+    }
 //    public void popUpMessage() {
 //        //        messageBox.add(addMoreTime);
 //        JDialog.setDefaultLookAndFeelDecorated(true);

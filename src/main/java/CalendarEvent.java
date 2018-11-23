@@ -57,11 +57,9 @@ public class CalendarEvent  implements Serializable {
         alarmTime = (GregorianCalendar)arrivalDateTime.clone();
         alarmTime.add(Calendar.MINUTE, - recommendedReadyMin);
     }
-
     public void editReadyTime(double adjustMin) {
         recommendedReadyMin += adjustMin;
         alarmTime.add(Calendar.MINUTE, - (int) adjustMin);
-        System.out.println(getAlarmFormatTime());
     }
 
     public int getTravelTime(){
