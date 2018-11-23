@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -194,6 +196,16 @@ public class UserInputFrame extends JFrame {
         date.setText("");
         time.setText("");
         importantScale.setValue(3);
+        Method setValueMethod = null;
+        try {
+        	setValueMethod = this.getClass().getClass().getDeclaredMethod("setValue", int.class);
+        	} catch (SecurityException e) { }
+        	  catch (NoSuchMethodException e) {  }
+        try {
+        	setValueMethod.invoke(importantScale, 3);
+        	} catch (IllegalArgumentException e) {  }
+        	  catch (IllegalAccessException e) {  }
+        	  catch (InvocationTargetException e) { }      
     }
 
     private void popUpWarningMessage() {

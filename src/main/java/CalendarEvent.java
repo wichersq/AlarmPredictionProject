@@ -35,9 +35,14 @@ public class CalendarEvent  implements Serializable {
     }
 
     public String toString() {
-        return String.format("Date and Time:\t%s\nOrigin:\t%s\nDestination:\t%s\n" +
-                        "Travel by:\t%s\n%s\n\n",
-                        getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getAlarmString());
+//        return String.format("Date and Time:\t%s\nOrigin:\t%s\nDestination:\t%s\n" +
+//                        "Travel by:\t%s\n%s\n\n",
+//                        getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getAlarmString());
+    	
+    	return String.format("---%s---\n%s  -->  %s\n" +
+                "%s  %s  ",
+                getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getAlarmString());
+
     }
     //TODO: calculate and format the alarm time by adding it to the event time
     public String getAlarmFormatTime() {
@@ -60,6 +65,7 @@ public class CalendarEvent  implements Serializable {
     public void editReadyTime(double adjustMin) {
         recommendedReadyMin += adjustMin;
         alarmTime.add(Calendar.MINUTE, - (int) adjustMin);
+        System.out.println(getAlarmFormatTime());
     }
 
     public int getTravelTime(){
@@ -67,10 +73,10 @@ public class CalendarEvent  implements Serializable {
     }
 
     public String getAlarmString(){
-        return String.format("Travel Estimation Duration: %d %s" +
-                "\nAlarm Time: %s \n%d minutes %s the event",
-                travelTime, travelTime > 1? "minutes" : "minute",
-                getAlarmFormatTime(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
+    	 return String.format("%d %s" +
+                 "\nAlarm: %s \n%d minutes %s",
+                 travelTime, travelTime > 1? "minutes" : "minute",
+                 getAlarmFormatTime(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
     }
 //    public void setTravelTime(double duration ){
 //    }
