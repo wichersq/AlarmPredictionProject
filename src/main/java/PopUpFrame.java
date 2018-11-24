@@ -2,7 +2,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-
+/**
+ *
+ */
 public class PopUpFrame extends JFrame {
 
     private JLabel text;
@@ -17,9 +19,11 @@ public class PopUpFrame extends JFrame {
     private Box sliderBox = Box.createVerticalBox();
     private JLabel timeText;
 
-
+    /**
+     *
+     */
     public PopUpFrame() {
-    		setTitle("Ready Time");
+        super.setTitle("Ready Time");
         allocateButtons();
         createSlider();
         panel.setLayout(new BorderLayout());
@@ -33,6 +37,9 @@ public class PopUpFrame extends JFrame {
         super.setBounds(0, 0, 500, 200);
     }
 
+    /**
+     *
+     */
     private void allocateButtons() {
         cancelButton = new JButton("Cancel");
 
@@ -46,6 +53,9 @@ public class PopUpFrame extends JFrame {
         buttonsBox.add(adjustButton);
     }
 
+    /**
+     *
+     */
     private void createSlider() {
         tf = new JTextArea("Recommended Alarm Time: ");
         tf.setEditable(false);
@@ -65,37 +75,50 @@ public class PopUpFrame extends JFrame {
 
     }
 
+    /**
+     * @param alarmStr
+     */
     public void showPopUp(String alarmStr) {
         tf.setText(alarmStr);
         slider.setValue(0);
         setVisible(true);
     }
-    public int getSliderValue(){
+
+    /**
+     * @return
+     */
+    public int getSliderValue() {
         int value = slider.getValue();
         slider.setValue(0);
         return value;
     }
 
+    /**
+     * @param e
+     */
     public void addActionEditButton(ActionListener e) {
         editButton.addActionListener(e);
     }
 
+    /**
+     * @param e
+     */
     public void addActionSaveButton(ActionListener e) {
         saveButton.addActionListener(e);
     }
 
+    /**
+     * @param e
+     */
     public void addActionCancelButton(ActionListener e) {
         cancelButton.addActionListener(e);
     }
+
+    /**
+     * @param e
+     */
     public void addActionAdjustButton(ActionListener e) {
         adjustButton.addActionListener(e);
     }
-//    public void popUpMessage() {
-//        //        messageBox.add(addMoreTime);
-//        JDialog.setDefaultLookAndFeelDecorated(true);
-//        JOptionPane.showOptionDialog(null, "The event is saved", "Confirmation",
-//                JOptionPane.NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,null,null);
-//    }
-
 }
 

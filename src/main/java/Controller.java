@@ -9,6 +9,13 @@ public class Controller implements Listener {
     private OutputFrame outputPanel;
     private LinkedBlockingQueue<ChangedObject> sharedQueue;
 
+    /**
+     *
+     * @param userInput
+     * @param model
+     * @param outputPanel
+     * @param sharedQueue
+     */
     public Controller(UserInputFrame userInput, EventModel model, OutputFrame outputPanel,
                       LinkedBlockingQueue<ChangedObject> sharedQueue) {
         this.sharedQueue = sharedQueue;
@@ -19,6 +26,10 @@ public class Controller implements Listener {
         responseToButtonUserInput();
     }
 
+    /**
+     *
+     * @param ob
+     */
     private void pullDataRequest(ChangedObject ob) {
         try {
             sharedQueue.put(ob);
@@ -27,19 +38,32 @@ public class Controller implements Listener {
         }
     }
 
-
+    /**
+     *
+     * @param dateTime
+     * @return
+     */
     public boolean checkIfTimeOccupied(String dateTime) {
         return model.isTimeOccupied(dateTime);
     }
 
+    /**
+     *
+     */
     public void saveEventsToFile() {
         model.saveEventsToFile();
     }
 
+    /**
+     *
+     */
     public void resetUserFrame(){
         userInput.setBackToDefault();
     }
 
+    /**
+     *
+     */
     private void responseToButtonUserInput() {
         userInput.addActionShowButton(ActionEvent -> {
             outputPanel.updateTextList();
@@ -47,6 +71,10 @@ public class Controller implements Listener {
         });
     }
 
+    /**
+     *
+     * @param ob
+     */
     public void update(Object ob) {
         if (ob.getClass().equals(ChangedObject.class)) {
             pullDataRequest((ChangedObject) ob);

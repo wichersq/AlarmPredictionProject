@@ -1,7 +1,19 @@
 import java.util.GregorianCalendar;
 
 public class CalendarEventFactory {
-
+    /**
+     *
+     * @param addressFrom
+     * @param addressTo
+     * @param eventName
+     * @param originName
+     * @param destName
+     * @param arrivalDateTime
+     * @param transport
+     * @param importantScale
+     * @param rating
+     * @return
+     */
     public static CalendarEvent createEvenType(String addressFrom, String addressTo, String eventName,
                                                String originName, String destName, GregorianCalendar arrivalDateTime,
                                                Transportation transport, double importantScale, double rating) {

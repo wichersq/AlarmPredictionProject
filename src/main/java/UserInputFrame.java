@@ -54,6 +54,9 @@ public class UserInputFrame extends JFrame {
 
     }
 
+    /**
+     *
+     */
 
     private void addCloseWindowOption() {
         this.addWindowListener(new WindowAdapter() {
@@ -69,6 +72,9 @@ public class UserInputFrame extends JFrame {
         });
     }
 
+    /**
+     *
+     */
     private void createPanel() {
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -82,6 +88,9 @@ public class UserInputFrame extends JFrame {
         panel.add(buttonBox, BorderLayout.SOUTH);
     }
 
+    /**
+     *
+     */
     private void createCheckBox() {
         checkBox = Box.createVerticalBox();
         ButtonGroup group = new ButtonGroup();
@@ -105,7 +114,9 @@ public class UserInputFrame extends JFrame {
         checkBox.add(transitJB);
     }
 
-
+    /**
+     *
+     */
     private void createSliderBar() {
         sliderBox = Box.createVerticalBox();
         importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6, 3);
@@ -119,6 +130,9 @@ public class UserInputFrame extends JFrame {
 
     }
 
+    /**
+     *
+     */
     private void createButtons() {
         buttonBox = Box.createHorizontalBox();
         addButton = new JButton("Add ");
@@ -136,7 +150,10 @@ public class UserInputFrame extends JFrame {
         });
     }
 
-
+    /**
+     *
+     * @return
+     */
     private ChangedObject gatherInfo() {
         String from = addressFrom.getText();
         String to = addressTo.getText();
@@ -147,6 +164,9 @@ public class UserInputFrame extends JFrame {
         return new ChangedObject(from, to, name, eventDate, trans, scale);
     }
 
+    /**
+     *
+     */
     private void createDateTextField() {
         MaskFormatter dateMask = null;
         try {
@@ -159,6 +179,9 @@ public class UserInputFrame extends JFrame {
 
     }
 
+    /**
+     *
+     */
     private void createTimeTextField() {
         MaskFormatter timeMask = null;
         try {
@@ -171,6 +194,12 @@ public class UserInputFrame extends JFrame {
         time = new JFormattedTextField(timeMask);
     }
 
+    /**
+     *
+     * @param convertingDate
+     * @param convertingTime
+     * @throws NumberFormatException
+     */
     private void createDateTime(String convertingDate, String convertingTime)
             throws NumberFormatException {
         String[] dateArr = convertingDate.split("/");
@@ -188,6 +217,9 @@ public class UserInputFrame extends JFrame {
         }
     }
 
+    /**
+     *
+     */
 
     public void setBackToDefault() {
         driveJB.setSelected(true);
@@ -209,6 +241,9 @@ public class UserInputFrame extends JFrame {
         }
     }
 
+    /**
+     *
+     */
     private void popUpWarningMessage() {
         JDialog.setDefaultLookAndFeelDecorated(true);
         JOptionPane.showConfirmDialog(null,
@@ -218,6 +253,10 @@ public class UserInputFrame extends JFrame {
         time.setText("");
     }
 
+    /**
+     *
+     * @return
+     */
     private String transportPick() {
         if (bikeJB.isSelected()) {
             return "BIKING";
@@ -255,10 +294,17 @@ public class UserInputFrame extends JFrame {
         addTextFieldsToBox();
     }
 
+    /**
+     *
+     * @param e
+     */
     public void addActionShowButton(ActionListener e) {
         showButton.addActionListener(e);
     }
 
+    /**
+     *
+     */
     private void addTextFieldsToBox() {
         textFieldBox = Box.createVerticalBox();
 
@@ -279,6 +325,10 @@ public class UserInputFrame extends JFrame {
         textFieldBox.add(time);
     }
 
+    /**
+     *
+     * @param object
+     */
     private void notifyListener(ChangedObject object) {
         for (Listener l : listeners) {
             l.update(object);

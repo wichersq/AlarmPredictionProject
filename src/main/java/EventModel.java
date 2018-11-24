@@ -9,6 +9,10 @@ public class EventModel {
     private TreeMap<String, CalendarEvent> events;
     private File file;
 
+    /**
+     *
+     * @param filePath
+     */
     public EventModel(String filePath) {
         events = new TreeMap<String, CalendarEvent>();
         listeners = new ArrayList<Listener>();
@@ -25,9 +29,9 @@ public class EventModel {
     }
 
     /**
-     * Adds shape to the list
+     * Adds event to the list
      *
-     * @param s the adding shape
+     * @param s the adding event
      */
     public void addEvent(CalendarEvent s) {
         events.put(s.getArrivalFormatTime(), s);
@@ -45,6 +49,10 @@ public class EventModel {
         return (ArrayList<CalendarEvent>) events.clone();
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getEvents() {
         CalendarEvent event;
         ArrayList<String> eventList = new ArrayList<>();
@@ -67,6 +75,9 @@ public class EventModel {
         }
     }
 
+    /**
+     *
+     */
     public void saveEventsToFile() {
         Iterator<Map.Entry<String, CalendarEvent>> iter = events.entrySet().iterator();
         try {
@@ -82,7 +93,10 @@ public class EventModel {
         }
     }
 
-//TODO: needs to check if file exists before reading the event from file: it threw FileNotFoundException
+    /**
+     *
+     */
+
     public void restoreEventsFromFile() {
         CalendarEvent event;
         try {

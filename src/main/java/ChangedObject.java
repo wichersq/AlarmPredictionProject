@@ -1,5 +1,8 @@
 import java.util.GregorianCalendar;
 
+/**
+ *
+ */
 public class ChangedObject {
     private String addressFrom = "";
     private String addressTo = "";
@@ -8,6 +11,15 @@ public class ChangedObject {
     private String transport;
     private double importantScale;
 
+    /**
+     *
+     * @param addressFrom
+     * @param addressTo
+     * @param name
+     * @param arrivalDateTime
+     * @param transportType
+     * @param importantScale
+     */
     public ChangedObject(String addressFrom, String addressTo, String name,
                          GregorianCalendar arrivalDateTime, String transportType, double importantScale){
         this.addressFrom = addressFrom;
@@ -18,16 +30,37 @@ public class ChangedObject {
         this.importantScale = importantScale;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAddressFrom(){return addressFrom;}
     public String getAddressTo(){return addressTo;}
+
+    /**
+     *
+     * @return
+     */
     public String getName(){return name;}
 
+    /**
+     *
+     * @return
+     */
     public GregorianCalendar getArrivalDateTime(){
         return (GregorianCalendar) arrivalDateTime.clone();
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTransport(){return transport;}
 
+    /**
+     *
+     * @return
+     */
     public double getImportantScale(){return importantScale;}
 
 

@@ -4,14 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class OutputFrame extends JFrame implements Listener {
     private JTextArea textArea;
     private EventModel model;
     private JPanel panel;
     private JScrollPane scrollPane;
 
+    /**
+     *
+     * @param model
+     * @param size
+     */
     public OutputFrame(EventModel model, int size) {
-        setTitle("Scheduled Events");
+        super.setTitle("Scheduled Events");
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size, size);
         setDefaultLookAndFeelDecorated(true);
@@ -24,6 +32,9 @@ public class OutputFrame extends JFrame implements Listener {
         this.add(panel, BorderLayout.CENTER);
     }
 
+    /**
+     *
+     */
     public void createEventListPanel() {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -36,6 +47,9 @@ public class OutputFrame extends JFrame implements Listener {
 
     }
 
+    /**
+     *
+     */
     public void updateTextList() {
         ArrayList<String> calendarList = model.getEvents();
         StringBuilder strBuilder = new StringBuilder();
@@ -48,6 +62,10 @@ public class OutputFrame extends JFrame implements Listener {
         textArea.setText(strBuilder.toString());
     }
 
+    /**
+     *
+     * @param ob
+     */
     @Override
     public void update(Object ob) {
         updateTextList();

@@ -1,6 +1,9 @@
 import java.util.GregorianCalendar;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ *
+ */
 public class ReadyTimeCalc implements Runnable {
     private LinkedBlockingQueue<ChangedObject> sharedQueue;
     private EventModel model;
@@ -10,6 +13,14 @@ public class ReadyTimeCalc implements Runnable {
     private Controller controller;
     private DataRequest dataRequest;
 
+    /**
+     *
+     * @param model
+     * @param outputPanel
+     * @param sharedQueue
+     * @param controller
+     * @param apiKey
+     */
     public ReadyTimeCalc(EventModel model, OutputFrame outputPanel, LinkedBlockingQueue<ChangedObject> sharedQueue,
                          Controller controller, String apiKey) {
         this.dataRequest = new DataRequest(apiKey);
@@ -21,6 +32,9 @@ public class ReadyTimeCalc implements Runnable {
         responseToButtonOfPopUp();
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
         while (true) {
@@ -35,6 +49,10 @@ public class ReadyTimeCalc implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param ob
+     */
     private void pullDataRequest(ChangedObject ob) {
         System.out.println("pull data request now");
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
@@ -66,12 +84,19 @@ public class ReadyTimeCalc implements Runnable {
         popUp.showPopUp(currentEvent.getEventInfo());
     }
 
+    /**
+     *
+     * @param changingTime
+     */
     public void adjustReadyTime(int changingTime) {
         currentEvent.editReadyTime(changingTime);
         String alarmStr = currentEvent.getEventInfo();
         popUp.showPopUp(alarmStr);
     }
 
+    /**
+     *
+     */
     private void responseToButtonOfPopUp() {
         popUp.addActionSaveButton(ActionEvent -> {
             model.addEvent(currentEvent);
@@ -96,5 +121,4 @@ public class ReadyTimeCalc implements Runnable {
             }
         });
     }
-
 }
