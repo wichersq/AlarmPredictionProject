@@ -1,9 +1,23 @@
 import java.util.GregorianCalendar;
 
+/**
+ *
+ */
 public class EventWithPlaceInfo extends CalendarEvent {
     private double averageRating;
 
-
+    /**
+     *
+     * @param addressFrom
+     * @param addressTo
+     * @param eventName
+     * @param originName
+     * @param destName
+     * @param arrivalDateTime
+     * @param transport
+     * @param importantScale
+     * @param averageRating
+     */
     public EventWithPlaceInfo(String addressFrom, String addressTo, String eventName,
                               String originName, String destName, GregorianCalendar arrivalDateTime,
                               Transportation transport, double importantScale, double averageRating){
@@ -13,6 +27,9 @@ public class EventWithPlaceInfo extends CalendarEvent {
 
     }
 
+    /**
+     *
+     */
     protected void calPrepareTime(){
         preparingTime = DEFAULT_PREPARE_MIN + (int)
                 (importantScale * 0.5 + (importantScale - averageRating*6)*0.5);
