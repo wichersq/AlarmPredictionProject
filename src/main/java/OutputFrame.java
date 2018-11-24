@@ -42,7 +42,7 @@ public class OutputFrame extends JFrame implements Listener {
         int index = 0;
         for (String event : calendarList) {
             index++;
-            strBuilder.append(String.format("Event %d:\n", index));
+            strBuilder.append(String.format("Event %d:", index));
             strBuilder.append(event);
         }
         textArea.setText(strBuilder.toString());

@@ -12,34 +12,52 @@ import java.util.GregorianCalendar;
 
 
 public class DataRequest {
-    private static DirectionsResult mapResult = null;
-    private static PlaceDetails details = null;
-    private static GeoApiContext context = new GeoApiContext.Builder()
-            .apiKey("")
-            .build();
-    private static String placeId = "";
-    private static String destName;
-    private static String originName;
-    private static long durationSec;
-    private static long distanceMeter;
-    private static float rating;
-    private static String startAddress;
-    private static String endAddress;
+    private DirectionsResult mapResult = null;
+    private PlaceDetails details = null;
+    private GeoApiContext context;
+    private String placeId = "";
+    private String destName;
+    private String originName;
+    private long durationSec;
+    private long distanceMeter;
+    private float rating;
+    private String startAddress;
+    private String endAddress;
 
-    public static void pullMapRequest(String origin, String destination, String travelMode, GregorianCalendar arrivalTime) {
+    public DataRequest(String apiKey){
+        context = new GeoApiContext.Builder().apiKey(apiKey).build();
+    }
+
+    public void requestMapData(String origin, String destination, String travelMode, GregorianCalendar arrivalTime) {
         Instant time = arrivalTime.toInstant();
         try {
             DirectionsApiRequest mapRequest = DirectionsApi.getDirections(context, origin, destination)
-                    .mode(TravelMode.DRIVING).arrivalTime(time);
+                    .mode(TravelMode.valueOf(travelMode)).arrivalTime(time);
             mapResult = mapRequest.await();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getMapInformation();
-        pullPlaceDetailRequest();
+        saveMapInformation();
+        requestPlaceDetail();
     }
 
-    public static void getMapInformation() {
+    private void savePlaceDetailsInfo() {
+        originName = startAddress.split(",")[0];
+        destName = details.name;
+        rating = details.rating;
+    }
+
+    private void requestPlaceDetail() {
+        try {
+            details = PlacesApi.placeDetails(context, placeId).await();
+
+        } catch (Exception e) {
+            System.out.println("Can't do the data result");
+        }
+        savePlaceDetailsInfo();
+    }
+
+    private void saveMapInformation() {
         durationSec = mapResult.routes[0].legs[0].duration.inSeconds;
         distanceMeter = mapResult.routes[0].legs[0].distance.inMeters;
         placeId = mapResult.geocodedWaypoints[1].placeId;
@@ -47,62 +65,50 @@ public class DataRequest {
         endAddress = mapResult.routes[0].legs[0].endAddress;
     }
 
-    public static String getOriginName() {
+    public String getOriginName() {
         return originName;
     }
 
-    public static long getDistance() {
+    public long getDistance() {
         return distanceMeter;
     }
 
-    public static String getDestName() {
+    public String getDestName() {
         return destName;
     }
 
-    public static float getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public static long getDurationSec() {
+    public long getDurationSec() {
         return durationSec;
     }
 
-    public static String getStartAddress() {
+    public String getStartAddress() {
         return startAddress;
     }
 
-    public static String getEndAddress() {
+    public String getEndAddress() {
         return endAddress;
     }
 
-    public static void getPlaceDetailsInfo() {
-        originName = startAddress.split(",")[0];
-        destName = details.name;
-        rating = details.rating;
-    }
-
-    private static void pullPlaceDetailRequest() {
-        try {
-            details = PlacesApi.placeDetails(context, placeId).await();
-
-        } catch (Exception e) {
-            System.out.println("Can't do the data result");
-        }
-        getPlaceDetailsInfo();
-    }
-
     public static void main(String[] args) {
+        DataRequest dataRequest = new DataRequest("AIzaSyCaQuQA2VQ9ey9B4WWZlIhNYDwvRU43nNY");
+
         String dest = "570 N Shoreline Blvd Mountain View";
         String origin = "189 Central Ave Mountain View CA";
-        DataRequest.pullMapRequest(origin, dest, "DRIVING",
+        dataRequest.requestMapData(origin, dest, "DRIVING",
                 new GregorianCalendar(12, 12, 2018, 14, 15));
-        System.out.println("Distance: " + getDistance());
-        System.out.println("Duration: " + getDurationSec());
-        System.out.println("Destination name " + getDestName());
-        System.out.println("Rating " + getRating());
-        System.out.println("Start Address: " + getStartAddress());
-        System.out.println("End Address " + getEndAddress());
-//                "ChIJwUcmtIJZwokREiWU5DTPSJA"
+
+
+//        System.out.println("Distance: " + getDistance());
+//        System.out.println("Duration: " + getDurationSec());
+//        System.out.println("Destination name " + getDestName());
+//        System.out.println("Rating " + getRating());
+//        System.out.println("Start Address: " + getStartAddress());
+//        System.out.println("End Address " + getEndAddress());
+////                "ChIJwUcmtIJZwokREiWU5DTPSJA"
 //            details.rating.
 //            Gson gson = new GsonBuilder().setPrettyPrinting().create();
 //            System.out.println(gson.toJson(details));

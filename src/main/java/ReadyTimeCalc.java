@@ -8,9 +8,11 @@ public class ReadyTimeCalc implements Runnable {
     private OutputFrame outputPanel;
     private CalendarEvent currentEvent;
     private Controller controller;
+    private DataRequest dataRequest;
 
-    public ReadyTimeCalc(EventModel model, OutputFrame outputPanel,
-                         LinkedBlockingQueue<ChangedObject> sharedQueue, Controller controller) {
+    public ReadyTimeCalc(EventModel model, OutputFrame outputPanel, LinkedBlockingQueue<ChangedObject> sharedQueue,
+                         Controller controller, String apiKey) {
+        this.dataRequest = new DataRequest(apiKey);
         this.controller = controller;
         this.popUp = new PopUpFrame();
         this.sharedQueue = sharedQueue;
@@ -23,7 +25,9 @@ public class ReadyTimeCalc implements Runnable {
     public void run() {
         while (true) {
             try {
+                System.out.println("start run");
                 ChangedObject event = sharedQueue.take();
+                System.out.println("Start to pull data request");
                 pullDataRequest(event);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -32,20 +36,22 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     private void pullDataRequest(ChangedObject ob) {
+        System.out.println("pull data request now");
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
         double importantScale = ob.getImportantScale();
 
         //TODO: This will need Api Key to run
-//        DataRequest.pullMapRequest(ob.getAddressFrom(), ob.getAddressTo(),
-//                        ob.getTransport(), arrivalDateTime);
-//        String destName = DataRequest.getDestName();
-//        String originName = DataRequest.getOriginName();
-//        long durationSec = DataRequest.getDurationSec();
-//        double rating = (double) DataRequest.getRating();
-//        String startAddress = DataRequest.getStartAddress();
-//        String endAddress = DataRequest.getEndAddress();
 
-        //TODO: this is for example
+//        dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
+//                        ob.getTransport(), arrivalDateTime);
+//        String destName = dataRequest.getDestName();
+//        String originName = dataRequest.getOriginName();
+//        long durationSec = dataRequest.getDurationSec();
+//        double rating = (double) dataRequest.getRating();
+//        String startAddress = dataRequest.getStartAddress();
+//        String endAddress = dataRequest.getEndAddress();
+
+        //TODO: this is for example without using API Key
         String destName = "570 N Shoreline Blvd";
         String originName = "189 Central Ave";
         long durationSec = 286;

@@ -44,13 +44,12 @@ public class CalendarEvent implements Serializable {
 //                        "Travel by:\t%s\n%s\n\n",
 //                        getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getEventInfo());
 
-        return String.format("---%s---\n%s  -->  %s\n" +
-                        "Alarm at:%s  ",
-                getArrivalFormatTime(), originName, destName, getAlarmFormatTime());
+        return String.format("\t%s\n*** %s ***\n%s  --->  %s\n" +
+                        "Alarm set at: %s\n",eventName, getArrivalFormatTime(),
+                originName, destName, getAlarmFormatTime());
 
     }
 
-    //TODO: calculate and format the alarm time by adding it to the event time
     public String getAlarmFormatTime() {
         return dateTimeFormat.format(alarmTime.getTime());
     }
@@ -79,10 +78,10 @@ public class CalendarEvent implements Serializable {
         return travelTime;
     }
 
-    public String getEventInfo(){
+    public String getEventInfo() {
         return String.format("Travel Duration: %d %s" +
                         "\nAlarm Time: %s \n%d minutes %s the event",
-                travelTime, travelTime > 1? "minutes" : "minute",
+                travelTime, travelTime > 1 ? "minutes" : "minute",
                 getAlarmFormatTime(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
     }
 
