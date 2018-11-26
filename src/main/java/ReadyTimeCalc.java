@@ -29,7 +29,7 @@ public class ReadyTimeCalc implements Runnable {
         this.popUp = new PopUpFrame();
         this.model = model;
         this.outputFrame = outputFrame;
-        responseToButtonOfPopUp();
+        createsButtonOfPopUp();
     }
 
     /**
@@ -68,17 +68,24 @@ public class ReadyTimeCalc implements Runnable {
         System.out.println("pull data request now");
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
 
-        //TODO: this is for example without using API Key
+        String destName;
+        String originName;
+        long durationSec;
+        double rating;
+        String startAddress;
+        String endAddress;
         double importantScale = ob.getImportantScale();
-        String destName = "570 N Shoreline Blvd";
-        String originName = "189 Central Ave";
-        long durationSec = 976*60;
-        double rating = 1.0;
-        String startAddress = "189 Central Ave, Mountain View, CA 94043, USA";
-        String endAddress = "570 N Shoreline Blvd, Mountain View, CA 94043, USA";
-
+        //TODO: this is for example without using API Key
+        if (isDryRun) {
+            destName = "570 N Shoreline Blvd";
+            originName = "189 Central Ave";
+            durationSec = 976 * 60;
+            rating = 1.0;
+            startAddress = "189 Central Ave, Mountain View, CA 94043, USA";
+            endAddress = "570 N Shoreline Blvd, Mountain View, CA 94043, USA";
+        }
         //TODO: This will need Api Key to run
-        if (!isDryRun) {
+        else {
             dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
                     ob.getTransport(), arrivalDateTime);
             destName = dataRequest.getDestName();
@@ -90,7 +97,7 @@ public class ReadyTimeCalc implements Runnable {
         }
 
         Transportation transport = TransportationFactory.createTransport(ob.getTransport(), (int) durationSec);
-        currentEvent = CalendarEventFactory.createEvenType(startAddress,
+        currentEvent = CalendarEventFactory.createEventType(startAddress,
                 endAddress, ob.getName(), originName, destName, arrivalDateTime,
                 transport, importantScale, rating);
         popUp.showPopUp(currentEvent.getEventInfo());
@@ -108,7 +115,7 @@ public class ReadyTimeCalc implements Runnable {
     /**
      *
      */
-    private void responseToButtonOfPopUp() {
+    private void createsButtonOfPopUp() {
         popUp.addActionSaveButton(ActionEvent -> {
             model.addEvent(currentEvent);
             controller.resetUserFrame();
