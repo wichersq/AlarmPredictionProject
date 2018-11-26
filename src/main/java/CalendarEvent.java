@@ -110,7 +110,7 @@ public class CalendarEvent implements Serializable {
     }
 
 //    /**
-//     * Determines estimated travel time
+//     * Determines estimated travel time.
 //     * @return estimated time it would take to travel to the ending location from the starting location
 //     */
 //    public int getTravelTime() {
