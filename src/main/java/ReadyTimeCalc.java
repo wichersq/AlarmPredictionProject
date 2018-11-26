@@ -1,14 +1,15 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.GregorianCalendar;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.Scanner;
 
 /**
  *
  */
 public class ReadyTimeCalc implements Runnable {
-    private LinkedBlockingQueue<ChangedObject> sharedQueue;
     private EventModel model;
     private PopUpFrame popUp;
-    private OutputFrame outputPanel;
+    private OutputFrame outputFrame;
     private CalendarEvent currentEvent;
     private Controller controller;
     private DataRequest dataRequest;
@@ -16,36 +17,44 @@ public class ReadyTimeCalc implements Runnable {
     /**
      *
      * @param model
-     * @param outputPanel
-     * @param sharedQueue
+     * @param outputFrame
      * @param controller
-     * @param apiKey
      */
-    public ReadyTimeCalc(EventModel model, OutputFrame outputPanel, LinkedBlockingQueue<ChangedObject> sharedQueue,
-                         Controller controller, String apiKey) {
-        this.dataRequest = new DataRequest(apiKey);
+    public ReadyTimeCalc(EventModel model, OutputFrame outputFrame, Controller controller) {
+//        this.dataRequest = new DataRequest(readApiKey());
         this.controller = controller;
         this.popUp = new PopUpFrame();
-        this.sharedQueue = sharedQueue;
         this.model = model;
-        this.outputPanel = outputPanel;
+        this.outputFrame = outputFrame;
         responseToButtonOfPopUp();
     }
 
+    /**
+     *
+     * @return
+     */
+    private static String readApiKey() {
+        File input = new File("API_Key.txt");
+        Scanner scanner = null;
+        String apiKey = "";
+        try {
+            scanner = new Scanner(input);
+            while (scanner.hasNext()) {
+                apiKey = scanner.nextLine();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        scanner.close();
+        return apiKey;
+    }
     /**
      *
      */
     @Override
     public void run() {
         while (true) {
-            try {
-                System.out.println("start run");
-                ChangedObject event = sharedQueue.take();
-                System.out.println("Start to pull data request");
-                pullDataRequest(event);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            requestData(model.getEventToProcess());
         }
     }
 
@@ -53,7 +62,7 @@ public class ReadyTimeCalc implements Runnable {
      *
      * @param ob
      */
-    private void pullDataRequest(ChangedObject ob) {
+    private void requestData(ChangedObject ob) {
         System.out.println("pull data request now");
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
         double importantScale = ob.getImportantScale();
@@ -102,7 +111,7 @@ public class ReadyTimeCalc implements Runnable {
             model.addEvent(currentEvent);
             controller.resetUserFrame();
             popUp.setVisible(false);
-            outputPanel.setVisible(true);
+            outputFrame.setVisible(true);
         });
 
         popUp.addActionCancelButton(ActionEvent -> {

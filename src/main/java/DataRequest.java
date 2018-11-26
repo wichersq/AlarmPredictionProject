@@ -144,12 +144,12 @@ public class DataRequest {
     }
 
     public static void main(String[] args) {
-        DataRequest dataRequest = new DataRequest("");
+//        DataRequest dataRequest = new DataRequest("");
 
-        String dest = "570 N Shoreline Blvd Mountain View";
-        String origin = "189 Central Ave Mountain View CA";
-        dataRequest.requestMapData(origin, dest, "DRIVING",
-                new GregorianCalendar(12, 12, 2018, 14, 15));
+//        String dest = "570 N Shoreline Blvd Mountain View";
+//        String origin = "189 Central Ave Mountain View CA";
+//        dataRequest.requestMapData(origin, dest, "DRIVING",
+//                new GregorianCalendar(12, 12, 2018, 14, 15));
 
 
 //        System.out.println("Distance: " + getDistance());

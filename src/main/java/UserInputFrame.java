@@ -18,7 +18,7 @@ public class UserInputFrame extends JFrame {
     private JPanel panel;
     private ArrayList<Listener> listeners;
     private Box textFieldBox;
-    private Box checkBox;
+    private Box radioButtonBox;
     private Box buttonBox;
     private Box sliderBox;
     private JTextField addressFrom;
@@ -62,11 +62,9 @@ public class UserInputFrame extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 int i = JOptionPane.showConfirmDialog(null, "Are you sure want to close?", null, JOptionPane.YES_OPTION);
-                System.out.println(i);
                 if (i == JOptionPane.YES_OPTION) {
                     controller.saveEventsToFile();
                     System.exit(0);
-                } else {
                 }
             }
         });
@@ -83,35 +81,90 @@ public class UserInputFrame extends JFrame {
         createSliderBar();
         createButtons();
         panel.add(textFieldBox, BorderLayout.NORTH);
-        panel.add(checkBox, BorderLayout.EAST);
+        panel.add(radioButtonBox, BorderLayout.EAST);
         panel.add(sliderBox, BorderLayout.CENTER);
         panel.add(buttonBox, BorderLayout.SOUTH);
     }
+
+
+    /**
+     *
+     * @param format
+     * @return
+     */
+
+    private JFormattedTextField createFormatField(String format){
+        MaskFormatter timeMask = null;
+        try {
+            timeMask = new MaskFormatter(format);
+            timeMask.setPlaceholderCharacter('_');
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return new JFormattedTextField(timeMask);
+    }
+
+
+    /**
+     *
+     *
+     */
+    private void createTextFields() {
+        addressFrom = new JTextField();
+        addressTo = new JTextField();
+        eventName = new JTextField();
+        date = createFormatField("##/##/####");
+        time = createFormatField("##:##");
+        addTextFieldsToBox();
+    }
+
+
+    /**
+     *
+     */
+    private void addTextFieldsToBox() {
+        textFieldBox = Box.createVerticalBox();
+
+        textFieldBox.add(new JLabel("Event Name:"));
+        textFieldBox.add(eventName);
+
+        textFieldBox.add(new JLabel("From:"));
+        textFieldBox.add(addressFrom);
+
+        textFieldBox.add(new JLabel("To:"));
+        textFieldBox.add(addressTo);
+
+
+        textFieldBox.add(new JLabel("Date(mm/dd/yyyy): "));
+        textFieldBox.add(date);
+
+        textFieldBox.add(new JLabel("Time(hh:mm): "));
+        textFieldBox.add(time);
+    }
+
 
     /**
      *
      */
     private void createCheckBox() {
-        checkBox = Box.createVerticalBox();
         ButtonGroup group = new ButtonGroup();
-
+        radioButtonBox = Box.createVerticalBox();
         driveJB = new JRadioButton("Driving");
         bikeJB = new JRadioButton("Biking");
         walkJB = new JRadioButton("Walking");
         transitJB = new JRadioButton("Transit");
 
         driveJB.setSelected(true);
-
-
         group.add(bikeJB);
         group.add(driveJB);
         group.add(walkJB);
         group.add(transitJB);
 
-        checkBox.add(driveJB);
-        checkBox.add(bikeJB);
-        checkBox.add(walkJB);
-        checkBox.add(transitJB);
+        radioButtonBox.add(driveJB);
+        radioButtonBox.add(bikeJB);
+        radioButtonBox.add(walkJB);
+        radioButtonBox.add(transitJB);
     }
 
     /**
@@ -164,35 +217,8 @@ public class UserInputFrame extends JFrame {
         return new ChangedObject(from, to, name, eventDate, trans, scale);
     }
 
-    /**
-     *
-     */
-    private void createDateTextField() {
-        MaskFormatter dateMask = null;
-        try {
-            dateMask = new MaskFormatter("##/##/####");
-            dateMask.setPlaceholderCharacter('_');
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        date = new JFormattedTextField(dateMask);
 
-    }
 
-    /**
-     *
-     */
-    private void createTimeTextField() {
-        MaskFormatter timeMask = null;
-        try {
-            timeMask = new MaskFormatter("##:##");
-            timeMask.setPlaceholderCharacter('_');
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        time = new JFormattedTextField(timeMask);
-    }
 
     /**
      *
@@ -228,7 +254,7 @@ public class UserInputFrame extends JFrame {
         eventName.setText("");
         date.setText("");
         time.setText("");
-        importantScale.setValue(3);
+
         try {
             Method setValueMethod = importantScale.getClass().getDeclaredMethod("setValue", int.class);
             setValueMethod.invoke(importantScale, 3);
@@ -249,8 +275,6 @@ public class UserInputFrame extends JFrame {
         JOptionPane.showConfirmDialog(null,
                 "The time is invalid or already occupied. Please try different time", "Invalid Event Time",
                 JOptionPane.DEFAULT_OPTION);
-        date.setText("");
-        time.setText("");
     }
 
     /**
@@ -259,13 +283,13 @@ public class UserInputFrame extends JFrame {
      */
     private String transportPick() {
         if (bikeJB.isSelected()) {
-            return "BIKING";
+            return TransportationFactory.BIKE_TYPE;
         } else if (driveJB.isSelected()) {
-            return "DRIVING";
+            return TransportationFactory.DRIVE_TYPE;
         } else if (walkJB.isSelected()) {
-            return "WALKING";
+            return TransportationFactory.WALK_TYPE;
         } else
-            return "TRANSIT";
+            return TransportationFactory.TRANSIT_TYPE;
     }
 
     /**
@@ -281,18 +305,6 @@ public class UserInputFrame extends JFrame {
         }
     }
 
-    /**
-     *
-     *
-     */
-    private void createTextFields() {
-        addressFrom = new JTextField();
-        addressTo = new JTextField();
-        eventName = new JTextField();
-        createDateTextField();
-        createTimeTextField();
-        addTextFieldsToBox();
-    }
 
     /**
      *
@@ -302,28 +314,6 @@ public class UserInputFrame extends JFrame {
         showButton.addActionListener(e);
     }
 
-    /**
-     *
-     */
-    private void addTextFieldsToBox() {
-        textFieldBox = Box.createVerticalBox();
-
-        textFieldBox.add(new JLabel("Event Name:"));
-        textFieldBox.add(eventName);
-
-        textFieldBox.add(new JLabel("From:"));
-        textFieldBox.add(addressFrom);
-
-        textFieldBox.add(new JLabel("To:"));
-        textFieldBox.add(addressTo);
-
-
-        textFieldBox.add(new JLabel("Date(mm/dd/yyyy): "));
-        textFieldBox.add(date);
-
-        textFieldBox.add(new JLabel("Time(hh:mm): "));
-        textFieldBox.add(time);
-    }
 
     /**
      *

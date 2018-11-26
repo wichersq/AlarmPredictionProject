@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * A model keeps track all events' values
@@ -8,6 +9,7 @@ public class EventModel {
     private ArrayList<Listener> listeners;
     private TreeMap<String, CalendarEvent> events;
     private File file;
+    private LinkedBlockingQueue<ChangedObject> eventsToProcess;
 
     /**
      *
@@ -16,6 +18,7 @@ public class EventModel {
     public EventModel(String filePath) {
         events = new TreeMap<String, CalendarEvent>();
         listeners = new ArrayList<Listener>();
+        eventsToProcess = new LinkedBlockingQueue<>();
         maybeCreateFile(filePath);
     }
 
@@ -36,6 +39,26 @@ public class EventModel {
     public void addEvent(CalendarEvent s) {
         events.put(s.getArrivalFormatTime(), s);
         notifyListener(s);
+    }
+
+    public void addEventToProcess(ChangedObject ob){
+        try {
+            eventsToProcess.put(ob);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public ChangedObject getEventToProcess(){
+        ChangedObject event = null;
+        try {
+            System.out.println("start run");
+            event = eventsToProcess.take();
+            System.out.println("Start to pull data request");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return event;
     }
     public boolean isTimeOccupied(String dateTime) {
         return events.containsKey(dateTime);
