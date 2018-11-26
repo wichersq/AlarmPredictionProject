@@ -1,7 +1,7 @@
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Class Changed object allows the user to edit the information after it has been inputted
  */
 public class ChangedObject {
     private String addressFrom = "";
