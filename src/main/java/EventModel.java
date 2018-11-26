@@ -12,7 +12,7 @@ public class EventModel {
     private LinkedBlockingQueue<ChangedObject> eventsToProcess;
 
     /**
-     * @param filePath
+     * @param filePath 
      */
     public EventModel(String filePath) {
         events = new TreeMap<GregorianCalendar, CalendarEvent>();
