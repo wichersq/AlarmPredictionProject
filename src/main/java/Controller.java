@@ -19,7 +19,7 @@ public class Controller implements Listener {
         this.userInput = userInput;
         this.model = model;
         userInput.addListener(this);
-        responseToButtonUserInput();
+        createButtonUserInput();
     }
 
     /**
@@ -56,7 +56,7 @@ public class Controller implements Listener {
     /**
      *
      */
-    private void responseToButtonUserInput() {
+    private void createButtonUserInput() {
         userInput.addActionShowButton(ActionEvent -> {
             outputFrame.updateTextList();
             outputFrame.setVisible(true);

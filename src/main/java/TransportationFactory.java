@@ -2,7 +2,7 @@
  *
  */
 public class TransportationFactory {
-    public final static String BIKING_TYPE = "BIKING";
+    public final static String BIKING_TYPE = "BICYCLING";
     public final static String DRIVING_TYPE = "DRIVING";
     public final static String WALKING_TYPE = "WALKING";
     public final static String TRANSIT_TYPE = "TRANSIT";
