@@ -10,7 +10,7 @@ public class Controller implements Listener {
     private OutputFrame outputFrame;
 
     /**
-     *
+     * Constructor 
      * @param userInput 
      * @param model
      * @param outputPanel
@@ -24,7 +24,7 @@ public class Controller implements Listener {
     }
 
     /**
-     *
+     * Method where the information from UserInput to queue so the consumer thread can get it
      * @param ob 
      */
     private void requestData(ChangedObject ob) {
@@ -32,8 +32,8 @@ public class Controller implements Listener {
     }
 
     /**
-     *
-     * @param dateTime Tiem and Deate that the event is scheduled
+     * Checking if the time and date is already occupied by another event.
+     * @param dateTime Time and Date that the event is scheduled
      * @return checks if there is an event that is already scheduled at the specifed time and date
      */
     public boolean checkIfTimeOccupied(GregorianCalendar dateTime) {
@@ -41,21 +41,21 @@ public class Controller implements Listener {
     }
 
     /**
-     * Saves the created event to the model
+     * Saves the created event to File.
      */
     public void saveEventsToFile() {
         model.saveEventsToFile();
     }
 
     /**
-     * Clears the information that was inputted
+     * Clears the information that was inputted.
      */
     public void resetUserFrame(){
         userInput.setBackToDefault();
     }
 
     /**
-     * 
+     * Creates a button
      */
     private void responseToButtonUserInput() {
         userInput.addActionShowButton(ActionEvent -> {
@@ -65,8 +65,8 @@ public class Controller implements Listener {
     }
 
     /**
-     * Udates the user information that was changed
-     * @param ob
+     * Udates the user information that was changed.
+     * @param ob another object to compare to
      */
     public void update(Object ob) {
         if (ob.getClass().equals(ChangedObject.class)) {
