@@ -2,6 +2,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Class controller mitigates information from the UserInput, EventModel, and OutputFrame
+ * Class uses Observer Pattern. Listener from UserInputFrame.
  */
 public class Controller implements Listener {
     private UserInputFrame userInput;
