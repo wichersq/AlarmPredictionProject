@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Class CalendarEvent allows the user to input all of the information to schedule an event in the calendar
+ * Class CalendarEvent collects all infromation the user inputs to schedule an event.
  */
 public class CalendarEvent implements Serializable {
     protected int DEFAULT_PREPARE_MIN = 30;
