@@ -6,32 +6,41 @@ import java.io.Serializable;
 public abstract class Transportation  implements Serializable {
     final static int BREAK_TIME_MIN = 30;
     protected int durationInSec;
-    protected int totalMinTravel;
+    protected int travelMin;
+    protected int breakTimeOfTravel;
     Transportation(int duration){
         durationInSec = duration;
         setTotalMinTravel();
-        System.out.println(totalMinTravel);
+        System.out.println(travelMin);
     }
 
     /**
      *
      * @return
      */
-    abstract double calculateBreakTime();
+    abstract int calculateBreakTime();
 
     /**
      *
      */
     private void setTotalMinTravel(){
-        totalMinTravel = (int) calculateBreakTime() + durationInSec/60;
+        travelMin = calculateBreakTime() + durationInSec/60;
+    }
+
+    private int getDurationInMin(){
+        return durationInSec/60;
+    }
+
+    public int getBreakTimeOfTravel(){
+        return breakTimeOfTravel;
     }
 
     /**
      *
      * @return
      */
-    public int getTotalMinTravel(){
-        return totalMinTravel;
+    public int getTravelMin(){
+        return travelMin;
     }
 
     /**

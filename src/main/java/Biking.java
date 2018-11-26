@@ -17,9 +17,10 @@ public class Biking extends Transportation {
      *
      * @return
      */
-    protected double calculateBreakTime() {
+    protected int calculateBreakTime() {
         double numOfBreak = Math.floor(durationInSec/ TRAVEL_SEC_PER_BREAK);
-        return numOfBreak* BREAK_TIME_MIN;
+        breakTimeOfTravel = (int) numOfBreak * BREAK_TIME_MIN;
+        return breakTimeOfTravel;
     }
 
     /**

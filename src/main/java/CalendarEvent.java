@@ -25,7 +25,6 @@ public class CalendarEvent implements Serializable {
     protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
 
     /**
-     *
      * @param addressFrom
      * @param addressTo
      * @param eventName
@@ -46,41 +45,42 @@ public class CalendarEvent implements Serializable {
         this.arrivalDateTime = arrivalDateTime;
         this.transport = transport;
         this.importantScale = importantScale;
-        this.travelTime = transport.getTotalMinTravel();
+        this.travelTime = transport.getTravelMin();
         calPrepareTime();
         setTotalTime();
 
     }
 
     /**
-     *
      * @return
      */
     public String toString() {
 //        return String.format("Date and Time:\t%s\nOrigin:\t%s\nDestination:\t%s\n" +
 //                        "Travel by:\t%s\n%s\n\n",
-//                        getArrivalFormatTime(), addressFrom, addressTo, transport.toString(), getEventInfo());
+//                        getArrivalTimeString(), addressFrom, addressTo, transport.toString(), getEventInfo());
 
         return String.format("\t%s\n*** %s ***\n%s  --->  %s\n" +
-                        "Alarm set at: %s\n",eventName, getArrivalFormatTime(),
-                originName, destName, getAlarmFormatTime());
+                        "Alarm set at: %s\n", eventName, getArrivalTimeString(),
+                originName, destName, getAlarmString());
 
     }
 
+    public GregorianCalendar getArrivalDateTime() {
+        return (GregorianCalendar) arrivalDateTime.clone();
+    }
+
     /**
-     *
      * @return
      */
-    public String getAlarmFormatTime() {
+    public String getAlarmString() {
         return dateTimeFormat.format(alarmTime.getTime());
     }
 
     /**
-     *
      * @return
      */
 
-    public String getArrivalFormatTime() {
+    public String getArrivalTimeString() {
         return dateTimeFormat.format(arrivalDateTime.getTime());
     }
 
@@ -101,13 +101,12 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     *
      * @param adjustMin
      */
     public void editReadyTime(double adjustMin) {
         recommendedReadyMin += adjustMin;
         alarmTime.add(Calendar.MINUTE, -(int) adjustMin);
-        System.out.println(getAlarmFormatTime());
+        System.out.println(getAlarmString());
     }
 
 //    /**
@@ -119,18 +118,16 @@ public class CalendarEvent implements Serializable {
 //    }
 
     /**
-     *
      * @return
      */
     public String getEventInfo() {
         return String.format("Travel Duration: %d %s" +
                         "\nAlarm Time: %s \n%d minutes %s the event",
                 travelTime, travelTime > 1 ? "minutes" : "minute",
-                getAlarmFormatTime(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
+                getAlarmString(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
     }
 
     /**
-     *
      * @param other
      * @return
      */

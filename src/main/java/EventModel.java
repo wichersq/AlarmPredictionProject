@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class EventModel {
     private ArrayList<Listener> listeners;
-    private TreeMap<String, CalendarEvent> events;
+    private TreeMap<GregorianCalendar, CalendarEvent> events;
     private File file;
     private LinkedBlockingQueue<ChangedObject> eventsToProcess;
 
@@ -16,7 +16,7 @@ public class EventModel {
      * @param filePath
      */
     public EventModel(String filePath) {
-        events = new TreeMap<String, CalendarEvent>();
+        events = new TreeMap<GregorianCalendar, CalendarEvent>();
         listeners = new ArrayList<Listener>();
         eventsToProcess = new LinkedBlockingQueue<>();
         maybeCreateFile(filePath);
@@ -37,7 +37,7 @@ public class EventModel {
      * @param s the adding event
      */
     public void addEvent(CalendarEvent s) {
-        events.put(s.getArrivalFormatTime(), s);
+        events.put(s.getArrivalDateTime(),s);
         notifyListener(s);
     }
 
@@ -64,22 +64,14 @@ public class EventModel {
         return events.containsKey(dateTime);
     }
     /**
-     * Gets list of events
+     * Gets list of events in string format
      *
-     * @return a copy of list of events
-     */
-    public ArrayList<CalendarEvent> getEventList() {
-        return (ArrayList<CalendarEvent>) events.clone();
-    }
-
-    /**
-     *
-     * @return
+     * @return a copy of list of events in string format
      */
     public ArrayList<String> getEvents() {
         CalendarEvent event;
         ArrayList<String> eventList = new ArrayList<>();
-        Iterator<Map.Entry<String, CalendarEvent>> iterator = events.entrySet().iterator();
+        Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
         while (iterator.hasNext()) {
             event = iterator.next().getValue();
             eventList.add(event.toString());
@@ -102,7 +94,7 @@ public class EventModel {
      *
      */
     public void saveEventsToFile() {
-        Iterator<Map.Entry<String, CalendarEvent>> iter = events.entrySet().iterator();
+        Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iter = events.entrySet().iterator();
         try {
             FileOutputStream fileOut = new FileOutputStream(file.getName());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -129,7 +121,7 @@ public class EventModel {
                 try {
                     event = (CalendarEvent) inputStream.readObject();
                     if (event != null)
-                        events.put(event.getArrivalFormatTime(), event);
+                        events.put(event.getArrivalDateTime(), event);
 
                 } catch (EOFException eof) {
                     break;

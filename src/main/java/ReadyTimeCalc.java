@@ -13,15 +13,18 @@ public class ReadyTimeCalc implements Runnable {
     private CalendarEvent currentEvent;
     private Controller controller;
     private DataRequest dataRequest;
+    private boolean isDryRun;
 
     /**
-     *
      * @param model
      * @param outputFrame
      * @param controller
      */
-    public ReadyTimeCalc(EventModel model, OutputFrame outputFrame, Controller controller) {
-//        this.dataRequest = new DataRequest(readApiKey());
+    public ReadyTimeCalc(EventModel model, OutputFrame outputFrame, Controller controller, boolean isDryRun) {
+        this.isDryRun = isDryRun;
+        if (!isDryRun) {
+            this.dataRequest = new DataRequest(readApiKey());
+        }
         this.controller = controller;
         this.popUp = new PopUpFrame();
         this.model = model;
@@ -30,7 +33,6 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     *
      * @return
      */
     private static String readApiKey() {
@@ -48,6 +50,7 @@ public class ReadyTimeCalc implements Runnable {
         scanner.close();
         return apiKey;
     }
+
     /**
      *
      */
@@ -59,32 +62,32 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     *
      * @param ob
      */
     private void requestData(ChangedObject ob) {
         System.out.println("pull data request now");
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
-        double importantScale = ob.getImportantScale();
-
-        //TODO: This will need Api Key to run
-
-//        dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
-//                        ob.getTransport(), arrivalDateTime);
-//        String destName = dataRequest.getDestName();
-//        String originName = dataRequest.getOriginName();
-//        long durationSec = dataRequest.getDurationSec();
-//        double rating = (double) dataRequest.getRating();
-//        String startAddress = dataRequest.getStartAddress();
-//        String endAddress = dataRequest.getEndAddress();
 
         //TODO: this is for example without using API Key
+        double importantScale = ob.getImportantScale();
         String destName = "570 N Shoreline Blvd";
         String originName = "189 Central Ave";
-        long durationSec = 286;
-        double rating = 0.0;
+        long durationSec = 976*60;
+        double rating = 1.0;
         String startAddress = "189 Central Ave, Mountain View, CA 94043, USA";
         String endAddress = "570 N Shoreline Blvd, Mountain View, CA 94043, USA";
+
+        //TODO: This will need Api Key to run
+        if (!isDryRun) {
+            dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
+                    ob.getTransport(), arrivalDateTime);
+            destName = dataRequest.getDestName();
+            originName = dataRequest.getOriginName();
+            durationSec = dataRequest.getDurationSec();
+            rating = (double) dataRequest.getRating();
+            startAddress = dataRequest.getStartAddress();
+            endAddress = dataRequest.getEndAddress();
+        }
 
         Transportation transport = TransportationFactory.createTransport(ob.getTransport(), (int) durationSec);
         currentEvent = CalendarEventFactory.createEvenType(startAddress,
@@ -94,7 +97,6 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     *
      * @param changingTime
      */
     public void adjustReadyTime(int changingTime) {

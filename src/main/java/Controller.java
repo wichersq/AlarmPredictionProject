@@ -1,12 +1,10 @@
-import java.util.concurrent.LinkedBlockingQueue;
-
 /**
  *
  */
 public class Controller implements Listener {
     private UserInputFrame userInput;
     private EventModel model;
-    private OutputFrame outputPanel;
+    private OutputFrame outputFrame;
 
     /**
      *
@@ -15,7 +13,7 @@ public class Controller implements Listener {
      * @param outputPanel
      */
     public Controller(UserInputFrame userInput, EventModel model, OutputFrame outputPanel) {
-        this.outputPanel = outputPanel;
+        this.outputFrame = outputPanel;
         this.userInput = userInput;
         this.model = model;
         userInput.addListener(this);
@@ -58,8 +56,8 @@ public class Controller implements Listener {
      */
     private void responseToButtonUserInput() {
         userInput.addActionShowButton(ActionEvent -> {
-            outputPanel.updateTextList();
-            outputPanel.setVisible(true);
+            outputFrame.updateTextList();
+            outputFrame.setVisible(true);
         });
     }
 
