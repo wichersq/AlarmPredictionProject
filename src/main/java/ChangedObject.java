@@ -1,7 +1,7 @@
 import java.util.GregorianCalendar;
 
 /**
- * Class Changed object allows the user to edit the information after it has been inputted
+ * Class Changed object allows the user to edit the information after it has been inputted.
  */
 public class ChangedObject {
     private String addressFrom = "";
@@ -12,7 +12,7 @@ public class ChangedObject {
     private double importantScale;
 
     /**
-     *
+     * Updates the changes the user makes on the event.
      * @param addressFrom Address of starting destination
      * @param addressTo Address of ending destination
      * @param name Name of event
@@ -31,20 +31,24 @@ public class ChangedObject {
     }
 
     /**
-     *
+     * Accessor for addressFrom
      * @return Returns address
      */
     public String getAddressFrom(){return addressFrom;}
+    /**
+     * Accessor for addressTo
+     * @return Returns address
+     */
     public String getAddressTo(){return addressTo;}
 
     /**
-     *
+     * Accessor for name
      * @return returns name of event
      */
     public String getName(){return name;}
 
     /**
-     *
+     * Creates clone for date and time.
      * @return returns a clone of the time and date of an event
      */
     public GregorianCalendar getArrivalDateTime(){
@@ -52,13 +56,13 @@ public class ChangedObject {
     }
 
     /**
-     *
+     * Accessor for transport
      * @return returns mode of transportation
      */
     public String getTransport(){return transport;}
 
     /**
-     *
+     * Accessor for importantScale
      * @return returns the level of importance of the event
      */
     public double getImportantScale(){return importantScale;}
