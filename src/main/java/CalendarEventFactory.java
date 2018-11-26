@@ -2,7 +2,7 @@ import java.util.GregorianCalendar;
 
 public class CalendarEventFactory {
     /**
-     * Class CalendarEventFactory creates an event for the calendar
+     * Class CalendarEventFactory creates an event for the calendar.
      * @param addressFrom Address of ending destination
      * @param addressTo Address of starting destination
      * @param eventName Name of event attending
