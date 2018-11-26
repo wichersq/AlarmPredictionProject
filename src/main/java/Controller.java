@@ -1,7 +1,7 @@
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Class controller mitigates information from the UserInput, EventModel, and OutputFrame
  */
 public class Controller implements Listener {
     private UserInputFrame userInput;
@@ -10,7 +10,7 @@ public class Controller implements Listener {
 
     /**
      *
-     * @param userInput
+     * @param userInput 
      * @param model
      * @param outputPanel
      */
@@ -24,7 +24,7 @@ public class Controller implements Listener {
 
     /**
      *
-     * @param ob
+     * @param ob 
      */
     private void requestData(ChangedObject ob) {
         model.addEventToProcess(ob);
@@ -32,29 +32,29 @@ public class Controller implements Listener {
 
     /**
      *
-     * @param dateTime
-     * @return
+     * @param dateTime Tiem and Deate that the event is scheduled
+     * @return checks if there is an event that is already scheduled at the specifed time and date
      */
     public boolean checkIfTimeOccupied(GregorianCalendar dateTime) {
         return model.isTimeOccupied(dateTime);
     }
 
     /**
-     *
+     * Saves the created event to the model
      */
     public void saveEventsToFile() {
         model.saveEventsToFile();
     }
 
     /**
-     *
+     * Clears the information that was inputted
      */
     public void resetUserFrame(){
         userInput.setBackToDefault();
     }
 
     /**
-     *
+     * 
      */
     private void responseToButtonUserInput() {
         userInput.addActionShowButton(ActionEvent -> {
@@ -64,7 +64,7 @@ public class Controller implements Listener {
     }
 
     /**
-     *
+     * Udates the user information that was changed
      * @param ob
      */
     public void update(Object ob) {
