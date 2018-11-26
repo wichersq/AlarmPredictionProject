@@ -85,14 +85,14 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     * Retruns the adjusted preparation time for the event based on the importance
+     * Returns the adjusted preparation time for the event based on the importance.
      */
     protected void calPrepareTime() {
         preparingTime = DEFAULT_PREPARE_MIN + (int) importantScale * 5;
     }
 
     /**
-     * Calculates the etimated time to prepare for an event based on all the user input
+     * Calculates the recommended time to prepare for an event based on all the user input.
      */
     protected void setTotalTime() {
         recommendedReadyMin = preparingTime + transport.getTotalTravelMin();
@@ -110,7 +110,7 @@ public class CalendarEvent implements Serializable {
     }
 
 //    /**
-//     * determines estimated travel time
+//     * Determines estimated travel time
 //     * @return estimated time it would take to travel to the ending location from the starting location
 //     */
 //    public int getTravelTime() {
@@ -132,8 +132,8 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     * @param other 
-     * @return false
+     * @param other provides another obeject to compare to new object
+     * @return false 
      */
     public boolean equals(Object other) {
         if (!(other instanceof CalendarEvent)) {
