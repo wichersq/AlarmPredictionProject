@@ -149,17 +149,19 @@ public class UserInputFrame extends JFrame {
     private void createCheckBox() {
         ButtonGroup group = new ButtonGroup();
         radioButtonBox = Box.createVerticalBox();
-        driveJB = new JRadioButton("Driving");
+        driveJB = new JRadioButton("Driving", true);
         bikeJB = new JRadioButton("Biking");
         walkJB = new JRadioButton("Walking");
         transitJB = new JRadioButton("Transit");
+//        JRadioButton example =  new JRadioButton("<html>Travel Duration:\n" +
+//                "Alarm Time:\nthe event</html>");
 
-        driveJB.setSelected(true);
         group.add(bikeJB);
         group.add(driveJB);
         group.add(walkJB);
         group.add(transitJB);
-
+//        group.add(example);
+//        radioButtonBox.add(example);
         radioButtonBox.add(driveJB);
         radioButtonBox.add(bikeJB);
         radioButtonBox.add(walkJB);

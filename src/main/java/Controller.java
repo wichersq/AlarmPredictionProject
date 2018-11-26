@@ -10,7 +10,7 @@ public class Controller implements Listener {
     private OutputFrame outputFrame;
 
     /**
-     * Constructor 
+     * Constructor of class
      * @param userInput 
      * @param model
      * @param outputPanel
@@ -65,7 +65,7 @@ public class Controller implements Listener {
     }
 
     /**
-     * Udates the user information that was changed.
+     * Updates the user information that was changed.
      * @param ob another object to compare to
      */
     public void update(Object ob) {
