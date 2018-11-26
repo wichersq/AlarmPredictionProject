@@ -1,5 +1,5 @@
 /**
- *
+ * Class Transit calculates time it would take for the user to get to ending destination using public transportation 
  */
 public class Transit extends Transportation {
     private final static int TRAVEL_SEC_PER_BREAK = 4*60*60;
@@ -8,8 +8,8 @@ public class Transit extends Transportation {
     }
 
     /**
-     *
-     * @return
+     * Calculates break time when using public transporation
+     * @return retruns break time when using public transporation 
      */
     protected int calculateBreakTime() {
         double numOfBreak = Math.floor(durationInSec/ TRAVEL_SEC_PER_BREAK);
@@ -19,7 +19,7 @@ public class Transit extends Transportation {
 
     /**
      *
-     * @return
+     * @return returns the mode of transportation
      */
     public String toString(){
         return TransportationFactory.TRANSIT_TYPE;

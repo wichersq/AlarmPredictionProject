@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Class UserInputFrame provides the window where the user inputs information of the event they are scheduling.
  */
 public class UserInputFrame extends JFrame {
     private JPanel panel;
@@ -55,7 +55,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
+     * This window makes sure that the user wants to exit the event they created.
      */
 
     private void addCloseWindowOption() {
@@ -71,7 +71,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
+     * Creates a new JPanel
      */
     private void createPanel() {
         panel = new JPanel();
@@ -107,8 +107,7 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     *
-     *
+     * Creates a text field within the panel
      */
     private void createTextFields() {
         addressFrom = new JTextField();
@@ -121,7 +120,7 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     *
+     * Creates text boxes within the window
      */
     private void addTextFieldsToBox() {
         textFieldBox = Box.createVerticalBox();
@@ -145,7 +144,7 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     *
+     * Creates the checkboxes for the user
      */
     private void createCheckBox() {
         ButtonGroup group = new ButtonGroup();
@@ -168,7 +167,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
+     * Creates a sliderbar in the panel
      */
     private void createSliderBar() {
         sliderBox = Box.createVerticalBox();
@@ -184,7 +183,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
+     * Creates "Add" and "Show List" buttons.
      */
     private void createButtons() {
         buttonBox = Box.createHorizontalBox();
@@ -204,8 +203,8 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
-     * @return
+     * Gathers the starting and ending destionations, name, mode of transportation, and prority of the new event.
+     * @return returns the new event
      */
     private ChangedObject gatherInfo() {
         String from = addressFrom.getText();
@@ -218,10 +217,10 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
-     * @param convertingDate
-     * @param convertingTime
-     * @throws NumberFormatException
+     * Crearts a place for the user to put the date and time the event is scheduled.
+     * @param convertingDate Scheduled date of the event 
+     * @param convertingTime Scheduled time of the event
+     * @throws NumberFormatException If the user inputs an invalid time or date then the program will notify the user
      */
     private void createDateTime(String convertingDate, String convertingTime)
             throws NumberFormatException {
@@ -241,7 +240,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
+     * Allows the user to erase all the inputted information
      */
 
     public void setBackToDefault() {
@@ -265,7 +264,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
+     * Notifies the user if the date or time is invalid.
      */
     private void popUpWarningMessage() {
         JDialog.setDefaultLookAndFeelDecorated(true);
@@ -275,8 +274,8 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     *
-     * @return
+     * Allows user to pick a mode of transportation
+     * @return returns the mode of transportation
      */
     private String transportPick() {
         if (bikeJB.isSelected()) {

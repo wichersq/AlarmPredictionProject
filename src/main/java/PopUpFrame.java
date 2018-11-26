@@ -3,7 +3,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
- *
+ * Class PopUpFrame allows the user to cancel, edit, or save an event once they have inputted all the user information.
+   The slider allows them to add more time if needed.
  */
 public class PopUpFrame extends JFrame {
 
@@ -20,7 +21,7 @@ public class PopUpFrame extends JFrame {
     private JLabel timeText;
 
     /**
-     *
+     * Allows user to add or subtract time from the estimated time that is generated.
      */
     public PopUpFrame() {
         super.setTitle("Ready Time");
@@ -38,7 +39,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     *
+     * provides the "Cancel", "Edit", "Save Time", and "Adjust Ready Time" buttons.
      */
     private void allocateButtons() {
         cancelButton = new JButton("Cancel");
@@ -54,7 +55,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     *
+     * Creates a slider that allows the user to add or subtract time form the estimated time that is generated.
      */
     private void createSlider() {
         tf = new JTextArea("Recommended Alarm Time: ");
@@ -76,7 +77,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * @param alarmStr
+     * @param alarmStr 
      */
     public void showPopUp(String alarmStr) {
         tf.setText(alarmStr);
@@ -85,7 +86,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * @return
+     * @return returns slider value
      */
     public int getSliderValue() {
         int value = slider.getValue();
@@ -94,7 +95,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * @param e
+     * @param e 
      */
     public void addActionEditButton(ActionListener e) {
         editButton.addActionListener(e);

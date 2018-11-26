@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Class CalendarEvent collects all infromation the user inputs to schedule an event.
  */
 public class CalendarEvent implements Serializable {
     protected int DEFAULT_PREPARE_MIN = 30;
@@ -25,14 +25,14 @@ public class CalendarEvent implements Serializable {
     protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
 
     /**
-     * @param addressFrom
-     * @param addressTo
-     * @param eventName
-     * @param originName
-     * @param destName
-     * @param arrivalDateTime
-     * @param transport
-     * @param importantScale
+     * @param addressFrom Address of the starting destination 
+     * @param addressTo Address of the ending destination 
+     * @param eventName Name of the event attending
+     * @param originName Name of starting destination
+     * @param destName Name of ending destination
+     * @param arrivalDateTime Time of the event
+     * @param transport Mode of transportation
+     * @param importantScale How important the event is to the user
      */
     public CalendarEvent(String addressFrom, String addressTo, String eventName,
                          String originName, String destName, GregorianCalendar arrivalDateTime,
@@ -52,7 +52,7 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     * @return
+     * @return returns all the user inputs
      */
     public String toString() {
 //        return String.format("Date and Time:\t%s\nOrigin:\t%s\nDestination:\t%s\n" +
@@ -70,14 +70,14 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     * @return
+     * @return returns the information in the given format
      */
     public String getAlarmString() {
         return dateTimeFormat.format(alarmTime.getTime());
     }
 
     /**
-     * @return
+     * @return returns the arrival time
      */
 
     public String getArrivalTimeString() {
@@ -85,14 +85,14 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     *
+     * Returns the adjusted preparation time for the event based on the importance.
      */
     protected void calPrepareTime() {
         preparingTime = DEFAULT_PREPARE_MIN + (int) importantScale * 5;
     }
 
     /**
-     *
+     * Calculates the recommended time to prepare for an event based on all the user input.
      */
     protected void setTotalTime() {
         recommendedReadyMin = preparingTime + transport.getTotalTravelMin();
@@ -101,7 +101,7 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     * @param adjustMin
+     * @param adjustMin user input of how much time they want to add
      */
     public void editReadyTime(double adjustMin) {
         recommendedReadyMin += adjustMin;
@@ -110,15 +110,15 @@ public class CalendarEvent implements Serializable {
     }
 
 //    /**
-//     *
-//     * @return
+//     * Determines estimated travel time.
+//     * @return estimated time it would take to travel to the ending location from the starting location
 //     */
 //    public int getTravelTime() {
 //        return travelTime;
 //    }
 
     /**
-     * @return
+     * @return returns the recommended prepartion time for an event 
      */
     public String getEventInfo() {
         int min = recommendedReadyMin % 60;
@@ -132,8 +132,8 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     * @param other
-     * @return
+     * @param other provides another obeject to compare to new object
+     * @return false 
      */
     public boolean equals(Object other) {
         if (!(other instanceof CalendarEvent)) {

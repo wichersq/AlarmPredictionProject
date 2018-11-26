@@ -4,7 +4,8 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 /**
- *
+ * Class ReadyTimeCalc calculates the time it would take for the user to prepare for an event set at a specified place,
+   using secified mode of transportation, and taking into account the level of priority of the event. 
  */
 public class ReadyTimeCalc implements Runnable {
     private EventModel model;
@@ -17,7 +18,7 @@ public class ReadyTimeCalc implements Runnable {
 
     /**
      * @param model
-     * @param outputFrame
+     * @param outputFrame 
      * @param controller
      */
     public ReadyTimeCalc(EventModel model, OutputFrame outputFrame, Controller controller, boolean isDryRun) {
@@ -33,7 +34,7 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     * @return
+     * @return returns apiKey
      */
     private static String readApiKey() {
         File input = new File("API_Key.txt");
@@ -52,7 +53,7 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     *
+     * Runs the program
      */
     @Override
     public void run() {
@@ -104,7 +105,7 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     * @param changingTime
+     * @param changingTime adjusts the preperation time according to the user input 
      */
     public void adjustReadyTime(int changingTime) {
         currentEvent.editReadyTime(changingTime);
