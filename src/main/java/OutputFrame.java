@@ -5,7 +5,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- *
+ * Class OutputFrame displays the event information and estimated time the user would need 
+   to prepare for the event along with all the event that were scheduled prior. 
  */
 public class OutputFrame extends JFrame implements Listener {
     private JTextArea textArea;
@@ -15,8 +16,8 @@ public class OutputFrame extends JFrame implements Listener {
 
     /**
      *
-     * @param model
-     * @param size
+     * @param model 
+     * @param size desired size of output frame
      */
     public OutputFrame(EventModel model, int size) {
         super.setTitle("Scheduled Events");
@@ -33,7 +34,7 @@ public class OutputFrame extends JFrame implements Listener {
     }
 
     /**
-     *
+     * Creates the panel to shich the evnt will be displayed
      */
     public void createEventListPanel() {
         panel = new JPanel();
@@ -48,7 +49,7 @@ public class OutputFrame extends JFrame implements Listener {
     }
 
     /**
-     *
+     * Adds the new event to the list of events that were scheduled before
      */
     public void updateTextList() {
         ArrayList<String> calendarList = model.getEvents();
@@ -63,7 +64,7 @@ public class OutputFrame extends JFrame implements Listener {
     }
 
     /**
-     *
+     * Updates the event list with the new event
      * @param ob
      */
     @Override
