@@ -27,7 +27,7 @@ public class Walking extends Transportation {
      * @return
      */
     public String toString(){
-        return "WALKING";
+        return TransportationFactory.WALKING_TYPE;
     }
 
     /**

@@ -283,11 +283,11 @@ public class UserInputFrame extends JFrame {
      */
     private String transportPick() {
         if (bikeJB.isSelected()) {
-            return TransportationFactory.BIKE_TYPE;
+            return TransportationFactory.BIKING_TYPE;
         } else if (driveJB.isSelected()) {
-            return TransportationFactory.DRIVE_TYPE;
+            return TransportationFactory.DRIVING_TYPE;
         } else if (walkJB.isSelected()) {
-            return TransportationFactory.WALK_TYPE;
+            return TransportationFactory.WALKING_TYPE;
         } else
             return TransportationFactory.TRANSIT_TYPE;
     }

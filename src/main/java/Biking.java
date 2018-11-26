@@ -26,7 +26,7 @@ public class Biking extends Transportation {
      *
      * @return
      */
-    public String toString(){return "BIKING";}
+    public String toString(){return TransportationFactory.BIKING_TYPE;}
 
     /**
      *

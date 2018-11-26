@@ -21,7 +21,7 @@ public class Transit extends Transportation {
      * @return
      */
     public String toString(){
-        return "TRANSIT";
+        return TransportationFactory.TRANSIT_TYPE;
     }
 
     /**

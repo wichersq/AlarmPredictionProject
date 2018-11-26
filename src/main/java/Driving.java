@@ -26,7 +26,7 @@ public class Driving extends Transportation {
      * @return
      */
     public String toString(){
-        return "DRIVING";
+        return TransportationFactory.DRIVING_TYPE;
     }
 
     /**
