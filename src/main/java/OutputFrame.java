@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Class OutputFrame displays the event information and estimated time the user would need 
-   to prepare for the event along with all the event that were scheduled prior. 
+ * to prepare for the event along with all the event that were scheduled prior.
  */
 public class OutputFrame extends JFrame implements Listener {
     private JTextArea textArea;
@@ -34,7 +34,7 @@ public class OutputFrame extends JFrame implements Listener {
     }
 
     /**
-     * Creates the panel to shich the evnt will be displayed
+     * Creates the panel for the event to display
      */
     public void createEventListPanel() {
         panel = new JPanel();

@@ -17,6 +17,7 @@ public class ReadyTimeCalc implements Runnable {
     private boolean isDryRun;
 
     /**
+     * Constructor
      * @param model
      * @param outputFrame 
      * @param controller
@@ -34,7 +35,8 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     * @return returns apiKey
+     * Gets the api key from a file
+     * @return api key
      */
     private static String readApiKey() {
         File input = new File("API_Key.txt");
@@ -63,7 +65,8 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     * @param ob
+     * Process the raw input from user and call api on that information
+     * @param ob information object
      */
     private void requestData(ChangedObject ob) {
         System.out.println("pull data request now");
@@ -105,7 +108,8 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     * @param changingTime adjusts the preperation time according to the user input 
+     * Adjust the ready time from the user request
+     * @param changingTime adjusts the preparation time according to the user input
      */
     public void adjustReadyTime(int changingTime) {
         currentEvent.editReadyTime(changingTime);
@@ -114,7 +118,7 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     *
+     *Creates buttons for the PopUpFrame
      */
     private void createsButtonOfPopUp() {
         popUp.addActionSaveButton(ActionEvent -> {

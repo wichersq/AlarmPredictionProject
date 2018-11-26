@@ -8,8 +8,8 @@ public class Transit extends Transportation {
     }
 
     /**
-     * Calculates break time when using public transporation
-     * @return retruns break time when using public transporation 
+     * Calculates break time when using public transportation
+     * @return retruns break time when using public transportation
      */
     protected int calculateBreakTime() {
         double numOfBreak = Math.floor(durationInSec/ TRAVEL_SEC_PER_BREAK);

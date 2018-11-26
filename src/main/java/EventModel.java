@@ -12,7 +12,9 @@ public class EventModel {
     private LinkedBlockingQueue<ChangedObject> eventsToProcess;
 
     /**
-     * @param filePath 
+     * Constructor
+     *
+     * @param filePath file path that save old information
      */
     public EventModel(String filePath) {
         events = new TreeMap<GregorianCalendar, CalendarEvent>();
@@ -40,6 +42,10 @@ public class EventModel {
         notifyListener(s);
     }
 
+    /**
+     * @param ob
+     */
+
     public void addEventToProcess(ChangedObject ob) {
         try {
             eventsToProcess.put(ob);
@@ -47,6 +53,10 @@ public class EventModel {
             ex.printStackTrace();
         }
     }
+
+    /**
+     * @return
+     */
 
     public ChangedObject getEventToProcess() {
         ChangedObject event = null;
@@ -60,6 +70,12 @@ public class EventModel {
         return event;
     }
 
+    /**
+     * Checks if the time is already in the the list
+     *
+     * @param dateTime the checking time
+     * @return true or false
+     */
     public boolean isTimeOccupied(GregorianCalendar dateTime) {
         return events.containsKey(dateTime);
     }
@@ -108,6 +124,7 @@ public class EventModel {
         }
     }
 //TODO:  catch InvalidClassException
+
     /**
      *
      */

@@ -7,7 +7,7 @@ public class EventWithPlaceInfo extends CalendarEvent {
     private double averageRating;
 
     /**
-     *
+     * Constructor
      * @param addressFrom Starting address
      * @param addressTo Ending address
      * @param eventName Name of the event 

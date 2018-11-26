@@ -25,6 +25,7 @@ public class CalendarEvent implements Serializable {
     protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
 
     /**
+     * Constructor
      * @param addressFrom Address of the starting destination 
      * @param addressTo Address of the ending destination 
      * @param eventName Name of the event attending
@@ -118,7 +119,8 @@ public class CalendarEvent implements Serializable {
 //    }
 
     /**
-     * @return returns the recommended prepartion time for an event 
+     * Get a prompt about the ready time information
+     * @return a string about the ready time
      */
     public String getEventInfo() {
         int min = recommendedReadyMin % 60;
@@ -132,8 +134,9 @@ public class CalendarEvent implements Serializable {
     }
 
     /**
-     * @param other provides another obeject to compare to new object
-     * @return false 
+     * Compares if the object is the same
+     * @param other comparing object
+     * @return false if it is not equal otherwise true
      */
     public boolean equals(Object other) {
         if (!(other instanceof CalendarEvent)) {

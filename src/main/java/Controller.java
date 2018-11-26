@@ -32,9 +32,9 @@ public class Controller implements Listener {
     }
 
     /**
-     * Checking if the time and date is already occupied by another event.
+     * Checks if the time and date is already occupied by another event.
      * @param dateTime Time and Date that the event is scheduled
-     * @return checks if there is an event that is already scheduled at the specifed time and date
+     * @return true if there is an event that is already scheduled at the specified time and date
      */
     public boolean checkIfTimeOccupied(GregorianCalendar dateTime) {
         return model.isTimeOccupied(dateTime);
