@@ -1,5 +1,5 @@
 /**
- *
+ * Class Walking estimates the time it would take for the user to reach ending destination by walking
  */
 public class Walking extends Transportation {
     private final static int TRAVEL_SEC_PER_BREAK = 30*60;
@@ -7,15 +7,15 @@ public class Walking extends Transportation {
 
     /**
      *
-     * @param duration
+     * @param duration 
      */
     public Walking(int duration){
         super(duration);
     }
 
     /**
-     *
-     * @return
+     * Calculates the break time when walking
+     * @return returns break time when walking
      */
     protected int calculateBreakTime() {
         double numOfBreak = Math.floor(durationInSec/ TRAVEL_SEC_PER_BREAK);
@@ -25,7 +25,7 @@ public class Walking extends Transportation {
 
     /**
      *
-     * @return
+     * @return returns the mode of transportation
      */
     public String toString(){
         return TransportationFactory.WALKING_TYPE;
