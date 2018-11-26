@@ -1,5 +1,5 @@
 /**
- *
+ * Factory Pattern for creating different types of transportation.
  */
 public class TransportationFactory {
     public final static String BIKING_TYPE = "BIKING";
@@ -8,9 +8,9 @@ public class TransportationFactory {
     public final static String TRANSIT_TYPE = "TRANSIT";
 
     /**
-     * @param type
-     * @param duration
-     * @return
+     * @param type mode of transportation
+     * @param duration time is takes to travel from starting destination to ending destination using specified mode of transportation.
+     * @return returns the time
      */
     public static Transportation createTransport(String type, int duration) {
         if (type.equalsIgnoreCase(BIKING_TYPE)) {
