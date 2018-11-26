@@ -17,11 +17,8 @@ public class Driving extends Transportation {
      * @return
      */
     protected int calculateBreakTime() {
-        System.out.println("durationInSec " + durationInSec);
         double numOfBreak = Math.floor(durationInSec/ TRAVEL_SEC_PER_BREAK);
-        System.out.println("numOfBreak " + numOfBreak);
-        System.out.println("numOfBreak * BREAK_TIME_MIN " + numOfBreak * BREAK_TIME_MIN);
-        breakTimeOfTravel = (int) (numOfBreak * BREAK_TIME_MIN);
+        breakTimeOfTravel = (int) (numOfBreak * BREAK_TIME_SEC);
         return breakTimeOfTravel;
     }
 

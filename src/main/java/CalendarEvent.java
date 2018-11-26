@@ -45,7 +45,7 @@ public class CalendarEvent implements Serializable {
         this.arrivalDateTime = arrivalDateTime;
         this.transport = transport;
         this.importantScale = importantScale;
-        this.travelTime = transport.getTravelMin();
+        this.travelTime = transport.getDurationInMin();
         calPrepareTime();
         setTotalTime();
 
@@ -95,7 +95,7 @@ public class CalendarEvent implements Serializable {
      *
      */
     protected void setTotalTime() {
-        recommendedReadyMin = preparingTime + travelTime;
+        recommendedReadyMin = preparingTime + transport.getTotalTravelMin();
         alarmTime = (GregorianCalendar) arrivalDateTime.clone();
         alarmTime.add(Calendar.MINUTE, -recommendedReadyMin);
     }
@@ -121,10 +121,14 @@ public class CalendarEvent implements Serializable {
      * @return
      */
     public String getEventInfo() {
-        return String.format("Travel Duration: %d %s" +
-                        "\nAlarm Time: %s \n%d minutes %s the event",
-                travelTime, travelTime > 1 ? "minutes" : "minute",
-                getAlarmString(), Math.abs(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
+        int min = recommendedReadyMin % 60;
+        int hour = recommendedReadyMin/60;
+        String readyTime = String.format("%d %s %d %s", hour, hour > 1 ? "hours" : "hour",
+                min, min > 1 ? "minutes" : "minute");
+        return String.format("Travel Duration: %s" +
+                        "\nAlarm Time: %s \n%s %s the event",
+                transport.getDurationString(), getAlarmString(),
+                readyTime, (recommendedReadyMin < 0) ? "after" : "before");
     }
 
     /**

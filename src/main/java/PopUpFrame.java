@@ -31,7 +31,7 @@ public class PopUpFrame extends JFrame {
         panel.add(sliderBox, BorderLayout.CENTER);
         panel.add(buttonsBox, BorderLayout.SOUTH);
         setDefaultLookAndFeelDecorated(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.D);
         this.setLayout(new FlowLayout());
         this.add(panel, BorderLayout.CENTER);
         super.setBounds(0, 0, 500, 200);

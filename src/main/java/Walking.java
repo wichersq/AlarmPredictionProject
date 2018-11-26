@@ -3,7 +3,7 @@
  */
 public class Walking extends Transportation {
     private final static int TRAVEL_SEC_PER_BREAK = 30*60;
-    private final static int BREAK_TIME_MIN = 15;
+    private final static int BREAK_TIME_SEC = 15*60;
 
     /**
      *
@@ -19,7 +19,7 @@ public class Walking extends Transportation {
      */
     protected int calculateBreakTime() {
         double numOfBreak = Math.floor(durationInSec/ TRAVEL_SEC_PER_BREAK);
-        breakTimeOfTravel = (int) numOfBreak * BREAK_TIME_MIN;
+        breakTimeOfTravel = (int) numOfBreak * BREAK_TIME_SEC;
         return breakTimeOfTravel;
     }
 

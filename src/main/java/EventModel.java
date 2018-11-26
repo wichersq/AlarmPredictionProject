@@ -12,7 +12,6 @@ public class EventModel {
     private LinkedBlockingQueue<ChangedObject> eventsToProcess;
 
     /**
-     *
      * @param filePath
      */
     public EventModel(String filePath) {
@@ -37,11 +36,11 @@ public class EventModel {
      * @param s the adding event
      */
     public void addEvent(CalendarEvent s) {
-        events.put(s.getArrivalDateTime(),s);
+        events.put(s.getArrivalDateTime(), s);
         notifyListener(s);
     }
 
-    public void addEventToProcess(ChangedObject ob){
+    public void addEventToProcess(ChangedObject ob) {
         try {
             eventsToProcess.put(ob);
         } catch (InterruptedException ex) {
@@ -49,7 +48,7 @@ public class EventModel {
         }
     }
 
-    public ChangedObject getEventToProcess(){
+    public ChangedObject getEventToProcess() {
         ChangedObject event = null;
         try {
             System.out.println("start run");
@@ -60,9 +59,11 @@ public class EventModel {
         }
         return event;
     }
-    public boolean isTimeOccupied(String dateTime) {
+
+    public boolean isTimeOccupied(GregorianCalendar dateTime) {
         return events.containsKey(dateTime);
     }
+
     /**
      * Gets list of events in string format
      *
@@ -94,42 +95,37 @@ public class EventModel {
      *
      */
     public void saveEventsToFile() {
-        Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iter = events.entrySet().iterator();
         try {
             FileOutputStream fileOut = new FileOutputStream(file.getName());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            while (iter.hasNext()) {
-                out.writeObject(iter.next().getValue());
-            }
+
+            out.writeObject(events);
+
             out.close();
             fileOut.close();
         } catch (IOException i) {
             i.printStackTrace();
         }
     }
-
+//TODO:  catch InvalidClassException
     /**
      *
      */
 
     public void restoreEventsFromFile() {
-        CalendarEvent event;
         try {
             FileInputStream fileInput = new FileInputStream(file.getName());
             ObjectInputStream inputStream = new ObjectInputStream(fileInput);
             while (true) {
                 try {
-                    event = (CalendarEvent) inputStream.readObject();
-                    if (event != null)
-                        events.put(event.getArrivalDateTime(), event);
-
+                    events = (TreeMap<GregorianCalendar, CalendarEvent>) inputStream.readObject();
                 } catch (EOFException eof) {
                     break;
                 }
             }
             inputStream.close();
             fileInput.close();
-        }catch (EOFException e) {
+        } catch (EOFException e) {
             return;
         } catch (IOException e1) {
             e1.printStackTrace();

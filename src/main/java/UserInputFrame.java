@@ -217,9 +217,6 @@ public class UserInputFrame extends JFrame {
         return new ChangedObject(from, to, name, eventDate, trans, scale);
     }
 
-
-
-
     /**
      *
      * @param convertingDate
@@ -238,7 +235,7 @@ public class UserInputFrame extends JFrame {
         int min = Integer.parseInt(timeArr[1]);
 
         eventDate = new GregorianCalendar(year, month - 1, date, hour, min);
-        if (eventDate.before(Calendar.getInstance()) || controller.checkIfTimeOccupied(eventDate.toString())) {
+        if (eventDate.before(Calendar.getInstance()) || controller.checkIfTimeOccupied(eventDate)) {
             throw new NumberFormatException("Date Invalid");
         }
     }

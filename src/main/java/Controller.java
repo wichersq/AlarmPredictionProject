@@ -1,3 +1,5 @@
+import java.util.GregorianCalendar;
+
 /**
  *
  */
@@ -33,7 +35,7 @@ public class Controller implements Listener {
      * @param dateTime
      * @return
      */
-    public boolean checkIfTimeOccupied(String dateTime) {
+    public boolean checkIfTimeOccupied(GregorianCalendar dateTime) {
         return model.isTimeOccupied(dateTime);
     }
 

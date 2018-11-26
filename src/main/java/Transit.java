@@ -13,7 +13,7 @@ public class Transit extends Transportation {
      */
     protected int calculateBreakTime() {
         double numOfBreak = Math.floor(durationInSec/ TRAVEL_SEC_PER_BREAK);
-        breakTimeOfTravel = (int) numOfBreak * BREAK_TIME_MIN;
+        breakTimeOfTravel = (int) numOfBreak * BREAK_TIME_SEC;
         return breakTimeOfTravel;
     }
 
