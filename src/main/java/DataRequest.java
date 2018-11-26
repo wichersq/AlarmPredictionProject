@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Class DataRequest pulls data from google about the specifed addresses inputted by the user
  */
 public class DataRequest {
     private DirectionsResult mapResult = null;
@@ -27,8 +27,8 @@ public class DataRequest {
     private String endAddress;
 
     /**
-     *
-     * @param apiKey
+     * 
+     * @param apiKey 
      */
     public DataRequest(String apiKey){
         context = new GeoApiContext.Builder().apiKey(apiKey).build();
@@ -36,10 +36,10 @@ public class DataRequest {
 
     /**
      *
-     * @param origin
-     * @param destination
-     * @param travelMode
-     * @param arrivalTime
+     * @param origin Beginning destination
+     * @param destination Ending destination
+     * @param travelMode Mode of transportation
+     * @param arrivalTime Time that user must be at event
      */
     public void requestMapData(String origin, String destination, String travelMode, GregorianCalendar arrivalTime) {
         Instant time = arrivalTime.toInstant();
@@ -55,7 +55,7 @@ public class DataRequest {
     }
 
     /**
-     *
+     * Saves the details of the event specified by the user
      */
     private void savePlaceDetailsInfo() {
         originName = startAddress.split(",")[0];
@@ -64,7 +64,7 @@ public class DataRequest {
     }
 
     /**
-     *
+     * 
      */
     private void requestPlaceDetail() {
         try {
@@ -77,7 +77,7 @@ public class DataRequest {
     }
 
     /**
-     *
+     * 
      */
     private void saveMapInformation() {
         durationSec = mapResult.routes[0].legs[0].duration.inSeconds;
@@ -89,7 +89,7 @@ public class DataRequest {
 
     /**
      *
-     * @return
+     * @return returns name of beginning destination
      */
     public String getOriginName() {
         return originName;
@@ -97,7 +97,7 @@ public class DataRequest {
 
     /**
      *
-     * @return
+     * @return returns the distance from beginning destination to ending destination
      */
     public long getDistance() {
         return distanceMeter;
@@ -105,7 +105,7 @@ public class DataRequest {
 
     /**
      *
-     * @return
+     * @return returns the name of ending destination 
      */
     public String getDestName() {
         return destName;
@@ -113,7 +113,7 @@ public class DataRequest {
 
     /**
      *
-     * @return
+     * @return returns the rate of the destination given by google
      */
     public float getRating() {
         return rating;
@@ -121,7 +121,7 @@ public class DataRequest {
 
     /**
      *
-     * @return
+     * @return returns how long the travel time is to get from starting detination to ending destination
      */
     public long getDurationSec() {
         return durationSec;
@@ -129,7 +129,7 @@ public class DataRequest {
 
     /**
      *
-     * @return
+     * @return returns the starting address
      */
     public String getStartAddress() {
         return startAddress;
@@ -137,7 +137,7 @@ public class DataRequest {
 
     /**
      *
-     * @return
+     * @return returns the ending address
      */
     public String getEndAddress() {
         return endAddress;
