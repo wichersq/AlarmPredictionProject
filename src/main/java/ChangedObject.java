@@ -13,12 +13,12 @@ public class ChangedObject {
 
     /**
      *
-     * @param addressFrom
-     * @param addressTo
-     * @param name
-     * @param arrivalDateTime
-     * @param transportType
-     * @param importantScale
+     * @param addressFrom Address of starting destination
+     * @param addressTo Address of ending destination
+     * @param name Name of event
+     * @param arrivalDateTime Date and time of the event
+     * @param transportType Mode of transportation 
+     * @param importantScale The importance level of an event to the user
      */
     public ChangedObject(String addressFrom, String addressTo, String name,
                          GregorianCalendar arrivalDateTime, String transportType, double importantScale){
@@ -32,20 +32,20 @@ public class ChangedObject {
 
     /**
      *
-     * @return
+     * @return Returns address
      */
     public String getAddressFrom(){return addressFrom;}
     public String getAddressTo(){return addressTo;}
 
     /**
      *
-     * @return
+     * @return returns name of event
      */
     public String getName(){return name;}
 
     /**
      *
-     * @return
+     * @return returns a clone of the time and date of an event
      */
     public GregorianCalendar getArrivalDateTime(){
         return (GregorianCalendar) arrivalDateTime.clone();
@@ -53,13 +53,13 @@ public class ChangedObject {
 
     /**
      *
-     * @return
+     * @return returns mode of transportation
      */
     public String getTransport(){return transport;}
 
     /**
      *
-     * @return
+     * @return returns the level of importance of the event
      */
     public double getImportantScale(){return importantScale;}
 
