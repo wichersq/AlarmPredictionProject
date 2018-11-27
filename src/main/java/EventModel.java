@@ -1,3 +1,5 @@
+import javafx.beans.Observable;
+
 import javax.swing.*;
 import javax.swing.event.ListDataListener;
 import java.io.*;
@@ -7,9 +9,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * A model keeps track all events' values
  */
-public class EventModel{
+public class EventModel {
     private ArrayList<Listener> listeners;
-    private TreeMap<GregorianCalendar, CalendarEvent> events;
+    private HashMap<GregorianCalendar, CalendarEvent> events;
     private File file;
     private LinkedBlockingQueue<ChangedObject> eventsToProcess;
 
@@ -19,7 +21,7 @@ public class EventModel{
      * @param filePath file path that save old information
      */
     public EventModel(String filePath) {
-        events = new TreeMap<GregorianCalendar, CalendarEvent>();
+        events = new HashMap<GregorianCalendar, CalendarEvent>();
         listeners = new ArrayList<Listener>();
         eventsToProcess = new LinkedBlockingQueue<>();
         maybeCreateFile(filePath);
@@ -83,21 +85,10 @@ public class EventModel{
     }
 
     /**
-     * Gets list of events in string format
+     * Gets list of events in sort order
      *
      * @return a copy of list of events in string format
      */
-    public ArrayList<String> getEvents() {
-        CalendarEvent event;
-        ArrayList<String> eventList = new ArrayList<>();
-        Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
-        while (iterator.hasNext()) {
-            event = iterator.next().getValue();
-            eventList.add(event.toString());
-        }
-        return eventList;
-    }
-
 
     public ArrayList<CalendarEvent> getEventsList() {
         CalendarEvent event;
@@ -122,8 +113,16 @@ public class EventModel{
         }
     }
 
+    public void removeEvents(CalendarEvent ob){
+        GregorianCalendar calendar = ob.getArrivalDateTime();
+        if(events.containsKey(calendar)){
+            events.remove(calendar);
+            notifyListener(ob);
+        }
+    }
+
     /**
-     *
+     *  Saves all event to file
      */
     public void saveEventsToFile() {
         try {
@@ -141,7 +140,7 @@ public class EventModel{
 //TODO:  catch InvalidClassException
 
     /**
-     *
+     * Restore information from file
      */
 
     public void restoreEventsFromFile() {
@@ -150,7 +149,7 @@ public class EventModel{
             ObjectInputStream inputStream = new ObjectInputStream(fileInput);
             while (true) {
                 try {
-                    events = (TreeMap<GregorianCalendar, CalendarEvent>) inputStream.readObject();
+                    events = (HashMap<GregorianCalendar, CalendarEvent>) inputStream.readObject();
                 } catch (EOFException eof) {
                     break;
                 }

@@ -88,12 +88,12 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     *
+     * Creates a format text for field
      * @param format
      * @return
      */
 
-    private JFormattedTextField createFormatField(String format){
+    private JFormattedTextField createFormatField(String format) {
         MaskFormatter timeMask = null;
         try {
             timeMask = new MaskFormatter(format);
@@ -166,7 +166,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Creates a sliderbar in the panel
+     * Creates a slider bar in the panel
      */
     private void createSliderBar() {
         sliderBox = Box.createVerticalBox();
@@ -202,7 +202,8 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Gathers the starting and ending destionations, name, mode of transportation, and prority of the new event.
+     * Gathers the starting and ending destinations, name, mode of transportation, and prority of the new event.
+     *
      * @return returns the new event
      */
     private ChangedObject gatherInfo() {
@@ -216,8 +217,9 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Crearts a place for the user to put the date and time the event is scheduled.
-     * @param convertingDate Scheduled date of the event 
+     * Creates a place for the user to put the date and time the event is scheduled.
+     *
+     * @param convertingDate Scheduled date of the event
      * @param convertingTime Scheduled time of the event
      * @throws NumberFormatException If the user inputs an invalid time or date then the program will notify the user
      */
@@ -274,6 +276,7 @@ public class UserInputFrame extends JFrame {
 
     /**
      * Allows user to pick a mode of transportation
+     *
      * @return returns the mode of transportation
      */
     private String transportPick() {
@@ -302,8 +305,9 @@ public class UserInputFrame extends JFrame {
 
 
     /**
+     * Adds action to button
      *
-     * @param e
+     * @param e action when button is clicked
      */
     public void addActionShowButton(ActionListener e) {
         showButton.addActionListener(e);
@@ -311,7 +315,6 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     *
      * @param object
      */
     private void notifyListener(ChangedObject object) {

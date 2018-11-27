@@ -1,3 +1,4 @@
+import java.awt.event.ActionEvent;
 import java.util.GregorianCalendar;
 
 /**
@@ -62,6 +63,15 @@ public class Controller implements Listener {
             outputFrame.updateTextList();
             outputFrame.setVisible(true);
         });
+
+        outputFrame.addActionDeleteButton(ActionEvent -> {
+            deleteEvents(outputFrame.getSelectionFromList());
+        });
+    }
+
+    public void deleteEvents(CalendarEvent ob){
+
+        model.removeEvents(ob);
     }
 
     /**

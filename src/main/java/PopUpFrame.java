@@ -4,7 +4,7 @@ import javax.swing.*;
 
 /**
  * Class PopUpFrame allows the user to cancel, edit, or save an event once they have inputted all the user information.
-   The slider allows them to add more time if needed.
+ * The slider allows them to add more time if needed.
  */
 public class PopUpFrame extends JFrame {
 
@@ -28,18 +28,18 @@ public class PopUpFrame extends JFrame {
         allocateButtons();
         createSlider();
         panel.setLayout(new BorderLayout());
-        panel.setBounds(0, 0, 300, 100);
+        panel.setBounds(0, 0, 300, 300);
         panel.add(sliderBox, BorderLayout.CENTER);
         panel.add(buttonsBox, BorderLayout.SOUTH);
         setDefaultLookAndFeelDecorated(true);
-//        setDefaultCloseOperation(JFrame.D);
+        setResizable(false);
         this.setLayout(new FlowLayout());
-        this.add(panel, BorderLayout.CENTER);
-        super.setBounds(0, 0, 500, 200);
+        this.add(panel);
+        super.setBounds(0, 0, 400, 400);
     }
 
     /**
-     * provides the "Cancel", "Edit", "Save Time", and "Adjust Ready Time" buttons.
+     * Creates buttons.
      */
     private void allocateButtons() {
         cancelButton = new JButton("Cancel");
@@ -77,7 +77,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * @param alarmStr 
+     * @param alarmStr
      */
     public void showPopUp(String alarmStr) {
         tf.setText(alarmStr);
@@ -95,28 +95,36 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * @param e 
+     * Adds action to button
+     *
+     * @param e action when button is clicked
      */
     public void addActionEditButton(ActionListener e) {
         editButton.addActionListener(e);
     }
 
     /**
-     * @param e
+     * Adds action to button
+     *
+     * @param e action when button is clicked
      */
     public void addActionSaveButton(ActionListener e) {
         saveButton.addActionListener(e);
     }
 
     /**
-     * @param e
+     * Adds action to button
+     *
+     * @param e action when button is clicked
      */
     public void addActionCancelButton(ActionListener e) {
         cancelButton.addActionListener(e);
     }
 
     /**
-     * @param e
+     * Adds action to button
+     *
+     * @param e action when button is clicked
      */
     public void addActionAdjustButton(ActionListener e) {
         adjustButton.addActionListener(e);

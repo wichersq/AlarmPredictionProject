@@ -58,10 +58,6 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent> {
      * @return returns all the user inputs
      */
     public String toString() {
-//        return String.format("Date and Time:\t%s\nOrigin:\t%s\nDestination:\t%s\n" +
-//                        "Travel by:\t%s\n%s\n\n",
-//                        getArrivalTimeString(), addressFrom, addressTo, transport.toString(), getEventInfo());
-
         return String.format("\t%s\n*** %s ***\n%s  --->  %s\n" +
                         "Alarm set at: %s\n", eventName, getArrivalTimeString(),
                 originName, destName, getAlarmString());
@@ -126,14 +122,17 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent> {
      * @return a string about the ready time
      */
     public String getEventInfo() {
-        int min = recommendedReadyMin % 60;
-        int hour = recommendedReadyMin / 60;
-        String readyTime = String.format("%d %s %d %s", hour, hour > 1 ? "hours" : "hour",
+        return String.format("Travel Duration:\t%s" +
+                        "\n\nAlarm Time:\t%s\n\n%s %s the event",
+                durationStringFormat(travelTime), getAlarmString(),
+                durationStringFormat(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
+    }
+
+    private String durationStringFormat(int durationInMin){
+        int min = Math.abs(durationInMin % 60);
+        int hour = durationInMin / 60;
+        return String.format("%d %s %d %s", hour, hour > 1 ? "hours" : "hour",
                 min, min > 1 ? "minutes" : "minute");
-        return String.format("Travel Duration: %s" +
-                        "\nAlarm Time: %s \n%s %s the event",
-                transport.getDurationString(), getAlarmString(),
-                readyTime, (recommendedReadyMin < 0) ? "after" : "before");
     }
 
     /**
@@ -162,6 +161,12 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent> {
     @Override
     public int compareTo(CalendarEvent o) {
         return (this.arrivalDateTime.compareTo(o.arrivalDateTime));
+    }
+
+    public String getStringDetail() {
+        return String.format("Date & Time:\t%s\n\nOrigin:\t%s\n\nDestination:\t%s\n\nTravel by:\t%s\n\n" +
+                        "%s",
+                getArrivalTimeString(), addressFrom, addressTo, transport.toString(), getEventInfo());
     }
 }
 

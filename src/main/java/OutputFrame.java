@@ -2,6 +2,7 @@ import javax.swing.*;
 
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -9,17 +10,18 @@ import java.util.ArrayList;
  * to prepare for the event along with all the event that were scheduled prior.
  */
 public class OutputFrame extends JFrame implements Listener {
-    private JTextArea textArea;
-    private EventModel model;
+    private TextAreaDetail textArea;
     private JPanel listPanel;
     private JPanel detailPanel;
     private JScrollPane scrollPane;
     private DefaultListModel listModel;
     private JList list;
     private JScrollPane scrollPaneDetail;
-    private JButton showButton;
+    private EventModel model;
+//    private JButton showButton;
     private JButton deleteButton;
     private Box buttonBox;
+    private MyList myList;
 
     /**
      * @param model
@@ -40,7 +42,7 @@ public class OutputFrame extends JFrame implements Listener {
         setResizable(false);
         add(listPanel, BorderLayout.CENTER);
         add(detailPanel, BorderLayout.EAST);
-        add(buttonBox, BorderLayout.NORTH);
+        add(deleteButton , BorderLayout.SOUTH);
 
     }
 
@@ -49,11 +51,10 @@ public class OutputFrame extends JFrame implements Listener {
      */
     private void createEventListPanel() {
         listPanel = new JPanel();
-
         listModel = new DefaultListModel();
         list = new JList(listModel);
-        list.setCellRenderer(new MyList(3, 30));
-
+        myList = new MyList(3, 30);
+        list.setCellRenderer(myList);
         scrollPane = new JScrollPane(list);
         scrollPane.setPreferredSize(new Dimension(400, 400));
         listPanel.add(scrollPane, BorderLayout.CENTER);
@@ -62,7 +63,7 @@ public class OutputFrame extends JFrame implements Listener {
     private void createEventDetailPanel(){
         detailPanel = new JPanel();
 
-        textArea = new JTextArea();
+        textArea = new TextAreaDetail(myList);
         textArea.setEditable(false);
         scrollPaneDetail = new JScrollPane(textArea);
         scrollPaneDetail.setPreferredSize(new Dimension(400, 400));
@@ -71,16 +72,18 @@ public class OutputFrame extends JFrame implements Listener {
     }
     private void createButtonBox(){
         buttonBox = Box.createHorizontalBox();
-        showButton = new JButton("Show Detail");
+//        showButton = new JButton("Show Detail");
         deleteButton = new JButton("Delete");
-        buttonBox.add(showButton);
-        buttonBox.add(deleteButton);
+//        buttonBox.add(showButton);
+//        buttonBox.add(deleteButton);
 
     }
 
     //TODO: adds action to button
     public void updateTextList() {
         ArrayList<CalendarEvent> calendarList = model.getEventsList();
+        listModel.setSize(0);
+        textArea.setText("");
         for (CalendarEvent event : calendarList) {
             listModel.addElement(event);
         }
@@ -99,6 +102,20 @@ public class OutputFrame extends JFrame implements Listener {
 //        }
 //        textArea.setText(strBuilder.toString());
 //    }
+        /**
+         *  Adds action to button
+         * @param e     action when button is clicked
+         */
+        public void addActionDeleteButton(ActionListener e) {
+            deleteButton.addActionListener(e);
+        }
+
+        public CalendarEvent getSelectionFromList(){
+            return myList.getCurrentSelection();
+        }
+
+
+
 
     /**
      * Updates the event list with the new event
