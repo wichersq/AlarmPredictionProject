@@ -16,7 +16,7 @@ public class MyList extends JTextArea implements ListCellRenderer {
     }
 
     /**
-     * Return a component that has been configured to display the specified
+     * Returns a component that has been configured to display the specified
      * value.
      * @param list The JList we're painting.
      * @param value The value returned by list.getModel().getElementAt(index).
@@ -53,7 +53,7 @@ public class MyList extends JTextArea implements ListCellRenderer {
     }
 
     /**
-     * notifies all listener
+     * Notifies all listener
      *
      * @param object changed object
      */

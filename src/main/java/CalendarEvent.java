@@ -158,10 +158,10 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
      */
 
     @Override
-    public CalendarEvent clone() {
+    public CalendarEvent clone() throws CloneNotSupportedException {
         return new CalendarEvent(addressFrom, addressTo, eventName, originName,
                 destName, (GregorianCalendar) arrivalDateTime.clone(),
-                transport.copy(), importantScale);
+                (Transportation)transport.clone(), importantScale);
     }
 
     @Override
@@ -170,9 +170,10 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
     }
 
     public String toString() {
-        return String.format("Date & Time:\t%s\n\nOrigin:\t%s\n\nDestination:\t%s\n\nTravel by:\t%s\n\n" +
-                        "%s",
-                getArrivalTimeString(), addressFrom, addressTo, transport.toString(), getEventInfo());
+        return String.format("Date & Time:\t%s\n\nOrigin:\t%s\n\n" +
+                        "Destination:\t%s\n\nTravel by:\t%s\n\n%s",
+                getArrivalTimeString(), addressFrom, addressTo,
+                transport.toString(), getEventInfo());
     }
 }
 

@@ -35,9 +35,10 @@ public class EventWithPlaceInfo extends CalendarEvent {
         preparingTime = DEFAULT_PREPARE_MIN + (int)
                 (importantScale * 0.5 + (importantScale - averageRating*6)*0.5);
     }
-    public EventWithPlaceInfo copy(){
+    @Override
+    public EventWithPlaceInfo clone() throws CloneNotSupportedException{
         return new EventWithPlaceInfo(addressFrom,addressTo,eventName,originName,
                 destName,(GregorianCalendar)arrivalDateTime.clone(),
-                transport.copy(),importantScale,averageRating);
+                (Transportation)transport.clone(),importantScale,averageRating);
     }
 }

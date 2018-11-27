@@ -92,7 +92,11 @@ public class EventModel {
         Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
         while (iterator.hasNext()) {
             event = iterator.next().getValue();
-            eventList.add(event.clone());
+            try {
+                eventList.add(event.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
         Collections.sort(eventList);
         return eventList;
@@ -109,16 +113,16 @@ public class EventModel {
         }
     }
 
-    public void removeEvents(CalendarEvent ob){
+    public void removeEvents(CalendarEvent ob) {
         GregorianCalendar calendar = ob.getArrivalDateTime();
-        if(events.containsKey(calendar)){
+        if (events.containsKey(calendar)) {
             events.remove(calendar);
             notifyListener(ob);
         }
     }
 
     /**
-     *  Saves all event to file
+     * Saves all event to file
      */
     public void saveEventsToFile() {
         try {

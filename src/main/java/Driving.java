@@ -12,7 +12,7 @@ public class Driving extends Transportation {
     }
 
     /**
-     * 
+     *
      * @return returns
      */
     protected int calculateBreakTime() {
