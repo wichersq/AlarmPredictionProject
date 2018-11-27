@@ -1,4 +1,5 @@
 
+import java.awt.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,7 +9,7 @@ import java.util.GregorianCalendar;
 /**
  * Class CalendarEvent collects all infromation the user inputs to schedule an event.
  */
-public class CalendarEvent implements Serializable {
+public class CalendarEvent implements Serializable, Comparable<CalendarEvent> {
     protected int DEFAULT_PREPARE_MIN = 30;
     protected String addressFrom;
     protected String addressTo;
@@ -26,14 +27,15 @@ public class CalendarEvent implements Serializable {
 
     /**
      * Constructor
-     * @param addressFrom Address of the starting destination 
-     * @param addressTo Address of the ending destination 
-     * @param eventName Name of the event attending
-     * @param originName Name of starting destination
-     * @param destName Name of ending destination
+     *
+     * @param addressFrom     Address of the starting destination
+     * @param addressTo       Address of the ending destination
+     * @param eventName       Name of the event attending
+     * @param originName      Name of starting destination
+     * @param destName        Name of ending destination
      * @param arrivalDateTime Time of the event
-     * @param transport Mode of transportation
-     * @param importantScale How important the event is to the user
+     * @param transport       Mode of transportation
+     * @param importantScale  How important the event is to the user
      */
     public CalendarEvent(String addressFrom, String addressTo, String eventName,
                          String originName, String destName, GregorianCalendar arrivalDateTime,
@@ -120,11 +122,12 @@ public class CalendarEvent implements Serializable {
 
     /**
      * Get a prompt about the ready time information
+     *
      * @return a string about the ready time
      */
     public String getEventInfo() {
         int min = recommendedReadyMin % 60;
-        int hour = recommendedReadyMin/60;
+        int hour = recommendedReadyMin / 60;
         String readyTime = String.format("%d %s %d %s", hour, hour > 1 ? "hours" : "hour",
                 min, min > 1 ? "minutes" : "minute");
         return String.format("Travel Duration: %s" +
@@ -135,6 +138,7 @@ public class CalendarEvent implements Serializable {
 
     /**
      * Compares if the object is the same
+     *
      * @param other comparing object
      * @return false if it is not equal otherwise true
      */
@@ -149,4 +153,15 @@ public class CalendarEvent implements Serializable {
                 transport.equals(comparingEvent.transport));
     }
 
+    public CalendarEvent copy() {
+        return new CalendarEvent(addressFrom, addressTo, eventName, originName,
+                destName, (GregorianCalendar) arrivalDateTime.clone(),
+                transport.copy(), importantScale);
+    }
+
+    @Override
+    public int compareTo(CalendarEvent o) {
+        return (this.arrivalDateTime.compareTo(o.arrivalDateTime));
+    }
 }
+

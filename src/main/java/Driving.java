@@ -30,6 +30,10 @@ public class Driving extends Transportation {
         return TransportationFactory.DRIVING_TYPE;
     }
 
+    public Driving copy() {
+        return new Driving(durationInSec);
+    }
+
     /**
      *
      * @param other 
@@ -38,4 +42,5 @@ public class Driving extends Transportation {
     public boolean equals(Object other){
         return(other.getClass().equals(this));
     }
+
 }

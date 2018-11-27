@@ -49,4 +49,6 @@ public abstract class Transportation  implements Serializable {
      * @return
      */
     public abstract String toString();
+    public abstract Transportation copy();
+
 }

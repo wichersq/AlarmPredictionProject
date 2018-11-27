@@ -16,7 +16,9 @@ public class Transit extends Transportation {
         breakTimeOfTravel = (int) numOfBreak * BREAK_TIME_SEC;
         return breakTimeOfTravel;
     }
-
+    public Transit copy() {
+        return new Transit(durationInSec);
+    }
     /**
      *
      * @return returns the mode of transportation

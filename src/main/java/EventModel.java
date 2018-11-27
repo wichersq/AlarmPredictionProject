@@ -1,3 +1,5 @@
+import javax.swing.*;
+import javax.swing.event.ListDataListener;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -5,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * A model keeps track all events' values
  */
-public class EventModel {
+public class EventModel{
     private ArrayList<Listener> listeners;
     private TreeMap<GregorianCalendar, CalendarEvent> events;
     private File file;
@@ -93,6 +95,19 @@ public class EventModel {
             event = iterator.next().getValue();
             eventList.add(event.toString());
         }
+        return eventList;
+    }
+
+
+    public ArrayList<CalendarEvent> getEventsList() {
+        CalendarEvent event;
+        ArrayList<CalendarEvent> eventList = new ArrayList<>();
+        Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
+        while (iterator.hasNext()) {
+            event = iterator.next().getValue();
+            eventList.add(event.copy());
+        }
+        Collections.sort(eventList);
         return eventList;
     }
 

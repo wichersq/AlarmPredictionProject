@@ -1,7 +1,7 @@
 /**
  * Class Walking estimates the time it would take for the user to reach ending destination by walking
  */
-public class Walking extends Transportation {
+public class Walking extends Transportation{
     private final static int TRAVEL_SEC_PER_BREAK = 30*60;
     private final static int BREAK_TIME_SEC = 15*60;
 
@@ -38,5 +38,9 @@ public class Walking extends Transportation {
      */
     public boolean equals(Object other){
         return(other.getClass().equals(this));
+    }
+
+    public Walking copy() {
+        return new Walking(durationInSec);
     }
 }

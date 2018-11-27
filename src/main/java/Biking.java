@@ -37,4 +37,7 @@ public class Biking extends Transportation {
     public boolean equals(Object other){
         return(other.getClass().equals(this));
     }
+    public Biking copy() {
+        return new Biking(durationInSec);
+    }
 }
