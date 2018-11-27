@@ -28,7 +28,7 @@ public class Biking extends Transportation {
     }
 
     /**
-     * Puts type of transportation into string
+     * Puts type of transportation into string.
      *
      * @return returns biking as a mode of transportation
      */
@@ -37,7 +37,7 @@ public class Biking extends Transportation {
     }
 
     /**
-     * Compares objects
+     * Compares objects.
      *
      * @param other provides another object to compare new object to
      * @return class
