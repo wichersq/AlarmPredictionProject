@@ -89,6 +89,7 @@ public class UserInputFrame extends JFrame {
 
     /**
      * Creates a format text for field
+     *
      * @param format
      * @return
      */
@@ -193,7 +194,7 @@ public class UserInputFrame extends JFrame {
         addButton.addActionListener(ActionEvent -> {
             try {
                 createDateTime(date.getText(), time.getText());
-                ChangedObject changeOb = gatherInfo();
+                RawUserInput changeOb = gatherInfo();
                 notifyListener(changeOb);
             } catch (NumberFormatException e) {
                 popUpWarningMessage();
@@ -206,14 +207,14 @@ public class UserInputFrame extends JFrame {
      *
      * @return returns the new event
      */
-    private ChangedObject gatherInfo() {
+    private RawUserInput gatherInfo() {
         String from = addressFrom.getText();
         String to = addressTo.getText();
         String name = eventName.getText();
         String trans = transportPick();
         int scale = importantScale.getValue();
 
-        return new ChangedObject(from, to, name, eventDate, trans, scale);
+        return new RawUserInput(from, to, name, eventDate, trans, scale);
     }
 
     /**
@@ -317,7 +318,7 @@ public class UserInputFrame extends JFrame {
     /**
      * @param object
      */
-    private void notifyListener(ChangedObject object) {
+    private void notifyListener(RawUserInput object) {
         for (Listener l : listeners) {
             l.update(object);
         }

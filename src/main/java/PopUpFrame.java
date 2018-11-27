@@ -35,7 +35,7 @@ public class PopUpFrame extends JFrame {
         setResizable(false);
         this.setLayout(new FlowLayout());
         this.add(panel);
-        super.setBounds(0, 0, 400, 400);
+        super.setBounds(0, 0, 400, 300);
     }
 
     /**

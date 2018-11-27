@@ -7,9 +7,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Class CalendarEvent collects all infromation the user inputs to schedule an event.
+ * Class CalendarEvent collects all information the user inputs to schedule an event.
  */
-public class CalendarEvent implements Serializable, Comparable<CalendarEvent> {
+public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, Cloneable {
     protected int DEFAULT_PREPARE_MIN = 30;
     protected String addressFrom;
     protected String addressTo;
@@ -57,7 +57,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent> {
     /**
      * @return returns all the user inputs
      */
-    public String toString() {
+    public String getSummaryInfo() {
         return String.format("\t%s\n*** %s ***\n%s  --->  %s\n" +
                         "Alarm set at: %s\n", eventName, getArrivalTimeString(),
                 originName, destName, getAlarmString());
@@ -152,7 +152,13 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent> {
                 transport.equals(comparingEvent.transport));
     }
 
-    public CalendarEvent copy() {
+    /**
+     * Deep clone a object
+     * @return copy object
+     */
+
+    @Override
+    public CalendarEvent clone() {
         return new CalendarEvent(addressFrom, addressTo, eventName, originName,
                 destName, (GregorianCalendar) arrivalDateTime.clone(),
                 transport.copy(), importantScale);
@@ -163,7 +169,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent> {
         return (this.arrivalDateTime.compareTo(o.arrivalDateTime));
     }
 
-    public String getStringDetail() {
+    public String toString() {
         return String.format("Date & Time:\t%s\n\nOrigin:\t%s\n\nDestination:\t%s\n\nTravel by:\t%s\n\n" +
                         "%s",
                 getArrivalTimeString(), addressFrom, addressTo, transport.toString(), getEventInfo());

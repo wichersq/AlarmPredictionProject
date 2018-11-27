@@ -18,7 +18,7 @@ public class OutputFrame extends JFrame implements Listener {
     private JList list;
     private JScrollPane scrollPaneDetail;
     private EventModel model;
-//    private JButton showButton;
+    //    private JButton showButton;
     private JButton deleteButton;
     private Box buttonBox;
     private MyList myList;
@@ -42,7 +42,7 @@ public class OutputFrame extends JFrame implements Listener {
         setResizable(false);
         add(listPanel, BorderLayout.CENTER);
         add(detailPanel, BorderLayout.EAST);
-        add(deleteButton , BorderLayout.SOUTH);
+        add(deleteButton, BorderLayout.SOUTH);
 
     }
 
@@ -60,7 +60,7 @@ public class OutputFrame extends JFrame implements Listener {
         listPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
-    private void createEventDetailPanel(){
+    private void createEventDetailPanel() {
         detailPanel = new JPanel();
 
         textArea = new TextAreaDetail(myList);
@@ -70,7 +70,8 @@ public class OutputFrame extends JFrame implements Listener {
 
         detailPanel.add(scrollPaneDetail, BorderLayout.CENTER);
     }
-    private void createButtonBox(){
+
+    private void createButtonBox() {
         buttonBox = Box.createHorizontalBox();
 //        showButton = new JButton("Show Detail");
         deleteButton = new JButton("Delete");
@@ -79,7 +80,6 @@ public class OutputFrame extends JFrame implements Listener {
 
     }
 
-    //TODO: adds action to button
     public void updateTextList() {
         ArrayList<CalendarEvent> calendarList = model.getEventsList();
         listModel.setSize(0);
@@ -88,33 +88,19 @@ public class OutputFrame extends JFrame implements Listener {
             listModel.addElement(event);
         }
     }
-//    /**
-//     * Adds the new event to the list of events that were scheduled before
-//     */
-//    public void updateTextList() {
-//        ArrayList<String> calendarList = model.getEvents();
-//        StringBuilder strBuilder = new StringBuilder();
-//        int index = 0;
-//        for (String event : calendarList) {
-//            index++;
-//            strBuilder.append(String.format("Event %d:", index));
-//            strBuilder.append(event);
-//        }
-//        textArea.setText(strBuilder.toString());
-//    }
-        /**
-         *  Adds action to button
-         * @param e     action when button is clicked
-         */
-        public void addActionDeleteButton(ActionListener e) {
-            deleteButton.addActionListener(e);
-        }
 
-        public CalendarEvent getSelectionFromList(){
-            return myList.getCurrentSelection();
-        }
+    /**
+     * Adds action to button
+     *
+     * @param e action when button is clicked
+     */
+    public void addActionDeleteButton(ActionListener e) {
+        deleteButton.addActionListener(e);
+    }
 
-
+    public CalendarEvent getSelectionFromList() {
+        return myList.getCurrentSelection();
+    }
 
 
     /**

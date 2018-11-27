@@ -40,7 +40,4 @@ public class Walking extends Transportation{
         return(other.getClass().equals(this));
     }
 
-    public Walking copy() {
-        return new Walking(durationInSec);
-    }
 }

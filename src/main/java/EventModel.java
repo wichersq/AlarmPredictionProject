@@ -1,7 +1,3 @@
-import javafx.beans.Observable;
-
-import javax.swing.*;
-import javax.swing.event.ListDataListener;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -13,7 +9,7 @@ public class EventModel {
     private ArrayList<Listener> listeners;
     private HashMap<GregorianCalendar, CalendarEvent> events;
     private File file;
-    private LinkedBlockingQueue<ChangedObject> eventsToProcess;
+    private LinkedBlockingQueue<RawUserInput> eventsToProcess;
 
     /**
      * Constructor
@@ -50,7 +46,7 @@ public class EventModel {
      * @param ob
      */
 
-    public void addEventToProcess(ChangedObject ob) {
+    public void addEventToProcess(RawUserInput ob) {
         try {
             eventsToProcess.put(ob);
         } catch (InterruptedException ex) {
@@ -62,8 +58,8 @@ public class EventModel {
      * @return
      */
 
-    public ChangedObject getEventToProcess() {
-        ChangedObject event = null;
+    public RawUserInput getEventToProcess() {
+        RawUserInput event = null;
         try {
             System.out.println("start run");
             event = eventsToProcess.take();
@@ -96,7 +92,7 @@ public class EventModel {
         Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
         while (iterator.hasNext()) {
             event = iterator.next().getValue();
-            eventList.add(event.copy());
+            eventList.add(event.clone());
         }
         Collections.sort(eventList);
         return eventList;

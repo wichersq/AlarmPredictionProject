@@ -1,6 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-        //TODO: fix ready time for longer driving time.
         boolean isDryRun = true;
         if(args.length >= 1){
             isDryRun = args[0].equalsIgnoreCase("1");

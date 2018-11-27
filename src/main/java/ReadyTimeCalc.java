@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * Class ReadyTimeCalc calculates the time it would take for the user to prepare for an event set at a specified place,
-   using secified mode of transportation, and taking into account the level of priority of the event. 
+ * using secified mode of transportation, and taking into account the level of priority of the event.
  */
 public class ReadyTimeCalc implements Runnable {
     private EventModel model;
@@ -18,8 +18,9 @@ public class ReadyTimeCalc implements Runnable {
 
     /**
      * Constructor
+     *
      * @param model
-     * @param outputFrame 
+     * @param outputFrame
      * @param controller
      */
     public ReadyTimeCalc(EventModel model, OutputFrame outputFrame, Controller controller, boolean isDryRun) {
@@ -36,6 +37,7 @@ public class ReadyTimeCalc implements Runnable {
 
     /**
      * Gets the api key from a file
+     *
      * @return api key
      */
     private static String readApiKey() {
@@ -66,9 +68,10 @@ public class ReadyTimeCalc implements Runnable {
 
     /**
      * Process the raw input from user and call api on that information
+     *
      * @param ob information object
      */
-    private void requestData(ChangedObject ob) {
+    private void requestData(RawUserInput ob) {
         System.out.println("pull data request now");
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
 
@@ -109,6 +112,7 @@ public class ReadyTimeCalc implements Runnable {
 
     /**
      * Adjust the ready time from the user request
+     *
      * @param changingTime adjusts the preparation time according to the user input
      */
     public void adjustReadyTime(int changingTime) {
@@ -118,7 +122,7 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     *Creates buttons for the PopUpFrame
+     * Creates buttons for the PopUpFrame
      */
     private void createsButtonOfPopUp() {
         popUp.addActionSaveButton(ActionEvent -> {

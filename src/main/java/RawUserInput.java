@@ -3,7 +3,7 @@ import java.util.GregorianCalendar;
 /**
  * A class that holds all input from the user.
  */
-public class ChangedObject {
+public class RawUserInput {
     private String addressFrom = "";
     private String addressTo = "";
     private String name = "";
@@ -20,8 +20,8 @@ public class ChangedObject {
      * @param transportType Mode of transportation 
      * @param importantScale The importance level of an event to the user
      */
-    public ChangedObject(String addressFrom, String addressTo, String name,
-                         GregorianCalendar arrivalDateTime, String transportType, double importantScale){
+    public RawUserInput(String addressFrom, String addressTo, String name,
+                        GregorianCalendar arrivalDateTime, String transportType, double importantScale){
         this.addressFrom = addressFrom;
         this.addressTo = addressTo;
         this.name = name;
