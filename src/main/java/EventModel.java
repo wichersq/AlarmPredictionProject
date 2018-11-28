@@ -3,7 +3,7 @@ import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * A model keeps track all events' values
+ * A model keeps track all events' values.
  */
 public class EventModel {
     private ArrayList<Listener> listeners;
@@ -12,7 +12,7 @@ public class EventModel {
     private LinkedBlockingQueue<RawUserInput> eventsToProcess;
 
     /**
-     * Constructor
+     * Constructor for the class. 
      *
      * @param filePath file path that save old information
      */
@@ -24,7 +24,7 @@ public class EventModel {
     }
 
     /**
-     * adds a listener
+     * Adds a listener.
      *
      * @param l adding listener
      */
@@ -33,7 +33,7 @@ public class EventModel {
     }
 
     /**
-     * Adds event to the list
+     * Adds event to the list.
      *
      * @param s the adding event
      */
@@ -43,7 +43,7 @@ public class EventModel {
     }
 
     /**
-     * @param ob
+     * @param ob object with the user input
      */
 
     public void addEventToProcess(RawUserInput ob) {
@@ -55,7 +55,7 @@ public class EventModel {
     }
 
     /**
-     * @return
+     * @return returns the event
      */
 
     public RawUserInput getEventToProcess() {
@@ -71,7 +71,7 @@ public class EventModel {
     }
 
     /**
-     * Checks if the time is already in the the list
+     * Checks if the time is already in the the list.
      *
      * @param dateTime the checking time
      * @return true or false
@@ -81,7 +81,7 @@ public class EventModel {
     }
 
     /**
-     * Gets list of events in sort order
+     * Gets list of events in sort order.
      *
      * @return a copy of list of events in string format
      */
@@ -103,7 +103,7 @@ public class EventModel {
     }
 
     /**
-     * notifies all listener
+     * Notifies all listeners.
      *
      * @param object changed object
      */
@@ -122,7 +122,7 @@ public class EventModel {
     }
 
     /**
-     * Saves all event to file
+     * Saves all event to file.
      */
     public void saveEventsToFile() {
         try {
@@ -140,7 +140,7 @@ public class EventModel {
 //TODO:  catch InvalidClassException
 
     /**
-     * Restore information from file
+     * Restore information from file.
      */
 
     public void restoreEventsFromFile() {
