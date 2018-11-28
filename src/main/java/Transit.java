@@ -1,5 +1,5 @@
 /**
- * Class Transit calculates time it would take for the user to get to ending destination using public transportation
+ * Class Transit calculates time it would take for the user to get to ending destination using public transportation/
  */
 public class Transit extends Transportation {
     private final static int TRAVEL_SEC_PER_BREAK = 4 * 60 * 60;
@@ -9,7 +9,7 @@ public class Transit extends Transportation {
     }
 
     /**
-     * Calculates break time when using public transportation
+     * Calculates break time when using public transportation.
      *
      * @return break time when using public transportation
      */
@@ -28,9 +28,9 @@ public class Transit extends Transportation {
     }
 
     /**
-     *
-     * @param other
-     * @return
+     * Provides another object to compare the time and date with the new event
+     * @param other another event
+     * @return new event
      */
     public boolean equals(Object other) {
         return (other.getClass().equals(this));
