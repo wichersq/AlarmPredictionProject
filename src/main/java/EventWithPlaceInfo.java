@@ -1,13 +1,13 @@
 import java.util.GregorianCalendar;
 
 /**
- * 
+ * Class EventWithPlaceInfo creates an event with all of the user input information.
  */
 public class EventWithPlaceInfo extends CalendarEvent {
     private double averageRating;
 
     /**
-     * Constructor
+     * Constructor for the class.
      * @param addressFrom Starting address
      * @param addressTo Ending address
      * @param eventName Name of the event 
