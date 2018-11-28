@@ -8,6 +8,7 @@ public class TransportationFactory {
     public final static String TRANSIT_TYPE = "TRANSIT";
 
     /**
+     * Displays all modes of transportation.
      * @param type mode of transportation
      * @param duration time is takes to travel from starting destination to ending destination using specified mode of transportation.
      * @return returns the time
