@@ -67,14 +67,16 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
     }
 
     /**
-     * @return returns the information in the given format
+     * Gets alarm time in string format
+     * @return the alarm time
      */
     public String getAlarmString() {
         return dateTimeFormat.format(alarmTime.getTime());
     }
 
     /**
-     * @return returns the arrival time
+     * Gets arrival time in string format
+     * @return the arrival time
      */
 
     public String getArrivalTimeString() {
@@ -82,7 +84,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
     }
 
     /**
-     * Returns the adjusted preparation time for the event based on the importance.
+     * Calculates the adjusted preparation time for the event based on the importance.
      */
     protected void calPrepareTime() {
         preparingTime = DEFAULT_PREPARE_MIN + (int) importantScale * 5;
@@ -98,12 +100,12 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
     }
 
     /**
+     * Adjust preparing time depends on the user's wish
      * @param adjustMin user input of how much time they want to add
      */
     public void editReadyTime(double adjustMin) {
         recommendedReadyMin += adjustMin;
         alarmTime.add(Calendar.MINUTE, -(int) adjustMin);
-        System.out.println(getAlarmString());
     }
 
 //    /**
@@ -163,10 +165,18 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
     }
 
     @Override
+    /**
+     * Compare 2 CalendarEvent 
+     *
+     */
     public int compareTo(CalendarEvent o) {
         return (this.arrivalDateTime.compareTo(o.arrivalDateTime));
     }
 
+    /**
+     * Gets information in string format
+     * @return a string
+     */
     public String toString() {
         return String.format("Date & Time:\t%s\n\nOrigin:\t%s\n\n" +
                         "Destination:\t%s\n\nTravel by:\t%s\n\n%s",
@@ -174,6 +184,5 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
                 transport.toString(), getEventInfo());
     }
 
-    //TODO: Need to write unitTest
 }
 

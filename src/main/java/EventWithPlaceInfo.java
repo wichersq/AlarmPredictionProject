@@ -33,7 +33,7 @@ public class EventWithPlaceInfo extends CalendarEvent {
      */
     protected void calPrepareTime(){
         preparingTime = DEFAULT_PREPARE_MIN + (int)
-                (importantScale * 0.5 + (importantScale - averageRating*6)*0.5);
+                ((importantScale * 5)*0.5 + ((5 - averageRating)*6)*0.5);
     }
     @Override
     public EventWithPlaceInfo clone() throws CloneNotSupportedException{
