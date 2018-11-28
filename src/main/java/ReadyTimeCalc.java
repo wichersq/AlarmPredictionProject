@@ -72,7 +72,6 @@ public class ReadyTimeCalc implements Runnable {
      * @param ob information object
      */
     private void requestData(RawUserInput ob) {
-        System.out.println("pull data request now");
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
 
         String destName;
@@ -82,7 +81,7 @@ public class ReadyTimeCalc implements Runnable {
         String startAddress;
         String endAddress;
         double importantScale = ob.getImportantScale();
-        //TODO: this is for example without using API Key
+        // this is for example without using API Key
         if (isDryRun) {
             destName = "570 N Shoreline Blvd";
             originName = "189 Central Ave";
@@ -91,7 +90,7 @@ public class ReadyTimeCalc implements Runnable {
             startAddress = "189 Central Ave, Mountain View, CA 94043, USA";
             endAddress = "570 N Shoreline Blvd, Mountain View, CA 94043, USA";
         }
-        //TODO: This will need Api Key to run
+        // This will need Api Key to run
         else {
             dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
                     ob.getTransport(), arrivalDateTime);

@@ -1,5 +1,3 @@
-
-import java.awt.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -175,5 +173,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
                 getArrivalTimeString(), addressFrom, addressTo,
                 transport.toString(), getEventInfo());
     }
+
+    //TODO: Need to write unitTest
 }
 

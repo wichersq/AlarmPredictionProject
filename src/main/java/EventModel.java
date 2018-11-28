@@ -137,8 +137,6 @@ public class EventModel {
             i.printStackTrace();
         }
     }
-//TODO:  catch InvalidClassException
-
     /**
      * Restore information from file
      */
@@ -156,12 +154,8 @@ public class EventModel {
             }
             inputStream.close();
             fileInput.close();
-        } catch (EOFException e) {
+        } catch (Exception e) {
             return;
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (ClassNotFoundException e2) {
-            e2.printStackTrace();
         }
     }
 
