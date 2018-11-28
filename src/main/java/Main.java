@@ -1,3 +1,6 @@
+/**
+ * Class Main runs the program wothout using the APIKey
+ */
 public class Main {
     public static void main(String[] args) {
         boolean isDryRun = true;

@@ -95,7 +95,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * Adds action to button
+     * Adds action to button.
      *
      * @param e action when button is clicked
      */
@@ -104,7 +104,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * Adds action to button
+     * Adds action to button.
      *
      * @param e action when button is clicked
      */
@@ -113,7 +113,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * Adds action to button
+     * Adds action to button.
      *
      * @param e action when button is clicked
      */
@@ -122,7 +122,7 @@ public class PopUpFrame extends JFrame {
     }
 
     /**
-     * Adds action to button
+     * Adds action to button.
      *
      * @param e action when button is clicked
      */

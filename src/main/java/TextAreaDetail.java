@@ -1,11 +1,11 @@
 import javax.swing.*;
 
 /**
- * Text Area class that can listen the change from the model
+ * Text Area class that can listen the change from the model.
  */
 public class TextAreaDetail extends JTextArea implements Listener {
     /**
-     * Constructor
+     * Constructor for the class.
      *
      * @param list selection list
      */
@@ -14,7 +14,7 @@ public class TextAreaDetail extends JTextArea implements Listener {
     }
 
     /**
-     * Updates whenever the model change
+     * Updates whenever the model changes.
      *
      * @param ob updating object
      */

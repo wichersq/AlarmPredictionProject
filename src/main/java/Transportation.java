@@ -1,7 +1,8 @@
 import java.io.Serializable;
 
 /**
- *
+ * Class Transportation determines the estimated time it would take to travel 
+ * from starting destination to ending destination including the break times.
  */
 public abstract class Transportation  implements Serializable, Cloneable {
     final static int BREAK_TIME_SEC = 30*60;
@@ -14,13 +15,13 @@ public abstract class Transportation  implements Serializable, Cloneable {
     }
 
     /**
-     *
-     * @return
+     * Calculates break time.
+     * @return breaktime
      */
     abstract int calculateBreakTime();
 
     /**
-     *
+     * Sets the minimum time it would take to travel from starting destination to ending destination.
      */
     private void setTotalMinTravel(){
         travelInSec = calculateBreakTime() + durationInSec;
@@ -32,16 +33,16 @@ public abstract class Transportation  implements Serializable, Cloneable {
 
 
     /**
-     *
-     * @return
+     * Accessor for TotalTravelMin.
+     * @return minimum travel time
      */
     public int getTotalTravelMin(){
         return travelInSec/60;
     }
 
     /**
-     *
-     * @return
+     * Tostring method
+     * @return toString
      */
     public abstract String toString();
 

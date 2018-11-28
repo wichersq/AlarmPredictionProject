@@ -10,7 +10,7 @@ public class Controller implements Listener {
     private OutputFrame outputFrame;
 
     /**
-     * Constructor of class
+     * Constructor of the class.
      *
      * @param userInput   user interface
      * @param model       model that stores all events
@@ -25,9 +25,9 @@ public class Controller implements Listener {
     }
 
     /**
-     * Method where the information from UserInput to queue so the consumer thread can get it
+     * Method where the information from UserInput to queue so the consumer thread can get it.
      *
-     * @param ob
+     * @param ob holds info from raw user input.
      */
     private void requestData(RawUserInput ob) {
         model.addEventToProcess(ob);
@@ -58,7 +58,7 @@ public class Controller implements Listener {
     }
 
     /**
-     * Creates a button
+     * Creates a button.
      */
     private void createButtonUserInput() {
         userInput.addActionShowButton(ActionEvent -> {
@@ -72,7 +72,7 @@ public class Controller implements Listener {
     }
 
     /**
-     * Deletes events in the event model
+     * Deletes events in the event model.
      *
      * @param ob deleting object
      */

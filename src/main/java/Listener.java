@@ -1,10 +1,10 @@
 /**
- *
+ * Reference type
  */
 public interface Listener {
     /**
-     *
-     * @param ob
+     * Updates the event list.
+     * @param ob provides on object to update
      */
     void update(Object ob);
 

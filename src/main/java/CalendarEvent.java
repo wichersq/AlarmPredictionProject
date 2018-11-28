@@ -24,7 +24,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
     protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param addressFrom     Address of the starting destination
      * @param addressTo       Address of the ending destination
@@ -115,7 +115,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
 //    }
 
     /**
-     * Get a prompt about the ready time information
+     * Get a prompt about the ready time information.
      *
      * @return a string about the ready time
      */
@@ -134,7 +134,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
     }
 
     /**
-     * Compares if the object is the same
+     * Compares if the object is the same.
      *
      * @param other comparing object
      * @return false if it is not equal otherwise true
@@ -151,7 +151,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
     }
 
     /**
-     * Deep clone a object
+     * Deep clone an object.
      * @return copy object
      */
 

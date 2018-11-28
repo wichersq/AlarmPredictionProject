@@ -12,8 +12,8 @@ public class Driving extends Transportation {
     }
 
     /**
-     *
-     * @return returns
+     * Calculates the estimated break time the user will take when driving.
+     * @return returns calculated break time
      */
     protected int calculateBreakTime() {
         double numOfBreak = Math.floor(durationInSec / TRAVEL_SEC_PER_BREAK);
@@ -30,8 +30,8 @@ public class Driving extends Transportation {
 
 
     /**
-     * @param other
-     * @return
+     * @param other another object used to compare the new object
+     * @return class
      */
     public boolean equals(Object other) {
         return (other.getClass().equals(this));

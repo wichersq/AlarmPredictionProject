@@ -38,7 +38,7 @@ public class UserInputFrame extends JFrame {
     private GregorianCalendar eventDate;
 
     /**
-     * Constructor
+     * Constructor for the class.
      *
      * @param size size of the panel
      */
@@ -72,7 +72,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Creates a new JPanel
+     * Creates a new JPanel.
      */
     private void createPanel() {
         panel = new JPanel();
@@ -89,10 +89,10 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     * Creates a format text for field
+     * Creates a format text for field.
      *
      * @param format
-     * @return
+     * @return returns JTextFeild
      */
 
     private JFormattedTextField createFormatField(String format) {
@@ -109,7 +109,7 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     * Creates a text field within the panel
+     * Creates a text field within the panel.
      */
     private void createTextFields() {
         addressFrom = new JTextField();
@@ -122,7 +122,7 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     * Creates text boxes within the window
+     * Creates text boxes within the window.
      */
     private void addTextFieldsToBox() {
         textFieldBox = Box.createVerticalBox();
@@ -146,7 +146,7 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     * Creates the checkboxes for the user
+     * Creates the checkboxes for the user.
      */
     private void createCheckBox() {
         ButtonGroup group = new ButtonGroup();
@@ -168,7 +168,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Creates a slider bar in the panel
+     * Creates a slider bar in the panel.
      */
     private void createSliderBar() {
         sliderBox = Box.createVerticalBox();
@@ -253,7 +253,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Allows the user to erase all the inputted information
+     * Allows the user to erase all the inputted information.
      */
 
     public void setBackToDefault() {
@@ -287,7 +287,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Allows user to pick a mode of transportation
+     * Allows user to pick a mode of transportation.
      *
      * @return returns the mode of transportation
      */
@@ -303,7 +303,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * adds a listener
+     * Adds a listener.
      *
      * @param l adding listener
      */
@@ -316,7 +316,7 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     * Adds action to button
+     * Adds action to button.
      *
      * @param e action when button is clicked
      */

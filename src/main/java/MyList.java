@@ -3,7 +3,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Class to creates JTextArea for Jlist's cell
+ * Class to creates JTextArea for Jlist's cell.
  */
 public class MyList extends JTextArea implements ListCellRenderer {
     private ArrayList<Listener> listeners;
@@ -17,7 +17,7 @@ public class MyList extends JTextArea implements ListCellRenderer {
 
     /**
      * Returns a component that has been configured to display the specified
-     * value.
+       value.
      * @param list The JList we're painting.
      * @param value The value returned by list.getModel().getElementAt(index).
      * @param index The cells index.
@@ -44,7 +44,7 @@ public class MyList extends JTextArea implements ListCellRenderer {
     }
 
     /**
-     * Adds a listener
+     * Adds a listener.
      *
      * @param l adding listener
      */
@@ -53,7 +53,7 @@ public class MyList extends JTextArea implements ListCellRenderer {
     }
 
     /**
-     * Notifies all listener
+     * Notifies all listeners.
      *
      * @param object changed object
      */

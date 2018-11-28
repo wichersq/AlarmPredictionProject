@@ -12,7 +12,7 @@ public class RawUserInput {
     private double importantScale;
 
     /**
-     * Constructor
+     * Constructor for the class.
      * @param addressFrom Address of starting destination
      * @param addressTo Address of ending destination
      * @param name Name of event
@@ -31,18 +31,18 @@ public class RawUserInput {
     }
 
     /**
-     * Accessor for addressFrom
+     * Accessor for addressFrom.
      * @return origin address
      */
     public String getAddressFrom(){return addressFrom;}
     /**
-     * Accessor for addressTo
+     * Accessor for addressTo.
      * @return destination address
      */
     public String getAddressTo(){return addressTo;}
 
     /**
-     * Accessor for name
+     * Accessor for name.
      * @return name of event
      */
     public String getName(){return name;}
@@ -56,13 +56,13 @@ public class RawUserInput {
     }
 
     /**
-     * Accessor for transport
+     * Accessor for transport.
      * @return mode of transportation
      */
     public String getTransport(){return transport;}
 
     /**
-     * Accessor for importantScale
+     * Accessor for importantScale.
      * @return the level of importance of the event
      */
     public double getImportantScale(){return importantScale;}
