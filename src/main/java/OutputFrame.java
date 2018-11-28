@@ -1,13 +1,11 @@
 import javax.swing.*;
-
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
  * Class OutputFrame displays the event information and estimated time the user would need
- * to prepare for the event along with all the event that were scheduled prior.
+   to prepare for the event along with all the event that were scheduled prior.
  */
 public class OutputFrame extends JFrame implements Listener {
     private TextAreaDetail textArea;
@@ -24,8 +22,8 @@ public class OutputFrame extends JFrame implements Listener {
     private MyList myList;
 
     /**
-     * @param model
-     * @param size  desired size of output frame
+     * @param model 
+     * @param size desired size of output frame
      */
     public OutputFrame(EventModel model, int size) {
         super.setTitle("Scheduled Events");
@@ -47,7 +45,7 @@ public class OutputFrame extends JFrame implements Listener {
     }
 
     /**
-     * Creates the detailPanel for the event to display
+     * Creates the detailPanel for the event to display.
      */
     private void createEventListPanel() {
         listPanel = new JPanel();
@@ -90,7 +88,7 @@ public class OutputFrame extends JFrame implements Listener {
     }
 
     /**
-     * Adds action to button
+     * Adds action to button.
      *
      * @param e action when button is clicked
      */
@@ -104,7 +102,7 @@ public class OutputFrame extends JFrame implements Listener {
 
 
     /**
-     * Updates the event list with the new event
+     * Updates the event list with the new event.
      *
      * @param ob
      */
