@@ -1,11 +1,11 @@
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Class CalendarEventFactory creates an event for the calendar.
  */
 public class CalendarEventFactory {
     /**
-     * The class creates an event for the calendar.
+     * Stores information about each scheduled event.
      * @param addressFrom Address of destination
      * @param addressTo Address of starting
      * @param eventName name of event
