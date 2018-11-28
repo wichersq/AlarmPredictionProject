@@ -112,7 +112,7 @@ public class DataRequest {
     }
 
     /**
-     * Acessor for Rating.
+     * Accessor for Rating.
      * @return the rate of the destination given by google
      */
     public float getRating() {
@@ -120,7 +120,7 @@ public class DataRequest {
     }
 
     /**
-     * Acessor for DurationSec.
+     * Accessor for DurationSec.
      * @return how long the travel time is to get from starting detination to ending destination
      */
     public long getDurationSec() {
@@ -128,7 +128,7 @@ public class DataRequest {
     }
 
     /**
-     * Acessor for StartAddress.
+     * Accessor for StartAddress.
      * @return the starting address
      */
     public String getStartAddress() {
@@ -136,7 +136,7 @@ public class DataRequest {
     }
 
     /**
-     * Acessor for EndAddress.
+     * Accessor for EndAddress.
      * @return the ending address
      */
     public String getEndAddress() {

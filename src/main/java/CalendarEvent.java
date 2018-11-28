@@ -166,7 +166,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
 
     @Override
     /**
-     * Compare 2 CalendarEvent 
+     * Compare 2 CalendarEvent
      *
      */
     public int compareTo(CalendarEvent o) {

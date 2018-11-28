@@ -3,7 +3,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Class to creates JTextArea for Jlist's cell.
+ * Class to creates JTextArea for each Jlist cell.
  */
 public class MyList extends JTextArea implements ListCellRenderer {
     private ArrayList<Listener> listeners;
@@ -16,9 +16,8 @@ public class MyList extends JTextArea implements ListCellRenderer {
     }
 
     /**
-     * Returns a component that has been configured to display the specified
-       value.
-     * @param list The JList we're painting.
+     * Returns a text area for each cell
+     * @param list The JList for painting.
      * @param value The value returned by list.getModel().getElementAt(index).
      * @param index The cells index.
      * @param isSelected True if the specified cell was selected.
@@ -28,9 +27,9 @@ public class MyList extends JTextArea implements ListCellRenderer {
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index,
                                                   boolean isSelected, boolean cellHasFocus) {
+        setBackground(null);
         CalendarEvent event = (CalendarEvent) value;
         setText(event.getSummaryInfo());
-        setBackground(null);
         if (cellHasFocus) {
             currentOb = event;
             setBackground(Color.LIGHT_GRAY);

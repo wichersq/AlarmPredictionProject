@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * Class ReadyTimeCalc calculates the time it would take for the user to prepare for an event set at a specified place,
- * using secified mode of transportation, and taking into account the level of priority of the event.
+ * using specified mode of transportation, and taking into account the level of priority of the event.
  */
 public class ReadyTimeCalc implements Runnable {
     private EventModel model;

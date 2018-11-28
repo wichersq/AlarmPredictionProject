@@ -21,8 +21,10 @@ public class OutputFrame extends JFrame implements Listener {
     private Box buttonBox;
     private MyList myList;
 
+
     /**
-     * @param model 
+     * Constructor
+     * @param model model that using to get values
      * @param size desired size of output frame
      */
     public OutputFrame(EventModel model, int size) {
@@ -30,7 +32,6 @@ public class OutputFrame extends JFrame implements Listener {
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, 900, 500);
         setDefaultLookAndFeelDecorated(true);
-//      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createEventListPanel();
         createEventDetailPanel();
         createButtonBox();
@@ -58,6 +59,9 @@ public class OutputFrame extends JFrame implements Listener {
         listPanel.add(scrollPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates a panel that show event detail
+     */
     private void createEventDetailPanel() {
         detailPanel = new JPanel();
 
@@ -69,15 +73,19 @@ public class OutputFrame extends JFrame implements Listener {
         detailPanel.add(scrollPaneDetail, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates button
+     */
     private void createButtonBox() {
         buttonBox = Box.createHorizontalBox();
-//        showButton = new JButton("Show Detail");
         deleteButton = new JButton("Delete");
-//        buttonBox.add(showButton);
-//        buttonBox.add(deleteButton);
+
 
     }
 
+    /**
+     *
+     */
     public void updateTextList() {
         ArrayList<CalendarEvent> calendarList = model.getEventsList();
         listModel.setSize(0);

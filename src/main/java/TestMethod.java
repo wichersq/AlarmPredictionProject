@@ -1,5 +1,8 @@
 import static org.junit.Assert.assertEquals;
 
+/**
+ * A Class shows example of unit test
+ */
 public class TestMethod {
     @org.junit.Test
     public void calculateTotalDrivingDuration(){
