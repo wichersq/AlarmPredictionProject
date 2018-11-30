@@ -73,8 +73,5 @@ public class OnlinePopUpFrame extends PopUpFrame {
     public void addActionAdjustButton(ActionListener e) {
         adjustButton.addActionListener(e);
     }
-    public static void main(String[] args){
-        new OnlinePopUpFrame("hi\nhi\nhi");
-    }
-}
+ }
 

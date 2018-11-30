@@ -21,8 +21,8 @@ public class ReadyTimeCalc implements Runnable {
      * Constructor for the class.
      *
      * @param model       model that using to get values
-     * @param outputFrame
-     * @param controller
+     * @param outputFrame output of the program
+     * @param controller  controller of the program
      */
     public ReadyTimeCalc(EventModel model, OutputFrame outputFrame, Controller controller, boolean isDryRun) {
         this.isDryRun = isDryRun;
@@ -61,7 +61,11 @@ public class ReadyTimeCalc implements Runnable {
     @Override
     public void run() {
         while (true) {
-            requestData(model.getEventToProcess());
+            try {
+                requestData(model.getEventToProcess());
+            }catch (Exception e){
+                break;
+            }
         }
     }
 
@@ -162,9 +166,7 @@ public class ReadyTimeCalc implements Runnable {
             controller.resetUserFrame();
         });
 
-        popUp.addActionEditButton(ActionEvent -> {
-            popUp.setVisible(false);
-        });
+        popUp.addActionEditButton(ActionEvent -> popUp.setVisible(false));
 
         popUp.addActionAdjustButton(ActionEvent -> {
             int adjustingTime = popUp.getSliderValue();

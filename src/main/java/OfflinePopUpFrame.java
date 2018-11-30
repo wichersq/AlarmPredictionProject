@@ -41,7 +41,8 @@ public class OfflinePopUpFrame extends PopUpFrame {
     }
 
     /**
-     * @param alarmStr
+     * Shows the popUp with new message
+     * @param alarmStr alarm in string format
      */
     public void showPopUp(String alarmStr) {
         detailMessage.setText(alarmStr);
@@ -50,7 +51,8 @@ public class OfflinePopUpFrame extends PopUpFrame {
     }
 
     /**
-     * @return returns slider value
+     * Gets slider value
+     * @return slider value
      */
     public int getSliderValue() {
         int value = slider.getValue();
@@ -61,10 +63,6 @@ public class OfflinePopUpFrame extends PopUpFrame {
     @Override
     protected void addActionAdjustButton(ActionListener e) {
         addTimeButton.addActionListener(e);
-    }
-
-    public static void main(String[] args){
-        new OfflinePopUpFrame("hi");
     }
 
 }
