@@ -91,8 +91,8 @@ public class UserInputFrame extends JFrame {
     /**
      * Creates a format text for field.
      *
-     * @param format
-     * @return returns JTextFeild
+     * @param format format for the textfield
+     * @return right format for textfield
      */
 
     private JFormattedTextField createFormatField(String format) {
@@ -194,7 +194,6 @@ public class UserInputFrame extends JFrame {
         buttonBox.add(showButton);
         addButton.addActionListener(ActionEvent -> {
             try {
-                createDateTime(date.getText(), time.getText());
                 RawUserInput changeOb = gatherInfo();
                 notifyListener(changeOb);
             } catch (NumberFormatException e) {
@@ -204,8 +203,7 @@ public class UserInputFrame extends JFrame {
     }
 
     /**
-     * Gathers the starting and ending destinations, name, mode of transportation, and prority of the new event.
-     *
+     * Gathers the user input
      * @return returns the new event
      */
     private RawUserInput gatherInfo() {
@@ -214,9 +212,10 @@ public class UserInputFrame extends JFrame {
         String name = eventName.getText();
         try {
             isInputValid(from, to);
-        }catch (InvalidObjectException e){
+        } catch (InvalidObjectException e) {
             popUpWarningMessage("Please check your input for address");
         }
+        createDateTime(date.getText(), time.getText());
         String trans = transportPick();
         int scale = importantScale.getValue();
 
@@ -230,24 +229,31 @@ public class UserInputFrame extends JFrame {
      * @param convertingTime Scheduled time of the event
      * @throws NumberFormatException If the user inputs an invalid time or date then the program will notify the user
      */
-    private void createDateTime(String convertingDate, String convertingTime) throws NumberFormatException{
+    private void createDateTime(String convertingDate, String convertingTime) throws NumberFormatException {
 
-        String[] dateArr = convertingDate.split("/");
-        int month = Integer.parseInt(dateArr[0]);
-        int date = Integer.parseInt(dateArr[1]);
-        int year = Integer.parseInt(dateArr[2]);
+        if (!convertingDate.equals("__/__/____") && !convertingDate.equals("__:__")) {
+            System.out.println("if");
+            String[] dateArr = convertingDate.split("/");
+            int month = Integer.parseInt(dateArr[0]);
+            int date = Integer.parseInt(dateArr[1]);
+            int year = Integer.parseInt(dateArr[2]);
 
-        String[] timeArr = convertingTime.split(":");
-        int hour = Integer.parseInt(timeArr[0]);
-        int min = Integer.parseInt(timeArr[1]);
+            String[] timeArr = convertingTime.split(":");
+            int hour = Integer.parseInt(timeArr[0]);
+            int min = Integer.parseInt(timeArr[1]);
 
-        eventDate = new GregorianCalendar(year, month - 1, date, hour, min);
-        if (eventDate.before(Calendar.getInstance())){
-            popUpWarningMessage("The time is invalid. Please try different time");
-            throw new NumberFormatException("Invalid input");
-        }
-        if (controller.checkIfTimeOccupied(eventDate)) {
-            popUpWarningMessage("The time is already occupied. Please try different time");
+            eventDate = new GregorianCalendar(year, month - 1, date, hour, min);
+            if (eventDate.before(Calendar.getInstance())) {
+                popUpWarningMessage("The time is invalid. Please try different time");
+                throw new NumberFormatException("Invalid input");
+            }
+            if (controller.checkIfTimeOccupied(eventDate)) {
+                popUpWarningMessage("The time is already occupied. Please try different time");
+                throw new NumberFormatException("Invalid input");
+            }
+        } else {
+            System.out.println("else");
+            popUpWarningMessage("Date or time in invalid format. Please try different time");
             throw new NumberFormatException("Invalid input");
         }
     }
@@ -326,15 +332,23 @@ public class UserInputFrame extends JFrame {
 
 
     /**
-     * @param object
+     * Notifies listener
+     * @param object    changing object
      */
     private void notifyListener(RawUserInput object) {
         for (Listener l : listeners) {
             l.update(object);
         }
     }
-    private void isInputValid(String addressFrom, String addressTo)throws InvalidObjectException {
-        if (addressFrom.length() == 0 || addressTo.length() == 0){
+
+    /**
+     * Checks if address inputs are valid
+     * @param addressFrom origin address
+     * @param addressTo destination address
+     * @throws InvalidObjectException throws when address is empty
+     */
+    private void isInputValid(String addressFrom, String addressTo) throws InvalidObjectException {
+        if (addressFrom.length() == 0 || addressTo.length() == 0) {
             throw new InvalidObjectException("Input can't be empty");
         }
     }

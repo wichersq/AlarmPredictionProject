@@ -102,11 +102,26 @@ public class ReadyTimeCalc implements Runnable {
         }
         currentEvent = createEventType(gotInfoSuccessfully, startAddress,
                 endAddress, ob.getName(), originName, destName, arrivalDateTime,
-               ob.getTransport(),(int) durationSec, importantScale, rating);
+                ob.getTransport(), (int) durationSec, importantScale, rating);
         popUp = currentEvent.createPopUp();
         createsButtonOfPopUp();
     }
 
+    /**
+     *  Creates type of scheduled event depends on the info.
+     *
+     * @param addressFrom     Address of destination
+     * @param addressTo       Address of starting
+     * @param eventName       name of event
+     * @param originName      name of origin place
+     * @param destName        name of destination
+     * @param arrivalDateTime arrival date and time
+     * @param transport       Mode of transportation
+     * @param duration        duration of travel
+     * @param importantScale  The importance level of an event to the user
+     * @param rating          rating of the business
+     * @return all the given user information
+     */
     private CalendarEvent createEventType(boolean gotInfoSuccessfully, String addressFrom, String addressTo, String eventName,
                                           String originName, String destName, GregorianCalendar arrivalDateTime,
                                           String transport, int duration, double importantScale, double rating) {
@@ -140,7 +155,6 @@ public class ReadyTimeCalc implements Runnable {
             controller.resetUserFrame();
             popUp.setVisible(false);
             outputFrame.setVisible(true);
-            System.out.println("save\n" + currentEvent);
         });
 
         popUp.addActionCancelButton(ActionEvent -> {
@@ -157,7 +171,6 @@ public class ReadyTimeCalc implements Runnable {
             if (adjustingTime != 0) {
                 adjustReadyTime(adjustingTime);
             }
-            System.out.println("Adjust\n" + currentEvent);
         });
     }
 }
