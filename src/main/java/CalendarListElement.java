@@ -29,7 +29,6 @@ public class CalendarListElement extends JTextArea implements ListCellRenderer {
                                                   boolean isSelected, boolean cellHasFocus) {
         setBackground(null);
         CalendarEvent event = (CalendarEvent) value;
-        System.out.println("getListCellRendererComponent\n" +value);
         setText(event.getSummaryInfo());
         if (cellHasFocus) {
             currentOb = event;
