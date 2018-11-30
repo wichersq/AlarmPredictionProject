@@ -61,6 +61,9 @@ public class OfflinePopUpFrame extends PopUpFrame {
     }
 
     @Override
+    /**
+     * Adds action for the adjustButton
+     */
     protected void addActionAdjustButton(ActionListener e) {
         addTimeButton.addActionListener(e);
     }
