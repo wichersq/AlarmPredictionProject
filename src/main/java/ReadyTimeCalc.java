@@ -100,12 +100,9 @@ public class ReadyTimeCalc implements Runnable {
             startAddress = dataRequest.getStartAddress();
             endAddress = dataRequest.getEndAddress();
         }
-        currentEvent = createEventType(true, startAddress,
+        currentEvent = createEventType(gotInfoSuccessfully, startAddress,
                 endAddress, ob.getName(), originName, destName, arrivalDateTime,
                ob.getTransport(),(int) durationSec, importantScale, rating);
-//        currentEvent = createEventType(true, "Invalid Address",
-//                "Invalid Address", ob.getName(), originName, destName, arrivalDateTime,
-//                ob.getTransport(), (int) durationSec, importantScale, rating);
         popUp = currentEvent.createPopUp();
         createsButtonOfPopUp();
     }
