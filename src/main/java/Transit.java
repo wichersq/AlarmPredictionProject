@@ -35,5 +35,4 @@ public class Transit extends Transportation {
     public boolean equals(Object other) {
         return (other.getClass().equals(this));
     }
-
 }

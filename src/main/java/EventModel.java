@@ -87,6 +87,7 @@ public class EventModel {
      */
 
     public ArrayList<CalendarEvent> getEventsList() {
+        System.out.println("In here");
         CalendarEvent event;
         ArrayList<CalendarEvent> eventList = new ArrayList<>();
         Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();

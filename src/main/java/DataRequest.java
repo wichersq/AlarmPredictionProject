@@ -18,13 +18,13 @@ public class DataRequest {
     private PlaceDetails details = null;
     private GeoApiContext context;
     private String placeId = "";
-    private String destName;
-    private String originName;
-    private long durationSec;
+    private String destName = "Invalid";
+    private String originName = "Invalid";
+    private long durationSec = 0;
     private long distanceMeter;
-    private float rating;
-    private String startAddress;
-    private String endAddress;
+    private float rating = 0;
+    private String startAddress = "Invalid Address";
+    private String endAddress = "Invalid Address";
 
     /**
      * Constructor for the class.
@@ -41,17 +41,18 @@ public class DataRequest {
      * @param travelMode Mode of transportation
      * @param arrivalTime Time that user must be at event
      */
-    public void requestMapData(String origin, String destination, String travelMode, GregorianCalendar arrivalTime) {
+    public boolean requestMapData(String origin, String destination, String travelMode, GregorianCalendar arrivalTime) {
         Instant time = arrivalTime.toInstant();
         try {
             DirectionsApiRequest mapRequest = DirectionsApi.getDirections(context, origin, destination)
                     .mode(TravelMode.valueOf(travelMode)).arrivalTime(time);
             mapResult = mapRequest.await();
+            saveMapInformation();
+            return requestPlaceDetail();
         } catch (Exception e) {
-            e.printStackTrace();
+           return false;
         }
-        saveMapInformation();
-        requestPlaceDetail();
+
     }
 
     /**
@@ -66,14 +67,15 @@ public class DataRequest {
     /**
      * Makes Place API call.
      */
-    private void requestPlaceDetail() {
+    private boolean requestPlaceDetail() {
         try {
             details = PlacesApi.placeDetails(context, placeId).await();
-
+            savePlaceDetailsInfo();
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
+           return false;
         }
-        savePlaceDetailsInfo();
+
     }
 
     /**

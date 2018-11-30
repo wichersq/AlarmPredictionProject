@@ -7,21 +7,23 @@ import java.util.GregorianCalendar;
 /**
  * Class CalendarEvent collects all information the user inputs to schedule an event.
  */
-public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, Cloneable {
+public abstract class CalendarEvent implements Serializable, Comparable<CalendarEvent>, Cloneable {
     protected int DEFAULT_PREPARE_MIN = 30;
+    protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
     protected String addressFrom;
     protected String addressTo;
-    protected String eventName;
+    protected String eventName = "No Event Name";
     protected String originName;
     protected String destName;
     protected GregorianCalendar arrivalDateTime;
     protected GregorianCalendar alarmTime;
-    protected Transportation transport;
     protected double importantScale;
-    protected int recommendedReadyMin;
-    protected int preparingTime;
-    protected int travelTime;
-    protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
+    protected int recommendedReadyMin = 0;
+    protected Transportation transport;
+    public final static String BIKING_TYPE = "BICYCLING";
+    public final static String DRIVING_TYPE = "DRIVING";
+    public final static String WALKING_TYPE = "WALKING";
+    public final static String TRANSIT_TYPE = "TRANSIT";
 
     /**
      * Constructor.
@@ -29,38 +31,32 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
      * @param addressFrom     Address of the starting destination
      * @param addressTo       Address of the ending destination
      * @param eventName       Name of the event attending
-     * @param originName      Name of starting destination
-     * @param destName        Name of ending destination
      * @param arrivalDateTime Time of the event
-     * @param transport       Mode of transportation
      * @param importantScale  How important the event is to the user
      */
-    public CalendarEvent(String addressFrom, String addressTo, String eventName,
-                         String originName, String destName, GregorianCalendar arrivalDateTime,
-                         Transportation transport, double importantScale) {
+    public CalendarEvent(String addressFrom, String addressTo, String eventName, String transport
+            , GregorianCalendar arrivalDateTime, double importantScale) {
+        this.transport = createTransport(transport, 0);
         this.addressFrom = addressFrom;
         this.addressTo = addressTo;
         this.eventName = eventName;
-        this.originName = originName;
-        this.destName = destName;
         this.arrivalDateTime = arrivalDateTime;
-        this.transport = transport;
         this.importantScale = importantScale;
-        this.travelTime = transport.getDurationInMin();
-        calPrepareTime();
-        setTotalTime();
+    }
+
+    public CalendarEvent(String addressFrom, String addressTo, String eventName, Transportation transport,
+                         GregorianCalendar arrivalDateTime,
+                         double importantScale) {
+        this.addressFrom = addressFrom;
+        this.addressTo = addressTo;
+        this.eventName = eventName;
+        this.transport = transport;
+        this.arrivalDateTime = arrivalDateTime;
+
 
     }
 
-    /**
-     * @return returns all the user inputs
-     */
-    public String getSummaryInfo() {
-        return String.format("\t%s\n*** %s ***\n%s  --->  %s\n" +
-                        "Alarm set at: %s\n", eventName, getArrivalTimeString(),
-                originName, destName, getAlarmString());
-
-    }
+    public abstract String getSummaryInfo();
 
     public GregorianCalendar getArrivalDateTime() {
         return (GregorianCalendar) arrivalDateTime.clone();
@@ -68,6 +64,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
 
     /**
      * Gets alarm time in string format
+     *
      * @return the alarm time
      */
     public String getAlarmString() {
@@ -76,6 +73,7 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
 
     /**
      * Gets arrival time in string format
+     *
      * @return the arrival time
      */
 
@@ -83,24 +81,10 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
         return dateTimeFormat.format(arrivalDateTime.getTime());
     }
 
-    /**
-     * Calculates the adjusted preparation time for the event based on the importance.
-     */
-    protected void calPrepareTime() {
-        preparingTime = DEFAULT_PREPARE_MIN + (int) importantScale * 5;
-    }
-
-    /**
-     * Calculates the recommended time to prepare for an event based on all the user input.
-     */
-    protected void setTotalTime() {
-        recommendedReadyMin = preparingTime + transport.getTotalTravelMin();
-        alarmTime = (GregorianCalendar) arrivalDateTime.clone();
-        alarmTime.add(Calendar.MINUTE, -recommendedReadyMin);
-    }
 
     /**
      * Adjust preparing time depends on the user's wish
+     *
      * @param adjustMin user input of how much time they want to add
      */
     public void editReadyTime(double adjustMin) {
@@ -121,14 +105,9 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
      *
      * @return a string about the ready time
      */
-    public String getEventInfo() {
-        return String.format("Travel Duration:\t%s" +
-                        "\n\nAlarm Time:\t%s\n\n%s %s the event",
-                durationStringFormat(travelTime), getAlarmString(),
-                durationStringFormat(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
-    }
+    public abstract String getEventInfo();
 
-    private String durationStringFormat(int durationInMin){
+    protected String durationStringFormat(int durationInMin) {
         int min = Math.abs(durationInMin % 60);
         int hour = durationInMin / 60;
         return String.format("%d %s %d %s", hour, hour > 1 ? "hours" : "hour",
@@ -141,28 +120,16 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
      * @param other comparing object
      * @return false if it is not equal otherwise true
      */
-    public boolean equals(Object other) {
-        if (!(other instanceof CalendarEvent)) {
-            return false;
-        }
-        CalendarEvent comparingEvent = (CalendarEvent) other;
-        return (addressFrom.equals(comparingEvent.addressFrom) &&
-                addressTo.equals(comparingEvent.addressTo) &&
-                arrivalDateTime.equals(comparingEvent.arrivalDateTime) &&
-                transport.equals(comparingEvent.transport));
-    }
+    public abstract boolean equals(Object other);
 
     /**
      * Deep clone an object.
+     *
      * @return copy object
      */
 
     @Override
-    public CalendarEvent clone() throws CloneNotSupportedException {
-        return new CalendarEvent(addressFrom, addressTo, eventName, originName,
-                destName, (GregorianCalendar) arrivalDateTime.clone(),
-                (Transportation)transport.clone(), importantScale);
-    }
+    public abstract CalendarEvent clone() throws CloneNotSupportedException;
 
     @Override
     /**
@@ -175,14 +142,37 @@ public class CalendarEvent implements Serializable, Comparable<CalendarEvent>, C
 
     /**
      * Gets information in string format
+     *
      * @return a string
      */
-    public String toString() {
-        return String.format("Date & Time:\t%s\n\nOrigin:\t%s\n\n" +
-                        "Destination:\t%s\n\nTravel by:\t%s\n\n%s",
-                getArrivalTimeString(), addressFrom, addressTo,
-                transport.toString(), getEventInfo());
+    public abstract String toString();
+
+
+    /**
+     * Displays all modes of transportation.
+     *
+     * @param type     mode of transportation
+     * @param duration time is takes to travel from starting destination to ending destination using specified mode of transportation.
+     * @return returns the time
+     */
+    public Transportation createTransport(String type, int duration) {
+        Transportation transport = null;
+        switch (type) {
+            case BIKING_TYPE:
+                transport = new Biking(duration);
+                break;
+            case DRIVING_TYPE:
+                transport = new Driving(duration);
+                break;
+            case WALKING_TYPE:
+                transport = new Walking(duration);
+                break;
+            case TRANSIT_TYPE:
+                transport = new Transit(duration);
+        }
+        return transport;
     }
+    public abstract PopUpFrame createPopUp();
 
 }
 

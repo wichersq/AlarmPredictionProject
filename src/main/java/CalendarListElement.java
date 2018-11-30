@@ -5,11 +5,11 @@ import java.util.ArrayList;
 /**
  * Class to creates JTextArea for each Jlist cell.
  */
-public class MyList extends JTextArea implements ListCellRenderer {
+public class CalendarListElement extends JTextArea implements ListCellRenderer {
     private ArrayList<Listener> listeners;
     private CalendarEvent currentOb;
 
-    protected MyList(int rows, int cols) {
+    protected CalendarListElement(int rows, int cols) {
         super(rows, cols);
         listeners = new ArrayList<>();
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -29,6 +29,7 @@ public class MyList extends JTextArea implements ListCellRenderer {
                                                   boolean isSelected, boolean cellHasFocus) {
         setBackground(null);
         CalendarEvent event = (CalendarEvent) value;
+        System.out.println("getListCellRendererComponent\n" +value);
         setText(event.getSummaryInfo());
         if (cellHasFocus) {
             currentOb = event;

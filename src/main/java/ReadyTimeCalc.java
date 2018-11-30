@@ -16,10 +16,11 @@ public class ReadyTimeCalc implements Runnable {
     private DataRequest dataRequest;
     private boolean isDryRun;
 
+
     /**
      * Constructor for the class.
      *
-     * @param model
+     * @param model       model that using to get values
      * @param outputFrame
      * @param controller
      */
@@ -29,10 +30,8 @@ public class ReadyTimeCalc implements Runnable {
             this.dataRequest = new DataRequest(readApiKey());
         }
         this.controller = controller;
-        this.popUp = new PopUpFrame();
         this.model = model;
         this.outputFrame = outputFrame;
-        createsButtonOfPopUp();
     }
 
     /**
@@ -73,7 +72,7 @@ public class ReadyTimeCalc implements Runnable {
      */
     private void requestData(RawUserInput ob) {
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
-
+        boolean gotInfoSuccessfully = false;
         String destName;
         String originName;
         long durationSec;
@@ -86,13 +85,13 @@ public class ReadyTimeCalc implements Runnable {
             destName = "570 N Shoreline Blvd";
             originName = "189 Central Ave";
             durationSec = 976 * 60;
-            rating = 1.0;
+            rating = 0.0;
             startAddress = "189 Central Ave, Mountain View, CA 94043, USA";
             endAddress = "570 N Shoreline Blvd, Mountain View, CA 94043, USA";
         }
-        // This will need Api Key to run
+//         This will need Api Key to run
         else {
-            dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
+            gotInfoSuccessfully = dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
                     ob.getTransport(), arrivalDateTime);
             destName = dataRequest.getDestName();
             originName = dataRequest.getOriginName();
@@ -101,12 +100,26 @@ public class ReadyTimeCalc implements Runnable {
             startAddress = dataRequest.getStartAddress();
             endAddress = dataRequest.getEndAddress();
         }
-
-        Transportation transport = TransportationFactory.createTransport(ob.getTransport(), (int) durationSec);
-        currentEvent = CalendarEventFactory.createEventType(startAddress,
+        currentEvent = createEventType(true, startAddress,
                 endAddress, ob.getName(), originName, destName, arrivalDateTime,
-                transport, importantScale, rating);
-        popUp.showPopUp(currentEvent.getEventInfo());
+               ob.getTransport(),(int) durationSec, importantScale, rating);
+//        currentEvent = createEventType(true, "Invalid Address",
+//                "Invalid Address", ob.getName(), originName, destName, arrivalDateTime,
+//                ob.getTransport(), (int) durationSec, importantScale, rating);
+        popUp = currentEvent.createPopUp();
+        createsButtonOfPopUp();
+    }
+
+    private CalendarEvent createEventType(boolean gotInfoSuccessfully, String addressFrom, String addressTo, String eventName,
+                                          String originName, String destName, GregorianCalendar arrivalDateTime,
+                                          String transport, int duration, double importantScale, double rating) {
+        if (gotInfoSuccessfully) {
+            return new EventWithPlaceInfo(addressFrom, addressTo, eventName,
+                    originName, destName, arrivalDateTime, transport, duration, importantScale, rating);
+        } else {
+
+            return new EventWithoutInfo(addressFrom, addressTo, eventName, arrivalDateTime, transport, importantScale);
+        }
     }
 
     /**
@@ -118,6 +131,7 @@ public class ReadyTimeCalc implements Runnable {
         currentEvent.editReadyTime(changingTime);
         String alarmStr = currentEvent.getEventInfo();
         popUp.showPopUp(alarmStr);
+
     }
 
     /**
@@ -129,6 +143,7 @@ public class ReadyTimeCalc implements Runnable {
             controller.resetUserFrame();
             popUp.setVisible(false);
             outputFrame.setVisible(true);
+            System.out.println("save\n" + currentEvent);
         });
 
         popUp.addActionCancelButton(ActionEvent -> {
@@ -145,6 +160,7 @@ public class ReadyTimeCalc implements Runnable {
             if (adjustingTime != 0) {
                 adjustReadyTime(adjustingTime);
             }
+            System.out.println("Adjust\n" + currentEvent);
         });
     }
 }

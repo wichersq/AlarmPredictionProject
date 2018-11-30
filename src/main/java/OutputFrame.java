@@ -19,7 +19,7 @@ public class OutputFrame extends JFrame implements Listener {
     //    private JButton showButton;
     private JButton deleteButton;
     private Box buttonBox;
-    private MyList myList;
+    private CalendarListElement calendarListElement;
 
 
     /**
@@ -52,8 +52,8 @@ public class OutputFrame extends JFrame implements Listener {
         listPanel = new JPanel();
         listModel = new DefaultListModel();
         list = new JList(listModel);
-        myList = new MyList(3, 30);
-        list.setCellRenderer(myList);
+        calendarListElement = new CalendarListElement(3, 30);
+        list.setCellRenderer(calendarListElement);
         scrollPane = new JScrollPane(list);
         scrollPane.setPreferredSize(new Dimension(400, 400));
         listPanel.add(scrollPane, BorderLayout.CENTER);
@@ -65,7 +65,7 @@ public class OutputFrame extends JFrame implements Listener {
     private void createEventDetailPanel() {
         detailPanel = new JPanel();
 
-        textArea = new TextAreaDetail(myList);
+        textArea = new TextAreaDetail(calendarListElement);
         textArea.setEditable(false);
         scrollPaneDetail = new JScrollPane(textArea);
         scrollPaneDetail.setPreferredSize(new Dimension(400, 400));
@@ -105,7 +105,7 @@ public class OutputFrame extends JFrame implements Listener {
     }
 
     public CalendarEvent getSelectionFromList() {
-        return myList.getCurrentSelection();
+        return calendarListElement.getCurrentSelection();
     }
 
 

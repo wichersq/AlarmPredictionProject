@@ -4,11 +4,12 @@ import java.io.Serializable;
  * Class Transportation determines the estimated time it would take to travel 
  * from starting destination to ending destination including the break times.
  */
-public abstract class Transportation  implements Serializable, Cloneable {
+public abstract class Transportation  implements Serializable, Cloneable{
     final static int BREAK_TIME_SEC = 30*60;
     protected int durationInSec;
     protected int travelInSec;
     protected int breakTimeOfTravel;
+
     Transportation(int duration){
         durationInSec = duration;
         setTotalMinTravel();
@@ -16,7 +17,7 @@ public abstract class Transportation  implements Serializable, Cloneable {
 
     /**
      * Calculates break time.
-     * @return breaktime
+     * @return break time during traveling
      */
     abstract int calculateBreakTime();
 
