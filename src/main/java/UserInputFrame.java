@@ -293,13 +293,13 @@ public class UserInputFrame extends JFrame {
      */
     private String transportPick() {
         if (bikeJB.isSelected()) {
-            return TransportationFactory.BIKING_TYPE;
+            return CalendarEvent.BIKING_TYPE;
         } else if (driveJB.isSelected()) {
-            return TransportationFactory.DRIVING_TYPE;
+            return CalendarEvent.DRIVING_TYPE;
         } else if (walkJB.isSelected()) {
-            return TransportationFactory.WALKING_TYPE;
+            return CalendarEvent.WALKING_TYPE;
         } else
-            return TransportationFactory.TRANSIT_TYPE;
+            return CalendarEvent.TRANSIT_TYPE;
     }
 
     /**
