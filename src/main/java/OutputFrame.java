@@ -16,9 +16,7 @@ public class OutputFrame extends JFrame implements Listener {
     private JList list;
     private JScrollPane scrollPaneDetail;
     private EventModel model;
-    //    private JButton showButton;
     private JButton deleteButton;
-    private Box buttonBox;
     private CalendarListElement calendarListElement;
 
 
@@ -32,23 +30,31 @@ public class OutputFrame extends JFrame implements Listener {
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, 900, 500);
         setDefaultLookAndFeelDecorated(true);
-        createEventListPanel();
-        createEventDetailPanel();
-        createButtonBox();
-        this.model = model;
-        model.addListener(this);
         setVisible(false);
         setResizable(false);
-        add(listPanel, BorderLayout.CENTER);
+
+        addEventListPanel();
+
+
+        createEventDetailPanel();
         add(detailPanel, BorderLayout.EAST);
+
+        createButtonBox();
         add(deleteButton, BorderLayout.SOUTH);
+
+        this.model = model;
+        model.addListener(this);
+
+
+
+
 
     }
 
     /**
      * Creates the detailPanel for the event to display.
      */
-    private void createEventListPanel() {
+    private void addEventListPanel() {
         listPanel = new JPanel();
         listModel = new DefaultListModel();
         list = new JList(listModel);
@@ -57,19 +63,21 @@ public class OutputFrame extends JFrame implements Listener {
         scrollPane = new JScrollPane(list);
         scrollPane.setPreferredSize(new Dimension(400, 400));
         listPanel.add(scrollPane, BorderLayout.CENTER);
+        add(listPanel, BorderLayout.CENTER);
     }
 
     /**
      * Creates a panel that show event detail
      */
     private void createEventDetailPanel() {
-        detailPanel = new JPanel();
 
         textArea = new TextAreaDetail(calendarListElement);
         textArea.setEditable(false);
+
         scrollPaneDetail = new JScrollPane(textArea);
         scrollPaneDetail.setPreferredSize(new Dimension(400, 400));
 
+        detailPanel = new JPanel();
         detailPanel.add(scrollPaneDetail, BorderLayout.CENTER);
     }
 
@@ -77,14 +85,13 @@ public class OutputFrame extends JFrame implements Listener {
      * Creates button
      */
     private void createButtonBox() {
-        buttonBox = Box.createHorizontalBox();
         deleteButton = new JButton("Delete");
 
 
     }
 
     /**
-     *
+     *  Updates list
      */
     public void updateTextList() {
         ArrayList<CalendarEvent> calendarList = model.getEventsList();

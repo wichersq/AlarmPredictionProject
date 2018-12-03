@@ -52,6 +52,7 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
         this.eventName = eventName;
         this.transport = transport;
         this.arrivalDateTime = arrivalDateTime;
+        this.importantScale = importantScale;
 
 
     }
