@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
+
 import java.awt.event.ActionListener;
 
 /**
@@ -17,7 +17,9 @@ public class OnlinePopUpFrame extends PopUpFrame {
         super(message);
     }
 
-
+    /**
+     * Create more buttons if needed
+     */
     @Override
     protected void createExtraButton() {
         adjustButton = new JButton("Adjust Ready Time");
@@ -29,7 +31,6 @@ public class OnlinePopUpFrame extends PopUpFrame {
      * Creates a slider that allows the user to add or subtract time form the estimated time that is generated.
      */
     protected void createSlider() {
-
 
 
         timeText = new JLabel();
@@ -48,6 +49,8 @@ public class OnlinePopUpFrame extends PopUpFrame {
     }
 
     /**
+     * Makes the popUp class visible
+     *
      * @param alarmStr
      */
     public void showPopUp(String alarmStr) {
@@ -57,7 +60,9 @@ public class OnlinePopUpFrame extends PopUpFrame {
     }
 
     /**
-     * @return returns slider value
+     * Gets slider value
+     *
+     * @return slider value
      */
     public int getSliderValue() {
         int value = slider.getValue();
@@ -73,5 +78,5 @@ public class OnlinePopUpFrame extends PopUpFrame {
     public void addActionAdjustButton(ActionListener e) {
         adjustButton.addActionListener(e);
     }
- }
+}
 

@@ -4,7 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 /**
- * Class ReadyTimeCalc calculates the time it would take for the user to prepare for an event set at a specified place,
+ * A class calculates the time it would take for the user to prepare for an event set at a specified place,
  * using specified mode of transportation, and taking into account the level of priority of the event.
  */
 public class ReadyTimeCalc implements Runnable {
@@ -48,10 +48,10 @@ public class ReadyTimeCalc implements Runnable {
             while (scanner.hasNext()) {
                 apiKey = scanner.nextLine();
             }
+            scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        scanner.close();
         return apiKey;
     }
 
@@ -63,7 +63,7 @@ public class ReadyTimeCalc implements Runnable {
         while (true) {
             try {
                 requestData(model.getEventToProcess());
-            }catch (Exception e){
+            } catch (Exception e) {
                 break;
             }
         }
@@ -112,7 +112,7 @@ public class ReadyTimeCalc implements Runnable {
     }
 
     /**
-     *  Creates type of scheduled event depends on the info.
+     * Creates type of scheduled event depends on the info.
      *
      * @param addressFrom     Address of destination
      * @param addressTo       Address of starting
@@ -130,7 +130,7 @@ public class ReadyTimeCalc implements Runnable {
                                           String originName, String destName, GregorianCalendar arrivalDateTime,
                                           String transport, int duration, double importantScale, double rating) {
         if (gotInfoSuccessfully) {
-            return new EventWithPlaceInfo(addressFrom, addressTo, eventName,
+            return new EventWithInfo(addressFrom, addressTo, eventName,
                     originName, destName, arrivalDateTime, transport, duration, importantScale, rating);
         } else {
 

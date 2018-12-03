@@ -1,10 +1,10 @@
 /**
- * Class Main runs the program wothout using the APIKey
+ * Class Main runs the program.
  */
 public class Main {
     public static void main(String[] args) {
         boolean isDryRun = true;
-        if(args.length >= 1){
+        if (args.length >= 1) {
             isDryRun = args[0].equalsIgnoreCase("1");
         }
 

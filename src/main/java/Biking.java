@@ -6,18 +6,16 @@ public class Biking extends Transportation {
     private final static int BREAK_TIME_MIN = 15;
 
     /**
-     * Determines time it would take to travel from starting
-     * destination to ending destination by bike.
+     * Determines time it would take to travel from starting destination to ending destination by bike.
      *
-     * @param durationInSec how long it would take to bike to the given destionation
+     * @param durationInSec how long it would take to bike to the given destination
      */
     public Biking(int durationInSec) {
         super(durationInSec);
     }
 
     /**
-     * Calculates estimated break time the user will take using
-     * bicycling as the mode of transportation.
+     * Calculates estimated break time the user will take using bicycling as the mode of transportation.
      *
      * @return returns the estimated time of travel
      */
@@ -28,19 +26,19 @@ public class Biking extends Transportation {
     }
 
     /**
-     * Puts type of transportation into string.
+     * Get string mode of the transportation
      *
-     * @return returns biking as a mode of transportation
+     * @return String of the mode of transportation
      */
     public String toString() {
-        return TransportationFactory.BIKING_TYPE;
+        return CalendarEvent.BIKING_TYPE;
     }
 
     /**
-     * Compares objects.
+     * Checks if 2 object is the same
      *
-     * @param other provides another object to compare new object to
-     * @return class
+     * @param other another object used to compare the new object
+     * @return true or false
      */
     public boolean equals(Object other) {
         return (other.getClass().equals(this));

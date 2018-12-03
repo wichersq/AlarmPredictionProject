@@ -9,6 +9,12 @@ public class CalendarListElement extends JTextArea implements ListCellRenderer {
     private ArrayList<Listener> listeners;
     private CalendarEvent currentOb;
 
+    /**
+     * Constructor
+     *
+     * @param rows number of rows in text area
+     * @param cols number of cols in text area
+     */
     protected CalendarListElement(int rows, int cols) {
         super(rows, cols);
         listeners = new ArrayList<>();
@@ -17,10 +23,11 @@ public class CalendarListElement extends JTextArea implements ListCellRenderer {
 
     /**
      * Returns a text area for each cell
-     * @param list The JList for painting.
-     * @param value The value returned by list.getModel().getElementAt(index).
-     * @param index The cells index.
-     * @param isSelected True if the specified cell was selected.
+     *
+     * @param list         The JList for painting.
+     * @param value        The value returned by list.getModel().getElementAt(index).
+     * @param index        The cells index.
+     * @param isSelected   True if the specified cell was selected.
      * @param cellHasFocus True if the specified cell has the focus.
      * @return A component whose paint() method will render the specified value.
      */

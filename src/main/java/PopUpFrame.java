@@ -33,7 +33,7 @@ public abstract class PopUpFrame extends JFrame {
         panel.setBounds(0, 0, 400, 250);
         panel.add(sliderBox, BorderLayout.CENTER);
         panel.add(buttonsBox, BorderLayout.SOUTH);
-        panel.add(detailMessage,BorderLayout.NORTH);
+        panel.add(detailMessage, BorderLayout.NORTH);
         setDefaultLookAndFeelDecorated(true);
         setResizable(false);
         this.setLayout(new FlowLayout());
@@ -45,7 +45,7 @@ public abstract class PopUpFrame extends JFrame {
     /**
      * Creates buttons.
      */
-    private  void allocateButtons() {
+    private void allocateButtons() {
         cancelButton = new JButton("Cancel");
         editButton = new JButton("Edit");
         saveButton = new JButton("Save Time");
@@ -54,7 +54,9 @@ public abstract class PopUpFrame extends JFrame {
         buttonsBox.add(cancelButton);
 
     }
+
     protected abstract void createExtraButton();
+
     /**
      * Creates a slider that allows the user to add or subtract time form the estimated time that is generated.
      */

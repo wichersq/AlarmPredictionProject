@@ -1,17 +1,40 @@
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Class contain event which doesn't have valid info from API
+ */
 public class EventWithoutInfo extends CalendarEvent {
     protected int preparingTime;
 
+    /**
+     * Constructor for the class takes in string of transportation
+     *
+     * @param addressFrom     Starting address
+     * @param addressTo       Ending address
+     * @param eventName       Name of the event
+     * @param arrivalDateTime Time the user wants to arrive by
+     * @param transport       String of transportation
+     * @param importantScale  Priority level of the event
+     */
     public EventWithoutInfo(String addressFrom, String addressTo, String eventName,
                             GregorianCalendar arrivalDateTime, String transport, double importantScale) {
         super(addressFrom, addressTo, eventName,
-                transport, arrivalDateTime, importantScale);
+                transport, 0, arrivalDateTime, importantScale);
         setTotalTime();
         calPrepareTime();
     }
 
+    /**
+     * Constructor for the class takes in Transportation type.
+     *
+     * @param addressFrom     Starting address
+     * @param addressTo       Ending address
+     * @param eventName       Name of the event
+     * @param arrivalDateTime Time the user wants to arrive by
+     * @param transport       String of transportation
+     * @param importantScale  Priority level of the event
+     */
     public EventWithoutInfo(String addressFrom, String addressTo, String eventName,
                             GregorianCalendar arrivalDateTime, Transportation transport, double importantScale) {
         super(addressFrom, addressTo, eventName,
@@ -38,7 +61,9 @@ public class EventWithoutInfo extends CalendarEvent {
     }
 
     /**
-     * @return returns all the user inputs
+     * Gets string information for output frame
+     *
+     * @return String about information for output frame
      */
     @Override
     public String getSummaryInfo() {
@@ -47,6 +72,11 @@ public class EventWithoutInfo extends CalendarEvent {
 
     }
 
+    /**
+     * String of object summary
+     *
+     * @return information of the object
+     */
     @Override
     public String getEventInfo() {
         return String.format("Alarm Time:\t%s\n\n%s %s the event", getAlarmString(),
@@ -70,15 +100,26 @@ public class EventWithoutInfo extends CalendarEvent {
                 arrivalDateTime.equals(comparingEvent.arrivalDateTime));
     }
 
+    /**
+     * Copy the object
+     *
+     * @return A copy of the object
+     * @throws CloneNotSupportedException
+     */
     @Override
     public EventWithoutInfo clone() throws CloneNotSupportedException {
         EventWithoutInfo event = new EventWithoutInfo(addressFrom, addressTo, eventName,
-                        (GregorianCalendar) arrivalDateTime.clone(), (Transportation) transport.clone(), importantScale);
+                (GregorianCalendar) arrivalDateTime.clone(), (Transportation) transport.clone(), importantScale);
         event.recommendedReadyMin = recommendedReadyMin;
         event.alarmTime = alarmTime;
         return event;
     }
 
+    /**
+     * To string method
+     *
+     * @return a string of info.
+     */
     @Override
     public String toString() {
         return String.format("Date & Time:\t%s\n\nOrigin:\t%s\n\n" +
@@ -87,6 +128,11 @@ public class EventWithoutInfo extends CalendarEvent {
                 transport.toString(), getEventInfo());
     }
 
+    /**
+     * Create a pop up frame
+     *
+     * @return a new create popUp
+     */
     public PopUpFrame createPopUp() {
         return new OfflinePopUpFrame(this.getEventInfo());
     }

@@ -34,27 +34,47 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      * @param arrivalDateTime Time of the event
      * @param importantScale  How important the event is to the user
      */
-    public CalendarEvent(String addressFrom, String addressTo, String eventName, String transport
-            , GregorianCalendar arrivalDateTime, double importantScale) {
-        this.transport = createTransport(transport, 0);
+
+    private CalendarEvent(String addressFrom, String addressTo, String eventName,
+                          GregorianCalendar arrivalDateTime, double importantScale) {
         this.addressFrom = addressFrom;
         this.addressTo = addressTo;
         this.eventName = eventName;
         this.arrivalDateTime = arrivalDateTime;
         this.importantScale = importantScale;
     }
+    /**
+     * Constructor for the class takes in string of transportation
+     *
+     * @param addressFrom     Starting address
+     * @param addressTo       Ending address
+     * @param eventName       Name of the event
+     * @param arrivalDateTime Time the user wants to arrive by
+     * @param transport       String of transportation
+     * @param duration        Traveling time
+     * @param importantScale  Priority level of the event
+     */
+    public CalendarEvent(String addressFrom, String addressTo, String eventName, String transport, int duration,
+                         GregorianCalendar arrivalDateTime, double importantScale) {
+        this(addressFrom, addressTo, eventName, arrivalDateTime, importantScale);
+        this.transport = createTransport(transport, duration);
 
+    }
+    /**
+     * Constructor for the class takes in string of transportation
+     *
+     * @param addressFrom     Starting address
+     * @param addressTo       Ending address
+     * @param eventName       Name of the event
+     * @param arrivalDateTime Time the user wants to arrive by
+     * @param transport       Transportation
+     * @param importantScale  Priority level of the event
+     */
     public CalendarEvent(String addressFrom, String addressTo, String eventName, Transportation transport,
                          GregorianCalendar arrivalDateTime,
                          double importantScale) {
-        this.addressFrom = addressFrom;
-        this.addressTo = addressTo;
-        this.eventName = eventName;
+        this(addressFrom, addressTo, eventName, arrivalDateTime, importantScale);
         this.transport = transport;
-        this.arrivalDateTime = arrivalDateTime;
-        this.importantScale = importantScale;
-
-
     }
 
     public abstract String getSummaryInfo();
@@ -93,14 +113,6 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
         alarmTime.add(Calendar.MINUTE, -(int) adjustMin);
     }
 
-//    /**
-//     * Determines estimated travel time.
-//     * @return estimated time it would take to travel to the ending location from the starting location
-//     */
-//    public int getTravelTime() {
-//        return travelTime;
-//    }
-
     /**
      * Get a prompt about the ready time information.
      *
@@ -132,11 +144,12 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
     @Override
     public abstract CalendarEvent clone() throws CloneNotSupportedException;
 
-    @Override
+
     /**
      * Compare 2 CalendarEvent
      *
      */
+    @Override
     public int compareTo(CalendarEvent o) {
         return (this.arrivalDateTime.compareTo(o.arrivalDateTime));
     }
@@ -173,6 +186,11 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
         }
         return transport;
     }
+
+    /**
+     * Create popUp frame
+     * @return  an new popUpFrame
+     */
     public abstract PopUpFrame createPopUp();
 
 }

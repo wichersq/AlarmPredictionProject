@@ -1,17 +1,41 @@
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+
 /**
- * Class EventWithPlaceInfo creates an event with all of the user input information.
+ * Class contain event which doesn't have valid info from API
  */
-public class EventWithPlaceInfo extends CalendarEvent {
+public class EventWithInfo extends CalendarEvent {
     protected int DEFAULT_PREPARE_MIN = 30;
     private double averageRating;
     protected int preparingTime;
     protected int travelTime;
 
     /**
-     * Constructor for the class.
+     * Constructor for the class takes in string of transportation
+     *
+     * @param addressFrom     Starting address
+     * @param addressTo       Ending address
+     * @param eventName       Name of the event
+     * @param originName      Name of the starting destination
+     * @param destName        Name of the ending destination
+     * @param arrivalDateTime Time the user wants to arrive by
+     * @param transport       String of transportation
+     * @param duration        Duration of the travel
+     * @param importantScale  Priority level of the event
+     * @param averageRating   Rating of the ending destination
+     */
+
+    public EventWithInfo(String addressFrom, String addressTo, String eventName,
+                         String originName, String destName, GregorianCalendar arrivalDateTime,
+                         String transport, int duration, double importantScale, double averageRating) {
+        super(addressFrom, addressTo, eventName,
+                transport, duration, arrivalDateTime, importantScale);
+        setInfo(originName, destName, importantScale, averageRating);
+    }
+
+    /**
+     * Constructor for the class takes in Transportation type.
      *
      * @param addressFrom     Starting address
      * @param addressTo       Ending address
@@ -23,29 +47,18 @@ public class EventWithPlaceInfo extends CalendarEvent {
      * @param importantScale  Priority level of the event
      * @param averageRating   Rating of the ending destination
      */
-    public EventWithPlaceInfo(String addressFrom, String addressTo, String eventName,
-                              String originName, String destName, GregorianCalendar arrivalDateTime,
-                              String transport, int duration, double importantScale, double averageRating) {
-        super(addressFrom, addressTo, eventName,
-                transport, arrivalDateTime, importantScale);
-        this.originName = originName;
-        this.destName = destName;
-        this.averageRating = averageRating;
-        this.transport = createTransport(transport, duration);
-        this.travelTime = this.transport.getDurationInMin();
-        setTotalTime();
-        calPrepareTime();
-    }
-
-    public EventWithPlaceInfo(String addressFrom, String addressTo, String eventName,
-                              String originName, String destName, GregorianCalendar arrivalDateTime,
-                              Transportation transport, double importantScale, double averageRating) {
+    public EventWithInfo(String addressFrom, String addressTo, String eventName,
+                         String originName, String destName, GregorianCalendar arrivalDateTime,
+                         Transportation transport, double importantScale, double averageRating) {
         super(addressFrom, addressTo, eventName, transport,
                 arrivalDateTime, importantScale);
+        setInfo(originName, destName, importantScale, averageRating);
+    }
+
+    private void setInfo(String originName, String destName, double importantScale, double averageRating) {
         this.originName = originName;
         this.destName = destName;
         this.averageRating = averageRating;
-        this.transport = transport;
         this.importantScale = importantScale;
         this.travelTime = this.transport.getDurationInMin();
         setTotalTime();
@@ -70,9 +83,15 @@ public class EventWithPlaceInfo extends CalendarEvent {
                 ((importantScale * 5) * 0.5 + ((5 - averageRating) * 6) * 0.5);
     }
 
+    /**
+     * Clone an object
+     *
+     * @return a copy of the object
+     * @throws CloneNotSupportedException
+     */
     @Override
-    public EventWithPlaceInfo clone() throws CloneNotSupportedException {
-        EventWithPlaceInfo event = new EventWithPlaceInfo(addressFrom, addressTo, eventName, originName,
+    public EventWithInfo clone() throws CloneNotSupportedException {
+        EventWithInfo event = new EventWithInfo(addressFrom, addressTo, eventName, originName,
                 destName, (GregorianCalendar) arrivalDateTime.clone(),
                 (Transportation) transport.clone(), importantScale, averageRating);
         event.recommendedReadyMin = recommendedReadyMin;
@@ -80,7 +99,11 @@ public class EventWithPlaceInfo extends CalendarEvent {
         return event;
     }
 
-
+    /**
+     * Creates popUp frame
+     *
+     * @return A right pop up frame
+     */
     public PopUpFrame createPopUp() {
         return new OnlinePopUpFrame(this.getEventInfo());
     }
@@ -95,24 +118,6 @@ public class EventWithPlaceInfo extends CalendarEvent {
                         "Destination:\t%s\n\nTravel by:\t%s\n\n%s",
                 getArrivalTimeString(), addressFrom, addressTo,
                 transport.toString(), getEventInfo());
-    }
-
-    public Transportation createTransport(String type, int duration) {
-        Transportation transport = null;
-        switch (type) {
-            case BIKING_TYPE:
-                transport = new Biking(duration);
-                break;
-            case DRIVING_TYPE:
-                transport = new Driving(duration);
-                break;
-            case WALKING_TYPE:
-                transport = new Walking(duration);
-                break;
-            case TRANSIT_TYPE:
-                transport = new Transit(duration);
-        }
-        return transport;
     }
 
     /**
@@ -144,10 +149,10 @@ public class EventWithPlaceInfo extends CalendarEvent {
      * @return false if it is not equal otherwise true
      */
     public boolean equals(Object other) {
-        if (!(other instanceof EventWithPlaceInfo)) {
+        if (!(other instanceof EventWithInfo)) {
             return false;
         }
-        EventWithPlaceInfo comparingEvent = (EventWithPlaceInfo) other;
+        EventWithInfo comparingEvent = (EventWithInfo) other;
         return (addressFrom.equals(comparingEvent.addressFrom) &&
                 addressTo.equals(comparingEvent.addressTo) &&
                 arrivalDateTime.equals(comparingEvent.arrivalDateTime) &&

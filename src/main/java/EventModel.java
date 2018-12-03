@@ -12,7 +12,7 @@ public class EventModel {
     private LinkedBlockingQueue<RawUserInput> eventsToProcess;
 
     /**
-     * Constructor for the class. 
+     * Constructor for the class.
      *
      * @param filePath file path that save old information
      */
@@ -43,6 +43,8 @@ public class EventModel {
     }
 
     /**
+     * Adds user input to list for processing
+     *
      * @param ob object with the user input
      */
 
@@ -55,15 +57,15 @@ public class EventModel {
     }
 
     /**
+     * Get raw info from the list
+     *
      * @return returns the event
      */
 
     public RawUserInput getEventToProcess() {
         RawUserInput event = null;
         try {
-            System.out.println("start run");
             event = eventsToProcess.take();
-            System.out.println("Start to pull data request");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -114,6 +116,11 @@ public class EventModel {
         }
     }
 
+    /**
+     * Remove events from the tracking event list
+     *
+     * @param ob removing object
+     */
     public void removeEvents(CalendarEvent ob) {
         GregorianCalendar calendar = ob.getArrivalDateTime();
         if (events.containsKey(calendar)) {
@@ -138,6 +145,7 @@ public class EventModel {
             i.printStackTrace();
         }
     }
+
     /**
      * Restore information from file.
      */

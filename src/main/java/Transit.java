@@ -20,17 +20,19 @@ public class Transit extends Transportation {
     }
 
     /**
-     * toString method
-     * @return the string mode of transportation
+     * Get string mode of the transportation
+     *
+     * @return String of the mode of transportation
      */
     public String toString() {
-        return TransportationFactory.TRANSIT_TYPE;
+        return CalendarEvent.TRANSIT_TYPE;
     }
 
     /**
-     * Provides another object to compare the time and date with the new event
-     * @param other another event
-     * @return new event
+     * Checks if 2 object is the same
+     *
+     * @param other another object used to compare the new object
+     * @return true or false
      */
     public boolean equals(Object other) {
         return (other.getClass().equals(this));

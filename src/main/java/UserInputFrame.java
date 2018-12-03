@@ -202,6 +202,7 @@ public class UserInputFrame extends JFrame {
 
     /**
      * Gathers the user input
+     *
      * @return returns the new event
      */
     private RawUserInput gatherInfo() {
@@ -269,7 +270,7 @@ public class UserInputFrame extends JFrame {
         try {
             Method setValueMethod = importantScale.getClass().getDeclaredMethod("setValue", int.class);
             setValueMethod.invoke(importantScale, 3);
-        } catch ( ReflectiveOperationException x) {
+        } catch (ReflectiveOperationException x) {
             x.printStackTrace();
         }
     }
@@ -325,7 +326,8 @@ public class UserInputFrame extends JFrame {
 
     /**
      * Notifies listener
-     * @param object    changing object
+     *
+     * @param object changing object
      */
     private void notifyListener(RawUserInput object) {
         for (Listener l : listeners) {
@@ -335,8 +337,9 @@ public class UserInputFrame extends JFrame {
 
     /**
      * Checks if address inputs are valid
+     *
      * @param addressFrom origin address
-     * @param addressTo destination address
+     * @param addressTo   destination address
      * @throws InvalidObjectException throws when address is empty
      */
     private void isInputValid(String addressFrom, String addressTo) throws InvalidObjectException {
