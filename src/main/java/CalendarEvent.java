@@ -54,10 +54,10 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      * @param duration        Traveling time
      * @param importantScale  Priority level of the event
      */
-    public CalendarEvent(String addressFrom, String addressTo, String eventName, String transport, int duration,
+    public CalendarEvent(String addressFrom, String addressTo, String eventName, String transport, int duration, int distance,
                          GregorianCalendar arrivalDateTime, double importantScale) {
         this(addressFrom, addressTo, eventName, arrivalDateTime, importantScale);
-        this.transport = createTransport(transport, duration);
+        this.transport = createTransport(transport, duration, distance);
 
     }
     /**
@@ -169,20 +169,20 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      * @param duration time is takes to travel from starting destination to ending destination using specified mode of transportation.
      * @return returns the time
      */
-    public Transportation createTransport(String type, int duration) {
+    public Transportation createTransport(String type, int duration, int distance) {
         Transportation transport = null;
         switch (type) {
             case BIKING_TYPE:
-                transport = new Biking(duration);
+                transport = new Biking(duration,distance);
                 break;
             case DRIVING_TYPE:
-                transport = new Driving(duration);
+                transport = new Driving(duration, distance);
                 break;
             case WALKING_TYPE:
-                transport = new Walking(duration);
+                transport = new Walking(duration, distance);
                 break;
             case TRANSIT_TYPE:
-                transport = new Transit(duration);
+                transport = new Transit(duration, distance);
         }
         return transport;
     }

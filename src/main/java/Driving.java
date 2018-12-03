@@ -10,8 +10,8 @@ public class Driving extends Transportation {
      *
      * @param duration estimated time it would take for user to drive from starting destination to ending destination
      */
-    public Driving(int duration) {
-        super(duration);
+    public Driving(int duration, int distance) {
+        super(duration, distance);
     }
 
     /**

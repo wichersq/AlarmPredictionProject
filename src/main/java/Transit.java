@@ -4,8 +4,8 @@
 public class Transit extends Transportation {
     private final static int TRAVEL_SEC_PER_BREAK = 4 * 60 * 60;
 
-    public Transit(int duration) {
-        super(duration);
+    public Transit(int duration, int distance) {
+        super(duration, distance);
     }
 
     /**

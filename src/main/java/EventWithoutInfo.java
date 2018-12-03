@@ -20,7 +20,7 @@ public class EventWithoutInfo extends CalendarEvent {
     public EventWithoutInfo(String addressFrom, String addressTo, String eventName,
                             GregorianCalendar arrivalDateTime, String transport, double importantScale) {
         super(addressFrom, addressTo, eventName,
-                transport, 0, arrivalDateTime, importantScale);
+                transport, 0, 0,arrivalDateTime, importantScale);
         setTotalTime();
         calPrepareTime();
     }

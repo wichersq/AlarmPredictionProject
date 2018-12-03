@@ -8,10 +8,10 @@ public class Biking extends Transportation {
     /**
      * Determines time it would take to travel from starting destination to ending destination by bike.
      *
-     * @param durationInSec how long it would take to bike to the given destination
+     * @param duration how long it would take to bike to the given destination
      */
-    public Biking(int durationInSec) {
-        super(durationInSec);
+    public Biking(int duration, int distance) {
+        super(duration,distance);
     }
 
     /**

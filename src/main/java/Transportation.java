@@ -9,9 +9,11 @@ public abstract class Transportation implements Serializable, Cloneable {
     protected int durationInSec;
     protected int travelInSec;
     protected int breakTimeOfTravel;
+    protected int distance;
 
-    Transportation(int duration) {
+    Transportation(int duration, int distance) {
         durationInSec = duration;
+        this.distance = distance;
         setTotalMinTravel();
     }
 
@@ -29,11 +31,21 @@ public abstract class Transportation implements Serializable, Cloneable {
         travelInSec = calculateBreakTime() + durationInSec;
     }
 
+    /**
+     * Gets travel time in minute
+     * @return  duration in min
+     */
     public int getDurationInMin() {
         return durationInSec / 60;
     }
 
-
+    /**
+     * Get travel distance in mile.
+     * @return miles of distance.
+     */
+    public int getTravelDistanceInMile(){
+        return distance;
+    }
     /**
      * Accessor for TotalTravelMin.
      *

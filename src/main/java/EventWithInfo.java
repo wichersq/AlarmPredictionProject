@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
  */
 public class EventWithInfo extends CalendarEvent {
     protected int DEFAULT_PREPARE_MIN = 30;
+    protected int DEFAULT_EXTRA_MIN = 10;
     private double averageRating;
     protected int preparingTime;
     protected int travelTime;
@@ -28,9 +29,9 @@ public class EventWithInfo extends CalendarEvent {
 
     public EventWithInfo(String addressFrom, String addressTo, String eventName,
                          String originName, String destName, GregorianCalendar arrivalDateTime,
-                         String transport, int duration, double importantScale, double averageRating) {
+                         String transport, int duration, int distance, double importantScale, double averageRating) {
         super(addressFrom, addressTo, eventName,
-                transport, duration, arrivalDateTime, importantScale);
+                transport, duration, distance, arrivalDateTime, importantScale);
         setInfo(originName, destName, importantScale, averageRating);
     }
 
@@ -61,8 +62,8 @@ public class EventWithInfo extends CalendarEvent {
         this.averageRating = averageRating;
         this.importantScale = importantScale;
         this.travelTime = this.transport.getDurationInMin();
-        setTotalTime();
         calPrepareTime();
+        setTotalTime();
     }
 
     /**
@@ -79,8 +80,24 @@ public class EventWithInfo extends CalendarEvent {
      * The more important the event is the more time will be adding to prepare.
      */
     protected void calPrepareTime() {
-        preparingTime = DEFAULT_PREPARE_MIN + (int)
-                ((importantScale * 5) * 0.5 + ((5 - averageRating) * 6) * 0.5);
+        System.out.println("Transport" + transport.getTravelDistanceInMile());
+        preparingTime = DEFAULT_PREPARE_MIN + addMoreBreakTime(transport.getTravelDistanceInMile());
+        if (averageRating != 0.0) {
+            preparingTime += (int) ((importantScale * 6) * 0.5 + ((5 - averageRating) * 6) * 0.5);
+        } else {
+            preparingTime += importantScale * 6;
+
+        }
+
+    }
+
+    /**
+     * calculates more break time if needs base on how far travel
+     *
+     * @param miles distance to travel
+     */
+    private int addMoreBreakTime(int miles) {
+        return (miles / 200) * DEFAULT_EXTRA_MIN;
     }
 
     /**

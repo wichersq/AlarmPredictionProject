@@ -173,7 +173,7 @@ public class UserInputFrame extends JFrame {
      */
     private void createSliderBar() {
         sliderBox = Box.createVerticalBox();
-        importantScale = new JSlider(JSlider.HORIZONTAL, 1, 6, 3);
+        importantScale = new JSlider(JSlider.HORIZONTAL, 1, 5, 3);
         importantScale.setMinorTickSpacing(1);
         importantScale.setMajorTickSpacing(1);
         importantScale.setPaintTicks(true);
@@ -195,8 +195,9 @@ public class UserInputFrame extends JFrame {
         buttonBox.add(showButton);
         addButton.addActionListener(ActionEvent -> {
             RawUserInput changeOb = gatherInfo();
-            notifyListener(changeOb);
-
+            if ( changeOb != null) {
+                notifyListener(changeOb);
+            }
         });
     }
 
@@ -209,18 +210,23 @@ public class UserInputFrame extends JFrame {
         String from = addressFrom.getText();
         String to = addressTo.getText();
         String name = eventName.getText();
+        boolean createTimeSuccessful = false;
         try {
             isInputValid(from, to);
-            createDateTime(date.getText(), time.getText());
+            createTimeSuccessful = createDateTime(date.getText(), time.getText());
         } catch (InvalidObjectException e) {
             popUpWarningMessage("Please check your input for address");
+            return null;
         } catch (NumberFormatException e) {
             popUpWarningMessage("Date or time in invalid format. Please try different time");
+            return null;
         }
-
-        String trans = transportPick();
-        int scale = importantScale.getValue();
-        return new RawUserInput(from, to, name, eventDate, trans, scale);
+        if (createTimeSuccessful) {
+            String trans = transportPick();
+            int scale = importantScale.getValue();
+            return new RawUserInput(from, to, name, eventDate, trans, scale);
+        }
+        return null;
     }
 
     /**
@@ -230,7 +236,7 @@ public class UserInputFrame extends JFrame {
      * @param convertingTime Scheduled time of the event
      * @throws NumberFormatException If the user inputs an invalid time or date then the program will notify the user
      */
-    private void createDateTime(String convertingDate, String convertingTime) throws NumberFormatException {
+    private boolean createDateTime(String convertingDate, String convertingTime) throws NumberFormatException {
 
         if (!convertingDate.equals("__/__/____") && !convertingDate.equals("__:__")) {
             System.out.println("if");
@@ -246,14 +252,16 @@ public class UserInputFrame extends JFrame {
             eventDate = new GregorianCalendar(year, month - 1, date, hour, min);
             if (eventDate.before(Calendar.getInstance())) {
                 popUpWarningMessage("The time is invalid. Please try different time");
+                return false;
             }
             if (controller.checkIfTimeOccupied(eventDate)) {
                 popUpWarningMessage("The time is already occupied. Please try different time");
+                return false;
             }
         } else {
-
             throw new NumberFormatException("Invalid input");
         }
+        return true;
     }
 
     /**

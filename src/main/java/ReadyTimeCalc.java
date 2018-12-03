@@ -76,22 +76,25 @@ public class ReadyTimeCalc implements Runnable {
      */
     private void requestData(RawUserInput ob) {
         GregorianCalendar arrivalDateTime = ob.getArrivalDateTime();
-        boolean gotInfoSuccessfully = false;
+        boolean gotInfoSuccessfully;
         String destName;
         String originName;
         long durationSec;
+        int distanceInMile = 0;
         double rating;
         String startAddress;
         String endAddress;
         double importantScale = ob.getImportantScale();
         // this is for example without using API Key
         if (isDryRun) {
-            destName = "570 N Shoreline Blvd";
-            originName = "189 Central Ave";
-            durationSec = 976 * 60;
+            destName = "Mountain View, CA";
+            originName = "Brooklyn, New York";
+            durationSec = 44*60 * 60;
+            distanceInMile = 2960;
             rating = 0.0;
-            startAddress = "189 Central Ave, Mountain View, CA 94043, USA";
-            endAddress = "570 N Shoreline Blvd, Mountain View, CA 94043, USA";
+            startAddress = "Mountain View, CA";
+            endAddress = "Brooklyn, New York";
+            gotInfoSuccessfully = true;
         }
 //         This will need Api Key to run
         else {
@@ -100,13 +103,14 @@ public class ReadyTimeCalc implements Runnable {
             destName = dataRequest.getDestName();
             originName = dataRequest.getOriginName();
             durationSec = dataRequest.getDurationSec();
+            distanceInMile = dataRequest.getDistance();
             rating = (double) dataRequest.getRating();
             startAddress = dataRequest.getStartAddress();
             endAddress = dataRequest.getEndAddress();
         }
         currentEvent = createEventType(gotInfoSuccessfully, startAddress,
                 endAddress, ob.getName(), originName, destName, arrivalDateTime,
-                ob.getTransport(), (int) durationSec, importantScale, rating);
+                ob.getTransport(), (int) durationSec, distanceInMile, importantScale, rating);
         popUp = currentEvent.createPopUp();
         createsButtonOfPopUp();
     }
@@ -128,12 +132,11 @@ public class ReadyTimeCalc implements Runnable {
      */
     private CalendarEvent createEventType(boolean gotInfoSuccessfully, String addressFrom, String addressTo, String eventName,
                                           String originName, String destName, GregorianCalendar arrivalDateTime,
-                                          String transport, int duration, double importantScale, double rating) {
+                                          String transport, int duration, int distance, double importantScale, double rating) {
         if (gotInfoSuccessfully) {
             return new EventWithInfo(addressFrom, addressTo, eventName,
-                    originName, destName, arrivalDateTime, transport, duration, importantScale, rating);
+                    originName, destName, arrivalDateTime, transport, duration, distance, importantScale, rating);
         } else {
-
             return new EventWithoutInfo(addressFrom, addressTo, eventName, arrivalDateTime, transport, importantScale);
         }
     }

@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
  * Class DataRequest pulls data from google about the specifed addresses inputted by the user.
  */
 public class DataRequest {
+    private double METER_PER_MILE = 1609.34;
     private DirectionsResult mapResult = null;
     private PlaceDetails details = null;
     private GeoApiContext context;
@@ -101,12 +102,12 @@ public class DataRequest {
     }
 
     /**
-     * Accessor for distanceMeter.
+     * Accessor for distance in mile.
      *
      * @return the distance from beginning destination to ending destination
      */
-    public long getDistance() {
-        return distanceMeter;
+    public int getDistance() {
+        return (int) (distanceMeter/METER_PER_MILE);
     }
 
     /**
@@ -133,7 +134,9 @@ public class DataRequest {
      * @return how long the travel time is to get from starting detination to ending destination
      */
     public long getDurationSec() {
+        System.out.println(durationSec);
         return durationSec;
+
     }
 
     /**

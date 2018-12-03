@@ -10,8 +10,8 @@ public class Walking extends Transportation {
      *
      * @param duration time it takes to walk from starting destination to ending destination
      */
-    public Walking(int duration) {
-        super(duration);
+    public Walking(int duration, int distance) {
+        super(duration, distance);
     }
 
     /**
