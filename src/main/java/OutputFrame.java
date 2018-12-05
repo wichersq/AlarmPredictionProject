@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /**
  * Class OutputFrame displays the event information and estimated time the user would need
@@ -12,10 +11,9 @@ public class OutputFrame extends JFrame implements Listener {
     private JPanel listPanel;
     private JPanel detailPanel;
     private JScrollPane scrollPane;
-    private DefaultListModel listModel;
+    private DataListModel listModel;
     private JList list;
     private JScrollPane scrollPaneDetail;
-    private EventModel model;
     private JButton deleteButton;
     private CalendarListElement calendarListElement;
 
@@ -33,7 +31,8 @@ public class OutputFrame extends JFrame implements Listener {
         setDefaultLookAndFeelDecorated(true);
         setVisible(false);
         setResizable(false);
-
+        model.addListener(this);
+        listModel = new DataListModel(model);
         addEventListPanel();
 
 
@@ -42,11 +41,6 @@ public class OutputFrame extends JFrame implements Listener {
 
         createButtonBox();
         add(deleteButton, BorderLayout.SOUTH);
-
-        this.model = model;
-        model.addListener(this);
-
-
     }
 
     /**
@@ -54,7 +48,7 @@ public class OutputFrame extends JFrame implements Listener {
      */
     private void addEventListPanel() {
         listPanel = new JPanel();
-        listModel = new DefaultListModel();
+
         list = new JList(listModel);
         calendarListElement = new CalendarListElement(3, 30);
         list.setCellRenderer(calendarListElement);
@@ -68,7 +62,6 @@ public class OutputFrame extends JFrame implements Listener {
      * Creates a panel that show event detail
      */
     private void createEventDetailPanel() {
-
         textArea = new TextAreaDetail(calendarListElement);
         textArea.setEditable(false);
 
@@ -84,32 +77,56 @@ public class OutputFrame extends JFrame implements Listener {
      */
     private void createButtonBox() {
         deleteButton = new JButton("Delete");
-
-
+        deleteButton.addActionListener(ActionListener -> {
+            deleteEvents(getSelectionFromList());
+            if (listModel.getSize() <= 0) {
+                clearTextDetail();
+            }
+        });
     }
 
     /**
-     * Updates list
+     * Deletes events in the event model.
+     *
+     * @param ob deleting object
      */
-    public void updateTextList() {
-        ArrayList<CalendarEvent> calendarList = model.getEventsList();
-        listModel.setSize(0);
-        textArea.setText("");
-        for (CalendarEvent event : calendarList) {
-            listModel.addElement(event);
+    public void deleteEvents(CalendarEvent ob) {
+        listModel.remove(ob);
+    }
+
+    /**
+     * Set visible frame
+     *
+     * @param visible true if visible
+     */
+    @Override
+    public void setVisible(boolean visible) {
+        if (visible) {
+            listModel.updateList();
+            if (listModel.getSize() <= 0) {
+                JDialog.setDefaultLookAndFeelDecorated(true);
+                JOptionPane.showConfirmDialog(null,
+                        "No Events", "Warning Message",
+                        JOptionPane.DEFAULT_OPTION);
+            } else {
+                super.setVisible(true);
+            }
+        } else {
+            super.setVisible(false);
         }
     }
 
     /**
-     * Adds action to button.
-     *
-     * @param e action when button is clicked
+     * Clear text in text area detail
      */
-    public void addActionDeleteButton(ActionListener e) {
-        deleteButton.addActionListener(e);
+    private void clearTextDetail() {
+        textArea.setText("");
     }
 
-    public CalendarEvent getSelectionFromList() {
+    /**
+     * Gets the object being chosen
+     */
+    private CalendarEvent getSelectionFromList() {
         return calendarListElement.getCurrentSelection();
     }
 
@@ -121,6 +138,6 @@ public class OutputFrame extends JFrame implements Listener {
      */
     @Override
     public void update(Object ob) {
-        updateTextList();
+        listModel.updateList();
     }
 }

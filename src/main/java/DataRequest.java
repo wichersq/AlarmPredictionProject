@@ -16,9 +16,11 @@ import java.util.GregorianCalendar;
 public class DataRequest {
     private double METER_PER_MILE = 1609.34;
     private DirectionsResult mapResult = null;
-    private PlaceDetails details = null;
+    private PlaceDetails destDetails = null;
+    private PlaceDetails originDetails = null;
     private GeoApiContext context;
-    private String placeId = "";
+    private String destinationID = "";
+    private String originID = "";
     private String destName = "Invalid";
     private String originName = "Invalid";
     private long durationSec = 0;
@@ -59,12 +61,12 @@ public class DataRequest {
     }
 
     /**
-     * Saves the details of the event specified by the user.
+     * Saves the destDetails of the event specified by the user.
      */
     private void savePlaceDetailsInfo() {
-        originName = startAddress.split(",")[0];
-        destName = details.name;
-        rating = details.rating;
+        originName = originDetails.name;
+        destName = destDetails.name;
+        rating = destDetails.rating;
     }
 
     /**
@@ -72,7 +74,8 @@ public class DataRequest {
      */
     private boolean requestPlaceDetail() {
         try {
-            details = PlacesApi.placeDetails(context, placeId).await();
+            destDetails = PlacesApi.placeDetails(context, destinationID).await();
+            originDetails = PlacesApi.placeDetails(context,originID).await();
             savePlaceDetailsInfo();
             return true;
         } catch (Exception e) {
@@ -87,7 +90,8 @@ public class DataRequest {
     private void saveMapInformation() {
         durationSec = mapResult.routes[0].legs[0].duration.inSeconds;
         distanceMeter = mapResult.routes[0].legs[0].distance.inMeters;
-        placeId = mapResult.geocodedWaypoints[1].placeId;
+        destinationID = mapResult.geocodedWaypoints[1].placeId;
+        originID = mapResult.geocodedWaypoints[0].placeId;
         startAddress = mapResult.routes[0].legs[0].startAddress;
         endAddress = mapResult.routes[0].legs[0].endAddress;
     }
@@ -134,7 +138,6 @@ public class DataRequest {
      * @return how long the travel time is to get from starting detination to ending destination
      */
     public long getDurationSec() {
-        System.out.println(durationSec);
         return durationSec;
 
     }

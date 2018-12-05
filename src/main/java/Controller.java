@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.GregorianCalendar;
 
 /**
@@ -25,7 +26,7 @@ public class Controller implements Listener {
     }
 
     /**
-     * Method where the information from UserInput to queue so the consumer thread can get it.
+     * Gets the information from UserInput to queue so the consumer thread can get it.
      *
      * @param ob holds info from raw user input.
      */
@@ -53,8 +54,7 @@ public class Controller implements Listener {
     /**
      * Clears the information that was inputted.
      */
-    public void resetUserFrame() {
-        userInput.setBackToDefault();
+    public void resetUserFrame() { userInput.setBackToDefault();
     }
 
     /**
@@ -62,24 +62,14 @@ public class Controller implements Listener {
      */
     private void createButtonUserInput() {
         userInput.addActionShowButton(ActionEvent -> {
-            outputFrame.updateTextList();
-            outputFrame.setVisible(true);
+
+                outputFrame.setVisible(true);
+
         });
 
-        outputFrame.addActionDeleteButton(ActionEvent -> {
-            deleteEvents(outputFrame.getSelectionFromList());
-        });
     }
 
-    /**
-     * Deletes events in the event model.
-     *
-     * @param ob deleting object
-     */
-    public void deleteEvents(CalendarEvent ob) {
 
-        model.removeEvents(ob);
-    }
 
     /**
      * Updates the user information that was changed.

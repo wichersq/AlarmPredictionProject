@@ -8,11 +8,13 @@ import java.util.GregorianCalendar;
  * Class CalendarEvent collects all information the user inputs to schedule an event.
  */
 public abstract class CalendarEvent implements Serializable, Comparable<CalendarEvent>, Cloneable {
-    protected int DEFAULT_PREPARE_MIN = 30;
+    protected final static int DEFAULT_PREPARE_MIN = 30;
+    protected final static int SEC_PER_MIN = 60;
+    protected final static int MIN_PER_HOUR = 60;
     protected SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
     protected String addressFrom;
     protected String addressTo;
-    protected String eventName = "No Event Name";
+    protected String eventName;
     protected String originName;
     protected String destName;
     protected GregorianCalendar arrivalDateTime;
@@ -77,8 +79,17 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
         this.transport = transport;
     }
 
+    /**
+     * Get high light information
+     * @return a string of information
+     */
     public abstract String getSummaryInfo();
 
+    /**
+     * Gets arrival time in string format
+     *
+     * @return the alarm time
+     */
     public GregorianCalendar getArrivalDateTime() {
         return (GregorianCalendar) arrivalDateTime.clone();
     }
@@ -104,7 +115,7 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
 
 
     /**
-     * Adjust preparing time depends on the user's wish
+     * Adjusts the ready time
      *
      * @param adjustMin user input of how much time they want to add
      */
@@ -120,9 +131,16 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      */
     public abstract String getEventInfo();
 
+    //TODO:
+
+    /**
+     *
+     * @param durationInMin
+     * @return
+     */
     protected String durationStringFormat(int durationInMin) {
-        int min = Math.abs(durationInMin % 60);
-        int hour = durationInMin / 60;
+        int min = Math.abs(durationInMin % SEC_PER_MIN);
+        int hour = durationInMin / MIN_PER_HOUR;
         return String.format("%d %s %d %s", hour, hour > 1 ? "hours" : "hour",
                 min, min > 1 ? "minutes" : "minute");
     }
@@ -169,7 +187,7 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      * @param duration time is takes to travel from starting destination to ending destination using specified mode of transportation.
      * @return returns the time
      */
-    public Transportation createTransport(String type, int duration, int distance) {
+    private Transportation createTransport(String type, int duration, int distance) {
         Transportation transport = null;
         switch (type) {
             case BIKING_TYPE:
@@ -192,6 +210,5 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      * @return  an new popUpFrame
      */
     public abstract PopUpFrame createPopUp();
-
 }
 

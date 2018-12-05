@@ -5,11 +5,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * A model keeps track all events' values.
  */
-public class EventModel {
-    private ArrayList<Listener> listeners;
+public class EventModel{
+    private ArrayList<Listener> modelListeners;
     private HashMap<GregorianCalendar, CalendarEvent> events;
     private File file;
     private LinkedBlockingQueue<RawUserInput> eventsToProcess;
+
 
     /**
      * Constructor for the class.
@@ -18,7 +19,7 @@ public class EventModel {
      */
     public EventModel(String filePath) {
         events = new HashMap<GregorianCalendar, CalendarEvent>();
-        listeners = new ArrayList<Listener>();
+        modelListeners = new ArrayList<Listener>();
         eventsToProcess = new LinkedBlockingQueue<>();
         maybeCreateFile(filePath);
     }
@@ -29,7 +30,7 @@ public class EventModel {
      * @param l adding listener
      */
     public void addListener(Listener l) {
-        listeners.add(l);
+        modelListeners.add(l);
     }
 
     /**
@@ -89,21 +90,20 @@ public class EventModel {
      */
 
     public ArrayList<CalendarEvent> getEventsList() {
-        System.out.println("In here");
-        CalendarEvent event;
-        ArrayList<CalendarEvent> eventList = new ArrayList<>();
-        Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
-        while (iterator.hasNext()) {
-            event = iterator.next().getValue();
-            try {
-                eventList.add(event.clone());
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+            CalendarEvent event;
+            ArrayList<CalendarEvent> eventListForModel = new ArrayList<>();
+            Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
+            while (iterator.hasNext()) {
+                event = iterator.next().getValue();
+                try {
+                    eventListForModel.add(event.clone());
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
             }
+            Collections.sort(eventListForModel);
+            return eventListForModel;
         }
-        Collections.sort(eventList);
-        return eventList;
-    }
 
     /**
      * Notifies all listeners.
@@ -111,7 +111,7 @@ public class EventModel {
      * @param object changed object
      */
     private void notifyListener(Object object) {
-        for (Listener l : listeners) {
+        for (Listener l : modelListeners) {
             l.update(object);
         }
     }
@@ -157,6 +157,7 @@ public class EventModel {
             while (true) {
                 try {
                     events = (HashMap<GregorianCalendar, CalendarEvent>) inputStream.readObject();
+                    getEventsList();
                 } catch (EOFException eof) {
                     break;
                 }
@@ -179,5 +180,6 @@ public class EventModel {
             restoreEventsFromFile();
         }
     }
+
 }
 
