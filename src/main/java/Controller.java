@@ -54,7 +54,8 @@ public class Controller implements Listener {
     /**
      * Clears the information that was inputted.
      */
-    public void resetUserFrame() { userInput.setBackToDefault();
+    public void resetUserFrame() {
+        userInput.setBackToDefault();
     }
 
     /**
@@ -62,14 +63,11 @@ public class Controller implements Listener {
      */
     private void createButtonUserInput() {
         userInput.addActionShowButton(ActionEvent -> {
-
-                outputFrame.setVisible(true);
+            outputFrame.setVisible(true);
 
         });
 
     }
-
-
 
     /**
      * Updates the user information that was changed.

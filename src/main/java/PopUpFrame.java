@@ -63,12 +63,14 @@ public abstract class PopUpFrame extends JFrame {
     protected abstract void createSlider();
 
     /**
-     * @param alarmStr
+     * edit popUp
+     * @param alarmStr changing text
      */
     public abstract void showPopUp(String alarmStr);
 
     /**
-     * @return returns slider value
+     * Gets side value
+     * @return slider value
      */
     public int getSliderValue() {
         int value = slider.getValue();

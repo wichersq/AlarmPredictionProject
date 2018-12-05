@@ -117,7 +117,7 @@ public class EventModel{
     }
 
     /**
-     * Remove events from the tracking event list
+     * Removes events from the tracking event list
      *
      * @param ob removing object
      */
