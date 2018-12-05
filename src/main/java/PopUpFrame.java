@@ -30,7 +30,7 @@ public abstract class PopUpFrame extends JFrame {
         detailMessage = new JTextArea(str);
         detailMessage.setEditable(false);
         panel.setLayout(new BorderLayout());
-        panel.setBounds(0, 0, 400, 250);
+        panel.setBounds(0, 0, 450, 250);
         panel.add(sliderBox, BorderLayout.CENTER);
         panel.add(buttonsBox, BorderLayout.SOUTH);
         panel.add(detailMessage, BorderLayout.NORTH);
@@ -38,7 +38,7 @@ public abstract class PopUpFrame extends JFrame {
         setResizable(false);
         this.setLayout(new FlowLayout());
         this.add(panel);
-        super.setBounds(0, 0, 400, 250);
+        super.setBounds(0, 0, 450, 250);
         setVisible(true);
     }
 
