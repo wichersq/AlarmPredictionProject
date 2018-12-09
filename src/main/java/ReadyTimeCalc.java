@@ -45,9 +45,8 @@ public class ReadyTimeCalc implements Runnable {
         String apiKey = "";
         try {
             scanner = new Scanner(input);
-            while (scanner.hasNext()) {
-                apiKey = scanner.nextLine();
-            }
+
+            apiKey = scanner.nextLine();
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -85,15 +84,16 @@ public class ReadyTimeCalc implements Runnable {
         String startAddress;
         String endAddress;
         double importantScale = ob.getImportantScale();
+
         // this is for example without using API Key
         if (isDryRun) {
-            destName = "Mountain View, CA";
-            originName = "Brooklyn, New York";
-            durationSec = 44*60 * 60;
-            distanceInMile = 2960;
-            rating = 0.0;
+            originName =  "Mountain View, CA";
+            destName = "San Jose State University";
+            durationSec = 20 *60 * 60;
+            distanceInMile = 17;
+            rating = 3.0;
             startAddress = "Mountain View, CA";
-            endAddress = "Brooklyn, New York";
+            endAddress = "San Jose State University";
             gotInfoSuccessfully = true;
         }
 //         This will need Api Key to run

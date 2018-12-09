@@ -2,11 +2,9 @@ import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.PlacesApi;
-
 import com.google.maps.DirectionsApi;
 import com.google.maps.model.PlaceDetails;
 import com.google.maps.model.TravelMode;
-
 import java.time.Instant;
 import java.util.GregorianCalendar;
 
