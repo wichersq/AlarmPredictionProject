@@ -3,7 +3,7 @@
 
 ## Student Information
 
-- **Name**: Quyen Wichers,
+- **Group Member**: Fei Pan, Quyen Wichers, Alysia Reyes
 - **Semester**: Fall 2018
 - **Class**: CS 151-6
 
