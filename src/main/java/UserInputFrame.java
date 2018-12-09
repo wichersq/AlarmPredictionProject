@@ -239,7 +239,6 @@ public class UserInputFrame extends JFrame {
     private boolean createDateTime(String convertingDate, String convertingTime) throws NumberFormatException {
 
         if (!convertingDate.equals("__/__/____") && !convertingDate.equals("__:__")) {
-            System.out.println("if");
             String[] dateArr = convertingDate.split("/");
             int month = Integer.parseInt(dateArr[0]);
             int date = Integer.parseInt(dateArr[1]);

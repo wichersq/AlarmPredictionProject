@@ -150,7 +150,6 @@ public class ReadyTimeCalc implements Runnable {
         currentEvent.editReadyTime(changingTime);
         String alarmStr = currentEvent.getEventInfo();
         popUp.showPopUp(alarmStr);
-
     }
 
     /**

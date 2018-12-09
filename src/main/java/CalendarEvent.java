@@ -60,7 +60,6 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
                          GregorianCalendar arrivalDateTime, double importantScale) {
         this(addressFrom, addressTo, eventName, arrivalDateTime, importantScale);
         this.transport = createTransport(transport, duration, distance);
-
     }
     /**
      * Constructor for the class takes in string of transportation

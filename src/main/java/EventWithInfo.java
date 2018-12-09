@@ -32,6 +32,7 @@ public class EventWithInfo extends CalendarEvent {
                          String transport, int duration, int distance, double importantScale, double averageRating) {
         super(addressFrom, addressTo, eventName,
                 transport, duration, distance, arrivalDateTime, importantScale);
+        System.out.println("transport" + this.transport == null);
         setInfo(originName, destName, importantScale, averageRating);
     }
 
@@ -61,7 +62,9 @@ public class EventWithInfo extends CalendarEvent {
         this.destName = destName;
         this.averageRating = averageRating;
         this.importantScale = importantScale;
-        this.travelTime = this.transport.getDurationInMin();
+        System.out.println("transport" + this.transport == null);
+        this.travelTime = transport.getDurationInMin();
+
         calPrepareTime();
         setTotalTime();
     }

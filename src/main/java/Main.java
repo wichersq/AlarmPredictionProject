@@ -12,7 +12,6 @@ public class Main {
         EventModel model = new EventModel(filePath);
         UserInputFrame userInput = new UserInputFrame(500);
         OutputFrame outputFrame = new OutputFrame(model, 500);
-
         Controller controller = new Controller(userInput, model, outputFrame);
 
         Thread thread = new Thread(new ReadyTimeCalc(model, outputFrame, controller, isDryRun));

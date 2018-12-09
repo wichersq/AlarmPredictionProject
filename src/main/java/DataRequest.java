@@ -135,7 +135,7 @@ public class DataRequest {
     /**
      * Accessor for DurationSec.
      *
-     * @return how long the travel time is to get from starting detination to ending destination
+     * @return how long the travel time is to get from starting destination to ending destination
      */
     public long getDurationSec() {
         return durationSec;
