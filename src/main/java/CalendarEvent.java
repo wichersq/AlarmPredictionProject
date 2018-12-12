@@ -36,9 +36,7 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      * @param arrivalDateTime Time of the event
      * @param importantScale  How important the event is to the user
      */
-
-    private CalendarEvent(String addressFrom, String addressTo, String eventName,
-                          GregorianCalendar arrivalDateTime, double importantScale) {
+    private CalendarEvent(String addressFrom, String addressTo, String eventName, GregorianCalendar arrivalDateTime, double importantScale) {
         this.addressFrom = addressFrom;
         this.addressTo = addressTo;
         this.eventName = eventName;
@@ -130,12 +128,10 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      */
     public abstract String getEventInfo();
 
-    //TODO:
-
     /**
-     *
-     * @param durationInMin
-     * @return
+     * Get a string for travel duration - from minutes to hours and minutes
+     * @param durationInMin minutes of duration
+     * @return  a string format
      */
     protected String durationStringFormat(int durationInMin) {
         int min = Math.abs(durationInMin % SEC_PER_MIN);
