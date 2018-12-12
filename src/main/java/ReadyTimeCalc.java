@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.GregorianCalendar;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -26,8 +27,11 @@ public class ReadyTimeCalc implements Runnable {
      */
     public ReadyTimeCalc(EventModel model, OutputFrame outputFrame, Controller controller, boolean isDryRun) {
         this.isDryRun = isDryRun;
-        if (!isDryRun) {
-            this.dataRequest = new DataRequest(readApiKey());
+        String apiKey = readApiKey();
+        if (apiKey.length()>0 && !isDryRun){
+            this.dataRequest = new DataRequest(apiKey);
+        }else {
+            this.isDryRun = true;
         }
         this.controller = controller;
         this.model = model;
@@ -45,11 +49,12 @@ public class ReadyTimeCalc implements Runnable {
         String apiKey = "";
         try {
             scanner = new Scanner(input);
-
             apiKey = scanner.nextLine();
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch(NoSuchElementException e){
+            apiKey = "";
         }
         return apiKey;
     }
