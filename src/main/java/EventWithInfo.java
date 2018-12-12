@@ -57,14 +57,21 @@ public class EventWithInfo extends CalendarEvent {
         setInfo(originName, destName, importantScale, averageRating);
     }
 
+    /**
+     * Set information for instance
+     *
+     * @param originName     name of the origin place
+     * @param destName       name of destination place
+     * @param importantScale event importance
+     * @param averageRating  rating of the place
+     */
     private void setInfo(String originName, String destName, double importantScale, double averageRating) {
         this.originName = originName;
         this.destName = destName;
         this.averageRating = averageRating;
         this.importantScale = importantScale;
-        System.out.println("transport" + this.transport == null);
-        this.travelTime = transport.getDurationInMin();
 
+        this.travelTime = transport.getDurationInMin();
         calPrepareTime();
         setTotalTime();
     }
@@ -95,7 +102,7 @@ public class EventWithInfo extends CalendarEvent {
     }
 
     /**
-     * calculates more break time if needs base on how far travel
+     * Calculates more break time if needs base on how far travel
      *
      * @param miles distance to travel
      */
@@ -141,7 +148,9 @@ public class EventWithInfo extends CalendarEvent {
     }
 
     /**
-     * @return returns all the user inputs
+     * Get summary of event's info
+     *
+     * @return all the event info
      */
     public String getSummaryInfo() {
         return String.format("\t%s\n*** %s ***\n%s  --->  %s\n" +

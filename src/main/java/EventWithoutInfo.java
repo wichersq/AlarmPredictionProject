@@ -101,7 +101,7 @@ public class EventWithoutInfo extends CalendarEvent {
     }
 
     /**
-     * Copy the object
+     * Copies the object
      *
      * @return A copy of the object
      * @throws CloneNotSupportedException
@@ -129,7 +129,7 @@ public class EventWithoutInfo extends CalendarEvent {
     }
 
     /**
-     * Create a pop up frame
+     * Creates a pop up frame
      *
      * @return a new create popUp
      */

@@ -26,7 +26,7 @@ public class Walking extends Transportation {
     }
 
     /**
-     * Get string mode of the transportation
+     * Gets string mode of the transportation
      *
      * @return String of the mode of transportation
      */

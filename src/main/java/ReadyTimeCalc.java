@@ -89,14 +89,14 @@ public class ReadyTimeCalc implements Runnable {
         if (isDryRun) {
             originName =  "Mountain View, CA";
             destName = "San Jose State University";
-            durationSec = 20 *60 * 60;
+            durationSec = 20 * 60;
             distanceInMile = 17;
             rating = 3.0;
             startAddress = "Mountain View, CA";
             endAddress = "San Jose State University";
             gotInfoSuccessfully = true;
         }
-//         This will need Api Key to run
+        //         This will need Api Key to run
         else {
             gotInfoSuccessfully = dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
                     ob.getTransport(), arrivalDateTime);

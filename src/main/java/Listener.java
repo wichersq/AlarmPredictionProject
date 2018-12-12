@@ -1,5 +1,5 @@
 /**
- * Reference type
+ * Listener interface
  */
 public interface Listener {
     /**

@@ -62,6 +62,12 @@ public abstract class Transportation implements Serializable, Cloneable {
      */
     public abstract String toString();
 
+    /**
+     * Clone an object
+     *
+     * @return a copy of the object
+     * @throws CloneNotSupportedException
+     */
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

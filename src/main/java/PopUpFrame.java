@@ -63,7 +63,7 @@ public abstract class PopUpFrame extends JFrame {
     protected abstract void createSlider();
 
     /**
-     * edit popUp
+     * Edits popUp frame
      * @param alarmStr changing text
      */
     public abstract void showPopUp(String alarmStr);

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Class to creates JTextArea for each Jlist cell.
  */
-public class CalendarListElement extends JTextArea implements ListCellRenderer{
+public class CalendarListElement extends JTextArea implements ListCellRenderer {
     private ArrayList<Listener> listeners;
     private CalendarEvent currentOb;
 
@@ -45,6 +45,11 @@ public class CalendarListElement extends JTextArea implements ListCellRenderer{
         return this;
     }
 
+    /**
+     * Get current selection from Jlist
+     *
+     * @return an current chosen object
+     */
     public CalendarEvent getCurrentSelection() {
         return currentOb;
     }

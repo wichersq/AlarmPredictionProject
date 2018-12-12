@@ -117,7 +117,7 @@ public class OutputFrame extends JFrame implements Listener {
     }
 
     /**
-     * Clear text in text area detail
+     * Clears text in text area detail
      */
     private void clearTextDetail() {
         textArea.setText("");

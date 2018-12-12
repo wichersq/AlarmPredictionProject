@@ -54,11 +54,9 @@ public class UserInputFrame extends JFrame {
         setVisible(true);
 
     }
-
     /**
      * This window makes sure that the user wants to exit the event they created.
      */
-
     private void addCloseWindowOption() {
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -71,7 +69,6 @@ public class UserInputFrame extends JFrame {
             }
         });
     }
-
     /**
      * Creates a new JPanel.
      */
@@ -87,7 +84,32 @@ public class UserInputFrame extends JFrame {
         panel.add(sliderBox, BorderLayout.CENTER);
         panel.add(buttonBox, BorderLayout.SOUTH);
     }
-
+    /**
+     * Notifies listener
+     *
+     * @param object changing object
+     */
+    private void notifyListener(RawUserInput object) {
+        for (Listener l : listeners) {
+            l.update(object);
+        }
+    }
+    /**
+     * Creates "Add" and "Show List" buttons.
+     */
+    private void createButtons() {
+        buttonBox = Box.createHorizontalBox();
+        addButton = new JButton("Add ");
+        showButton = new JButton("Show List");
+        buttonBox.add(addButton);
+        buttonBox.add(showButton);
+        addButton.addActionListener(ActionEvent -> {
+            RawUserInput changeOb = gatherInfo();
+            if ( changeOb != null) {
+                notifyListener(changeOb);
+            }
+        });
+    }
 
     /**
      * Creates a format text for field.
@@ -184,22 +206,7 @@ public class UserInputFrame extends JFrame {
 
     }
 
-    /**
-     * Creates "Add" and "Show List" buttons.
-     */
-    private void createButtons() {
-        buttonBox = Box.createHorizontalBox();
-        addButton = new JButton("Add ");
-        showButton = new JButton("Show List");
-        buttonBox.add(addButton);
-        buttonBox.add(showButton);
-        addButton.addActionListener(ActionEvent -> {
-            RawUserInput changeOb = gatherInfo();
-            if ( changeOb != null) {
-                notifyListener(changeOb);
-            }
-        });
-    }
+
 
     /**
      * Gathers the user input
@@ -331,16 +338,6 @@ public class UserInputFrame extends JFrame {
     }
 
 
-    /**
-     * Notifies listener
-     *
-     * @param object changing object
-     */
-    private void notifyListener(RawUserInput object) {
-        for (Listener l : listeners) {
-            l.update(object);
-        }
-    }
 
     /**
      * Checks if address inputs are valid
