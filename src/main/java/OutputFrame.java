@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 /**
  * Class OutputFrame displays the event information and estimated time the user would need
@@ -15,8 +14,10 @@ public class OutputFrame extends JFrame implements Listener {
     private JList list;
     private JScrollPane scrollPaneDetail;
     private JButton deleteButton;
+    private JButton editButton;
+    private Box buttonBox;
     private CalendarListElement calendarListElement;
-
+    private RealAlarmTimePopUp popUp;
 
     /**
      * Constructor
@@ -32,15 +33,16 @@ public class OutputFrame extends JFrame implements Listener {
         setVisible(false);
         setResizable(false);
         model.addListener(this);
+        popUp = new RealAlarmTimePopUp();
+
         listModel = new DataListModel(model);
         addEventListPanel();
-
 
         createEventDetailPanel();
         add(detailPanel, BorderLayout.EAST);
 
         createButtonBox();
-        add(deleteButton, BorderLayout.SOUTH);
+        add(buttonBox, BorderLayout.SOUTH);
     }
 
     /**
@@ -76,13 +78,32 @@ public class OutputFrame extends JFrame implements Listener {
      * Creates button
      */
     private void createButtonBox() {
+        buttonBox = Box.createHorizontalBox();
         deleteButton = new JButton("Delete");
+        editButton = new JButton("Edit Time");
+        buttonBox.add(deleteButton);
+        buttonBox.add(editButton);
         deleteButton.addActionListener(ActionListener -> {
-            deleteEvents(getSelectionFromList());
+            try {
+                deleteEvents(getSelectionFromList());
+            }catch(NullPointerException e){
+            }
             if (listModel.getSize() <= 0) {
                 clearTextDetail();
             }
         });
+
+        editButton.addActionListener(ActionListener -> {
+            try {
+                editEvents(getSelectionFromList());
+            }catch(NullPointerException e) {
+            }
+        });
+    }
+
+
+    private void editEvents(CalendarEvent ob) {
+        popUp.popUpMessage(ob);
     }
 
     /**
@@ -126,8 +147,12 @@ public class OutputFrame extends JFrame implements Listener {
     /**
      * Gets the object being chosen
      */
-    private CalendarEvent getSelectionFromList() {
-        return calendarListElement.getCurrentSelection();
+    private CalendarEvent getSelectionFromList() throws NullPointerException {
+        CalendarEvent selectedEvent = calendarListElement.getCurrentSelection();
+        if(selectedEvent == null){
+            throw new NullPointerException("No event pick");
+        }
+        return selectedEvent;
     }
 
 

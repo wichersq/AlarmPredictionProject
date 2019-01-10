@@ -17,7 +17,7 @@ public class ReadyTimeCalcTest {
         ReadyTimeCalc calc = new ReadyTimeCalc(model,outputFrame,controller,true);
         CalendarEvent event = null;
         try {
-            Method privateMethod = calc.getClass().getDeclaredMethod("createEventType",
+            Method privateMethod = ReadyTimeCalc.class.getDeclaredMethod("createEventType",
                     boolean.class,String.class, String.class,String.class,
                     String.class,String.class,GregorianCalendar.class,String.class,
                     int.class,int.class,double.class,double.class);

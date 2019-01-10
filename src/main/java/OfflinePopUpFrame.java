@@ -12,8 +12,8 @@ public class OfflinePopUpFrame extends PopUpFrame {
     /**
      * Allows user to add or subtract time from the estimated time that is generated.
      */
-    public OfflinePopUpFrame(String message) {
-        super(message);
+    public OfflinePopUpFrame(String message, boolean withEditButton) {
+        super(message, withEditButton);
     }
 
     /**

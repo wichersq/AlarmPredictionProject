@@ -134,7 +134,7 @@ public class EventWithoutInfo extends CalendarEvent {
      * @return a new create popUp
      */
     public PopUpFrame createPopUp() {
-        return new OfflinePopUpFrame(this.getEventInfo());
+        return new OfflinePopUpFrame(this.getEventInfo(),true);
     }
 
 }

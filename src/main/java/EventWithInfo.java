@@ -130,7 +130,7 @@ public class EventWithInfo extends CalendarEvent {
      * @return A right pop up frame
      */
     public PopUpFrame createPopUp() {
-        return new OnlinePopUpFrame(this.getEventInfo());
+        return new OnlinePopUpFrame(this.getEventInfo(), true);
     }
 
     /**

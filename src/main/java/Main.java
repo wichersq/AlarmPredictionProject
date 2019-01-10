@@ -14,7 +14,7 @@ public class Main {
         OutputFrame outputFrame = new OutputFrame(model, 500);
         Controller controller = new Controller(userInput, model, outputFrame);
 
-        Thread thread = new Thread(new ReadyTimeCalc(model, outputFrame, controller, isDryRun));
+        Thread thread = new Thread(new ReadyTimeCalc(model, outputFrame, controller, true));
         thread.start();
     }
 }

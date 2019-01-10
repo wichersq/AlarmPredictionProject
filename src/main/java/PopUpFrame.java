@@ -8,9 +8,9 @@ import javax.swing.*;
  */
 public abstract class PopUpFrame extends JFrame {
     protected JTextArea detailMessage;
-    protected JButton cancelButton = new JButton("Cancel");
-    protected JButton editButton = new JButton("Edit");
-    protected JButton saveButton = new JButton("Save Time");
+    protected JButton cancelButton;
+    protected JButton editButton;
+    protected JButton saveButton;
     protected JLabel text;
     protected JSlider slider;
     protected JPanel panel;
@@ -21,10 +21,10 @@ public abstract class PopUpFrame extends JFrame {
     /**
      * Allows user to add or subtract time from the estimated time that is generated.
      */
-    public PopUpFrame(String str) {
+    public PopUpFrame(String str, boolean withEditButton) {
         super.setTitle("Ready Time");
         panel = new JPanel();
-        allocateButtons();
+        allocateButtons(withEditButton);
         createSlider();
         createExtraButton();
         detailMessage = new JTextArea(str);
@@ -45,14 +45,18 @@ public abstract class PopUpFrame extends JFrame {
     /**
      * Creates buttons.
      */
-    private void allocateButtons() {
+    private void allocateButtons(boolean hasEditButton) {
         cancelButton = new JButton("Cancel");
-        editButton = new JButton("Edit");
         saveButton = new JButton("Save Time");
         buttonsBox.add(saveButton);
-        buttonsBox.add(editButton);
         buttonsBox.add(cancelButton);
+        if (hasEditButton)
+            createEditButton();
+    }
 
+    private void createEditButton(){
+        editButton = new JButton("Edit");
+        buttonsBox.add(editButton);
     }
 
     protected abstract void createExtraButton();
@@ -84,7 +88,9 @@ public abstract class PopUpFrame extends JFrame {
      * @param e action when button is clicked
      */
     public void addActionEditButton(ActionListener e) {
-        editButton.addActionListener(e);
+        if(editButton != null) {
+            editButton.addActionListener(e);
+        }
     }
 
     /**

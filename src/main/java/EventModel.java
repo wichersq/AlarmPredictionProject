@@ -136,9 +136,7 @@ public class EventModel{
         try {
             FileOutputStream fileOut = new FileOutputStream(file.getName());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-
             out.writeObject(events);
-
             out.close();
             fileOut.close();
         } catch (IOException i) {
