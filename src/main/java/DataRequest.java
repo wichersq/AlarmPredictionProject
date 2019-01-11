@@ -6,6 +6,7 @@ import com.google.maps.DirectionsApi;
 import com.google.maps.model.PlaceDetails;
 import com.google.maps.model.TravelMode;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.GregorianCalendar;
 
 /**
@@ -26,6 +27,7 @@ public class DataRequest {
     private float rating = 0;
     private String startAddress = "Invalid Address";
     private String endAddress = "Invalid Address";
+    private LocalDateTime departureTime;
 
     /**
      * Constructor for the class.
@@ -92,6 +94,7 @@ public class DataRequest {
         originID = mapResult.geocodedWaypoints[0].placeId;
         startAddress = mapResult.routes[0].legs[0].startAddress;
         endAddress = mapResult.routes[0].legs[0].endAddress;
+        departureTime = mapResult.routes[0].legs[0].departureTime;
     }
 
     /**
@@ -137,7 +140,22 @@ public class DataRequest {
      */
     public long getDurationSec() {
         return durationSec;
+    }
 
+    public String getDestinationID(){
+        return destinationID;
+    }
+    public String getOriginID(){
+        return originID;
+    }
+    public String getDepartureDateTime() {
+        return departureTime.toString();
+    }
+    public int getDateOfWeek(){
+        return departureTime.getDayOfWeek().getValue();
+    }
+    public String[] getOpeningPeriod(){
+        return destDetails.openingHours.weekdayText;
     }
 
     /**
