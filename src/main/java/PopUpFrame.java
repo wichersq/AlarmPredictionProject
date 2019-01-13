@@ -67,10 +67,15 @@ public abstract class PopUpFrame extends JFrame {
     protected abstract void createSlider();
 
     /**
-     * Edits popUp frame
-     * @param alarmStr changing text
+     * Shows the popUp with new message
+     *
+     * @param alarmStr alarm in string format
      */
-    public abstract void showPopUp(String alarmStr);
+    public void showPopUp(String alarmStr) {
+        detailMessage.setText(alarmStr);
+        slider.setValue(0);
+        setVisible(true);
+    }
 
     /**
      * Gets side value
@@ -117,5 +122,6 @@ public abstract class PopUpFrame extends JFrame {
      * @param e action when button is clicked
      */
     protected abstract void addActionAdjustButton(ActionListener e);
+
 }
 

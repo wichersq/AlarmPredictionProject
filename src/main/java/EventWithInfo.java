@@ -12,6 +12,7 @@ public class EventWithInfo extends CalendarEvent {
     protected int preparingTime;
     protected int travelTime;
 
+
     /**
      * Constructor for the class takes in string of transportation
      *
@@ -124,6 +125,12 @@ public class EventWithInfo extends CalendarEvent {
         return event;
     }
 
+    public void editAlarmAfterEventOccurred(double adjustMin){
+        alarmTime.add(Calendar.MINUTE, (int) adjustMin);
+        isAlarmCorrected = true;
+        recommendedReadyMin += adjustMin;
+    }
+
     /**
      * Creates popUp frame
      *
@@ -164,10 +171,12 @@ public class EventWithInfo extends CalendarEvent {
      */
     public String getEventInfo() {
         return String.format("Travel Duration:\t%s" +
-                        "\n\nAlarm Time:\t%s\n\n%s %s the event",
+                        "\n\nAlarm Time:\t%s\n\n%s %s the event,",
                 durationStringFormat(travelTime), getAlarmString(),
                 durationStringFormat(recommendedReadyMin), (recommendedReadyMin < 0) ? "after" : "before");
     }
+
+
 
     /**
      * Compares if the object is the same.

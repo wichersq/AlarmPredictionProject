@@ -44,28 +44,6 @@ public class OfflinePopUpFrame extends PopUpFrame {
 
     }
 
-    /**
-     * Shows the popUp with new message
-     *
-     * @param alarmStr alarm in string format
-     */
-    public void showPopUp(String alarmStr) {
-        detailMessage.setText(alarmStr);
-        slider.setValue(2);
-        setVisible(true);
-    }
-
-    /**
-     * Gets slider value
-     *
-     * @return slider value
-     */
-    public int getSliderValue() {
-        int value = slider.getValue();
-        slider.setValue(0);
-        return value;
-    }
-
     @Override
     /**
      * Adds action for the adjustButton

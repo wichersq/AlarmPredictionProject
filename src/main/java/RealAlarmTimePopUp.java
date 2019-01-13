@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -9,23 +12,22 @@ import java.awt.event.ActionListener;
 public class RealAlarmTimePopUp extends PopUpFrame {
     private JButton adjustButton;
     private JTextField timeText;
-    private static JLabel adjustedMinute = new JLabel("0 minutes earlier/later");
+    private static JLabel adjustedMinute= new JLabel("0 minutes earlier/later");
     private int requestedTotalMinAdj;
-
+    private CalendarEvent currentEvent;
+    private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd yyyy - HH:mm");
+    private GregorianCalendar calendar;
 
     /**
      * Allows user to add or subtract time from the estimated time that is generated.
      */
     public RealAlarmTimePopUp() {
         super("", false);
+        super.setBounds(0, 0, 450, 280);
         setVisible(false);
+        addActionCancelButton(ActionEvent -> hidePopUp());
     }
 
-    public void popUpMessage(CalendarEvent event){
-        detailMessage.setText(event.getEventInfo());
-        requestedTotalMinAdj = 0;
-        super.setVisible(true);
-    }
     /**
      * Create more buttons if needed
      */
@@ -33,9 +35,14 @@ public class RealAlarmTimePopUp extends PopUpFrame {
     protected void createExtraButton() {
         adjustButton = new JButton("Adjust Ready Time");
         buttonsBox.add(adjustButton);
-        addActionAdjustButton(e ->{
-            int totalTime = Integer.parseInt(timeText.getText());
-            adjustedMinute.setText(getAlarmText(totalTime));
+        addActionAdjustButton(e -> {
+            int totalRequestedMin = (int) Double.parseDouble(timeText.getText());
+            calendar = currentEvent.getAlarmTime();
+            adjustedMinute.setText(getAlarmText(totalRequestedMin));
+            calendar.add(Calendar.MINUTE, +totalRequestedMin);
+            detailMessage.setText(currentEvent.getEventInfo() +
+                    String.format("\n\nEdited Alarm: %s", dateTimeFormat.format(calendar.getTime())));
+
         });
     }
 
@@ -66,23 +73,34 @@ public class RealAlarmTimePopUp extends PopUpFrame {
 
     }
 
-    private String getAlarmText(int numOfMin){
-        requestedTotalMinAdj += numOfMin;
+    private String getAlarmText(int numOfMin) {
+        requestedTotalMinAdj = numOfMin;
         int min = Math.abs(requestedTotalMinAdj % 60);
         int hour = requestedTotalMinAdj / 60;
         return String.format("%d %s %d %s %s", hour, hour > 1 ? "hours" : "hour",
-                min, min > 1 ? "minutes" : "minute",  numOfMin < 0 ? "earlier":"later");
+                min, min > 1 ? "minutes" : "minute", numOfMin < 0 ? "earlier" : "later");
+    }
+
+    public CalendarEvent hidePopUp() {
+        setVisible(false);
+        CalendarEvent temp = currentEvent;
+        currentEvent = null;
+        calendar = null;
+        return temp;
     }
 
     /**
      * Makes the popUp class visible
      *
-     * @param alarmStr
+     * @param event
      */
-    public void showPopUp(String alarmStr) {
-        detailMessage.setText(alarmStr);
-        slider.setValue(0);
-        setVisible(true);
+    public void showPopUp(CalendarEvent event) {
+        currentEvent = event;
+        detailMessage.setText(currentEvent.getEventInfo());
+        requestedTotalMinAdj = 0;
+        timeText.setText("");
+        adjustedMinute.setText("0 minutes earlier/later");
+        super.setVisible(true);
     }
 
     /**
@@ -96,12 +114,17 @@ public class RealAlarmTimePopUp extends PopUpFrame {
         return value;
     }
 
-    @Override
+    public int getRequestedTotalMinAdj() {
+        return requestedTotalMinAdj;
+    }
+
+
     /**
      * Adds action to button.
      *
      * @param e action when button is clicked
      */
+    @Override
     public void addActionAdjustButton(ActionListener e) {
         adjustButton.addActionListener(e);
     }

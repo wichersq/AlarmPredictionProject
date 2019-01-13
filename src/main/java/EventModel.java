@@ -130,6 +130,20 @@ public class EventModel{
     }
 
     /**
+     * This method allows to edit existing even to have better time
+     * It is only for collecting data for ML model
+     * @param ob
+     */
+    public void editPublishedEvent(CalendarEvent ob, int changingMin) {
+        GregorianCalendar calendar = ob.getArrivalDateTime();
+        if (events.containsKey(calendar)) {
+            EventWithInfo changedEvent = (EventWithInfo)events.get(calendar);
+            changedEvent.editAlarmAfterEventOccurred(changingMin);
+            notifyListener(ob);
+        }
+    }
+
+    /**
      * Saves all event to file.
      */
     public void saveEventsToFile() {
@@ -178,6 +192,8 @@ public class EventModel{
             restoreEventsFromFile();
         }
     }
+
+
 
 }
 

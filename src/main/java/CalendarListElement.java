@@ -54,6 +54,8 @@ public class CalendarListElement extends JTextArea implements ListCellRenderer {
         return currentOb;
     }
 
+
+
     /**
      * Adds a listener.
      *
@@ -71,6 +73,10 @@ public class CalendarListElement extends JTextArea implements ListCellRenderer {
     private void notifyListener(Object object) {
         for (Listener l : listeners) {
             l.update(object);
+//            if(l.getClass() == OutputFrame.class){
+//                OutputFrame temp = (OutputFrame) l;
+//                ((OutputFrame) l).maybeGrayOutEditButton((CalendarEvent) ob);
+//            }
         }
     }
 }

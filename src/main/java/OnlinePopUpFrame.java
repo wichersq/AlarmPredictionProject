@@ -49,28 +49,6 @@ public class OnlinePopUpFrame extends PopUpFrame {
     }
 
     /**
-     * Makes the popUp class visible
-     *
-     * @param alarmStr
-     */
-    public void showPopUp(String alarmStr) {
-        detailMessage.setText(alarmStr);
-        slider.setValue(0);
-        setVisible(true);
-    }
-
-    /**
-     * Gets slider value
-     *
-     * @return slider value
-     */
-    public int getSliderValue() {
-        int value = slider.getValue();
-        slider.setValue(0);
-        return value;
-    }
-
-    /**
      * Adds action to button.
      *
      * @param e action when button is clicked

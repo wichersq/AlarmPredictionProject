@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
 
 /**
  * Class OutputFrame displays the event information and estimated time the user would need
@@ -18,6 +21,7 @@ public class OutputFrame extends JFrame implements Listener {
     private Box buttonBox;
     private CalendarListElement calendarListElement;
     private RealAlarmTimePopUp popUp;
+    private int size;
 
     /**
      * Constructor
@@ -26,14 +30,17 @@ public class OutputFrame extends JFrame implements Listener {
      * @param size  desired size of output frame
      */
     public OutputFrame(EventModel model, int size) {
+        this.size = size;
         super.setTitle("Scheduled Events");
         super.setLayout(new FlowLayout());
-        super.setBounds(0, 0, 900, 500);
+        super.setBounds(0, 0, size + (4*size/5), size);
         setDefaultLookAndFeelDecorated(true);
         setVisible(false);
         setResizable(false);
         model.addListener(this);
-        popUp = new RealAlarmTimePopUp();
+        calendarListElement.addListener(this);
+
+        createPopUp();
 
         listModel = new DataListModel(model);
         addEventListPanel();
@@ -55,7 +62,7 @@ public class OutputFrame extends JFrame implements Listener {
         calendarListElement = new CalendarListElement(3, 30);
         list.setCellRenderer(calendarListElement);
         scrollPane = new JScrollPane(list);
-        scrollPane.setPreferredSize(new Dimension(400, 400));
+        scrollPane.setPreferredSize(new Dimension(4*size/5, 4*size/5));
         listPanel.add(scrollPane, BorderLayout.CENTER);
         add(listPanel, BorderLayout.CENTER);
     }
@@ -68,11 +75,25 @@ public class OutputFrame extends JFrame implements Listener {
         textArea.setEditable(false);
 
         scrollPaneDetail = new JScrollPane(textArea);
-        scrollPaneDetail.setPreferredSize(new Dimension(400, 400));
+        scrollPaneDetail.setPreferredSize(new Dimension(4*size/5, 4*size/5));
 
         detailPanel = new JPanel();
         detailPanel.add(scrollPaneDetail, BorderLayout.CENTER);
     }
+
+    private void createPopUp(){
+        popUp = new RealAlarmTimePopUp();
+        popUp.addActionSaveButton(ActionEvent ->{
+            CalendarEvent editingEvent = popUp.hidePopUp();
+            int requestedChangeMin = popUp.getRequestedTotalMinAdj();
+            if(requestedChangeMin != 0) {
+                listModel.editEvents(editingEvent, requestedChangeMin);
+                textArea.setText("");
+            }
+        });
+
+    }
+
 
     /**
      * Creates button
@@ -95,17 +116,17 @@ public class OutputFrame extends JFrame implements Listener {
 
         editButton.addActionListener(ActionListener -> {
             try {
-                editEvents(getSelectionFromList());
+                popUp.showPopUp(getSelectionFromList());
             }catch(NullPointerException e) {
             }
         });
     }
 
-
-    private void editEvents(CalendarEvent ob) {
-        popUp.popUpMessage(ob);
+    public void maybeGrayOutEditButton(CalendarEvent ob){
+        if (ob.getClass() != EventWithInfo.class){
+            editButton.setEnabled(false);
+        }
     }
-
     /**
      * Deletes events in the event model.
      *

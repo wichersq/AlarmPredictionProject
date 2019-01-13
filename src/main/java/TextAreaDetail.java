@@ -22,7 +22,7 @@ public class TextAreaDetail extends JTextArea implements Listener {
     public void update(Object ob) {
         if (ob instanceof CalendarEvent) {
             CalendarEvent event = (CalendarEvent) ob;
-            setText(event.toString());
+            setText(event.toString() + event.printFeedback());
         }
     }
 }

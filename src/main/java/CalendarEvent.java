@@ -26,7 +26,7 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
     public final static String DRIVING_TYPE = "DRIVING";
     public final static String WALKING_TYPE = "WALKING";
     public final static String TRANSIT_TYPE = "TRANSIT";
-
+    protected boolean isAlarmCorrected = false;
     /**
      * Constructor.
      *
@@ -205,5 +205,15 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
      * @return  an new popUpFrame
      */
     public abstract PopUpFrame createPopUp();
+
+    public GregorianCalendar getAlarmTime (){
+        return (GregorianCalendar) alarmTime.clone();
+    }
+
+    public String printFeedback(){
+        if (isAlarmCorrected)
+            return "\n\nAlarm feed back %s given";
+        return " ";
+    }
 }
 
