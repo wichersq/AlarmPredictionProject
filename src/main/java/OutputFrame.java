@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Calendar;
 
 /**
@@ -22,6 +24,7 @@ public class OutputFrame extends JFrame implements Listener {
     private CalendarListElement calendarListElement;
     private RealAlarmTimePopUp popUp;
     private int size;
+    private boolean isEventChange = false;
 
     /**
      * Constructor
@@ -35,6 +38,8 @@ public class OutputFrame extends JFrame implements Listener {
         super.setLayout(new FlowLayout());
         super.setBounds(0, 0, size + (4*size/5), size);
         setDefaultLookAndFeelDecorated(true);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addCloseWindowOption(model);
         setVisible(false);
         setResizable(false);
         model.addListener(this);
@@ -57,7 +62,6 @@ public class OutputFrame extends JFrame implements Listener {
      */
     private void addEventListPanel() {
         listPanel = new JPanel();
-
         list = new JList(listModel);
         calendarListElement = new CalendarListElement(3, 30);
         calendarListElement.addListener(this);
@@ -90,6 +94,7 @@ public class OutputFrame extends JFrame implements Listener {
             if(requestedChangeMin != 0) {
                 listModel.editEvents(editingEvent, requestedChangeMin);
                 textArea.setText("");
+                isEventChange = true;
             }
         });
 
@@ -177,7 +182,17 @@ public class OutputFrame extends JFrame implements Listener {
         return selectedEvent;
     }
 
-
+    /**
+     * This window makes sure that the user wants to exit the event they created.
+     */
+    private void addCloseWindowOption(EventModel model) {
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                model.saveEventsToFile();
+                setVisible(false);
+            }
+        });
+    }
     /**
      * Updates the event list with the new event.
      *
