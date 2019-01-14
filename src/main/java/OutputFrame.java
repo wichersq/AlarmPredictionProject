@@ -38,7 +38,7 @@ public class OutputFrame extends JFrame implements Listener {
         setVisible(false);
         setResizable(false);
         model.addListener(this);
-        calendarListElement.addListener(this);
+
 
         createPopUp();
 
@@ -60,6 +60,7 @@ public class OutputFrame extends JFrame implements Listener {
 
         list = new JList(listModel);
         calendarListElement = new CalendarListElement(3, 30);
+        calendarListElement.addListener(this);
         list.setCellRenderer(calendarListElement);
         scrollPane = new JScrollPane(list);
         scrollPane.setPreferredSize(new Dimension(4*size/5, 4*size/5));
