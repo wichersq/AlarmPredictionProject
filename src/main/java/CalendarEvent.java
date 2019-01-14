@@ -212,7 +212,7 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
 
     public String printFeedback(){
         if (isAlarmCorrected)
-            return "\n\nAlarm feed back %s given";
+            return "\n\nAlarm feed back was given";
         return " ";
     }
 }

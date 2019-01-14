@@ -100,7 +100,6 @@ public class OutputFrame extends JFrame implements Listener {
 
     }
 
-
     /**
      * Creates button
      */
@@ -128,9 +127,11 @@ public class OutputFrame extends JFrame implements Listener {
         });
     }
 
-    public void maybeGrayOutEditButton(CalendarEvent ob){
+    public void maybeGrayOutEditButton(Object ob){
         if (ob.getClass() != EventWithInfo.class){
             editButton.setEnabled(false);
+        }else{
+            editButton.setEnabled(true);
         }
     }
     /**

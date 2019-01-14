@@ -122,6 +122,7 @@ public class EventWithInfo extends CalendarEvent {
                 (Transportation) transport.clone(), importantScale, averageRating);
         event.recommendedReadyMin = recommendedReadyMin;
         event.alarmTime = alarmTime;
+        event.isAlarmCorrected = isAlarmCorrected;
         return event;
     }
 

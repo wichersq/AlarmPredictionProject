@@ -73,10 +73,9 @@ public class CalendarListElement extends JTextArea implements ListCellRenderer {
     private void notifyListener(Object object) {
         for (Listener l : listeners) {
             l.update(object);
-//            if(l.getClass() == OutputFrame.class){
-//                OutputFrame temp = (OutputFrame) l;
-//                ((OutputFrame) l).maybeGrayOutEditButton((CalendarEvent) ob);
-//            }
+            if(l.getClass() == OutputFrame.class){
+                ((OutputFrame) l).maybeGrayOutEditButton( object);
+            }
         }
     }
 }
