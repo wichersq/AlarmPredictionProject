@@ -1,10 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Calendar;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Class OutputFrame displays the event information and estimated time the user would need
@@ -24,8 +24,8 @@ public class OutputFrame extends JFrame implements Listener {
     private CalendarListElement calendarListElement;
     private RealAlarmTimePopUp popUp;
     private int size;
-    private boolean isEventChange = false;
-
+    private FileWriter trainDataWriter;
+    private File file;
     /**
      * Constructor
      *
@@ -55,6 +55,8 @@ public class OutputFrame extends JFrame implements Listener {
 
         createButtonBox();
         add(buttonBox, BorderLayout.SOUTH);
+
+        maybeCreateFile("trainingData.csv");
     }
 
     /**
@@ -94,7 +96,6 @@ public class OutputFrame extends JFrame implements Listener {
             if(requestedChangeMin != 0) {
                 listModel.editEvents(editingEvent, requestedChangeMin);
                 textArea.setText("");
-                isEventChange = true;
             }
         });
 
@@ -141,6 +142,41 @@ public class OutputFrame extends JFrame implements Listener {
      */
     public void deleteEvents(CalendarEvent ob) {
         listModel.remove(ob);
+        writeToFile(ob);
+    }
+
+    public void writeToFile(CalendarEvent event){
+        if (event.getClass() == EventWithInfo.class) {
+            try {
+                trainDataWriter.append("");
+                trainDataWriter.append(",");
+                trainDataWriter.flush();
+            }catch (IOException ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Checks if the file exists, if not creates a file.
+     *
+     * @param fileName the file name
+     */
+    private void maybeCreateFile(String fileName) {
+        file = new File(fileName);
+        boolean doFileExist = file.exists();
+        try {
+            trainDataWriter = new FileWriter(file, true);
+            if (!doFileExist) {
+                String header = "Address From,Address To,Rating,Open Period,Event Important Level," +
+                        "Driving,Transit,Biking,Walking,Duration,Distance";
+                trainDataWriter.append(header);
+                trainDataWriter.flush();
+            }
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
     }
 
     /**

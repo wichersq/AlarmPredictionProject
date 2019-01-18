@@ -5,7 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * A model keeps track all events' values.
  */
-public class EventModel{
+public class EventModel {
     private ArrayList<Listener> modelListeners;
     private HashMap<GregorianCalendar, CalendarEvent> events;
     private File file;
@@ -90,20 +90,20 @@ public class EventModel{
      */
 
     public ArrayList<CalendarEvent> getEventsList() {
-            CalendarEvent event;
-            ArrayList<CalendarEvent> eventListForModel = new ArrayList<>();
-            Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
-            while (iterator.hasNext()) {
-                event = iterator.next().getValue();
-                try {
-                    eventListForModel.add(event.clone());
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                }
+        CalendarEvent event;
+        ArrayList<CalendarEvent> eventListForModel = new ArrayList<>();
+        Iterator<Map.Entry<GregorianCalendar, CalendarEvent>> iterator = events.entrySet().iterator();
+        while (iterator.hasNext()) {
+            event = iterator.next().getValue();
+            try {
+                eventListForModel.add(event.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
             }
-            Collections.sort(eventListForModel);
-            return eventListForModel;
         }
+        Collections.sort(eventListForModel);
+        return eventListForModel;
+    }
 
     /**
      * Notifies all listeners.
@@ -132,12 +132,13 @@ public class EventModel{
     /**
      * This method allows to edit existing even to have better time
      * It is only for collecting data for ML model
+     *
      * @param ob
      */
     public void editPublishedEvent(CalendarEvent ob, int changingMin) {
         GregorianCalendar calendar = ob.getArrivalDateTime();
         if (events.containsKey(calendar)) {
-            EventWithInfo changedEvent = (EventWithInfo)events.get(calendar);
+            EventWithInfo changedEvent = (EventWithInfo) events.get(calendar);
             changedEvent.editAlarmAfterEventOccurred(changingMin);
             notifyListener(ob);
         }
@@ -192,7 +193,6 @@ public class EventModel{
             restoreEventsFromFile();
         }
     }
-
 
 
 }
