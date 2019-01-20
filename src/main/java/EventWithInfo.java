@@ -6,11 +6,11 @@ import java.util.GregorianCalendar;
  * Class contain event which doesn't have valid info from API
  */
 public class EventWithInfo extends CalendarEvent {
-    protected int DEFAULT_PREPARE_MIN = 30;
-    protected int DEFAULT_EXTRA_MIN = 10;
+    private int DEFAULT_PREPARE_MIN = 30;
+    private int DEFAULT_EXTRA_MIN = 10;
     private double averageRating;
-    protected int preparingTime;
-    protected int travelTime;
+    private int preparingTime;
+    private int travelTime;
     private GooglePlaceInfo placeInfo;
 
 
