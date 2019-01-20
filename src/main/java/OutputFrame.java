@@ -142,11 +142,16 @@ public class OutputFrame extends JFrame implements Listener {
      */
     public void deleteEvents(CalendarEvent ob) {
         listModel.remove(ob);
-        writeToFile(ob);
+        if(ob.getClass().equals(EventWithInfo.class))
+            writeToFile((EventWithInfo)ob);
     }
 
-    public void writeToFile(CalendarEvent event){
-        if (event.getClass() == EventWithInfo.class) {
+    //TODO: edit method to output event info
+    /**
+     * This method to collect training data only
+     * @param event
+     */
+    public void writeToFile(EventWithInfo event){
             try {
                 trainDataWriter.append("");
                 trainDataWriter.append(",");
@@ -154,7 +159,6 @@ public class OutputFrame extends JFrame implements Listener {
             }catch (IOException ex){
                 ex.printStackTrace();
             }
-        }
     }
 
     /**
@@ -168,7 +172,7 @@ public class OutputFrame extends JFrame implements Listener {
         try {
             trainDataWriter = new FileWriter(file, true);
             if (!doFileExist) {
-                String header = "Address From,Address To,Rating,Open Period,Event Important Level," +
+                String header = "Address From,Origin ID,Address To,Place ID,Rating,Open Period,Event Important Level," +
                         "Driving,Transit,Biking,Walking,Duration,Distance";
                 trainDataWriter.append(header);
                 trainDataWriter.flush();

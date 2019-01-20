@@ -37,8 +37,6 @@ public class DataListModel extends AbstractListModel {
     public void remove(CalendarEvent ob) {
         model.removeEvents(ob);
         model.getEventsList();
-        if(ob.getClass().equals(EventWithInfo.class))
-            saveEventToFile(ob);
         fireIntervalRemoved(eventListForModel, 0, eventListForModel.size());
     }
 
@@ -49,20 +47,6 @@ public class DataListModel extends AbstractListModel {
      */
     public void editEvents(CalendarEvent ob, int adjustMins){
         model.editPublishedEvent(ob, adjustMins);
-    }
-
-    public void saveEventToFile(CalendarEvent ob) {
-        FileWriter file = null;
-        PrintWriter writer = null;
-        try {
-            file = new FileWriter("testing.csv", true);
-            writer = new PrintWriter(file);
-            writer.append("");
-            writer.append("\n");
-            writer.flush();
-        } catch (IOException e) {
-            System.out.println("catch it");
-        }
     }
 
     /**

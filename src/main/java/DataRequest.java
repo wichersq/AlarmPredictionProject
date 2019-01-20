@@ -27,7 +27,7 @@ public class DataRequest {
     private float rating = 0;
     private String startAddress = "Invalid Address";
     private String endAddress = "Invalid Address";
-    private LocalDateTime departureTime;
+
 
     /**
      * Constructor for the class.
@@ -81,7 +81,6 @@ public class DataRequest {
         } catch (Exception e) {
             return false;
         }
-
     }
 
     /**
@@ -94,7 +93,6 @@ public class DataRequest {
         originID = mapResult.geocodedWaypoints[0].placeId;
         startAddress = mapResult.routes[0].legs[0].startAddress;
         endAddress = mapResult.routes[0].legs[0].endAddress;
-        departureTime = mapResult.routes[0].legs[0].departureTime;
     }
 
     /**
@@ -142,22 +140,6 @@ public class DataRequest {
         return durationSec;
     }
 
-    public String getDestinationID(){
-        return destinationID;
-    }
-    public String getOriginID(){
-        return originID;
-    }
-    public String getDepartureDateTime() {
-        return departureTime.toString();
-    }
-    public int getDateOfWeek(){
-        return departureTime.getDayOfWeek().getValue();
-    }
-    public String[] getOpeningPeriod(){
-        return destDetails.openingHours.weekdayText;
-    }
-
     /**
      * Accessor for StartAddress.
      *
@@ -175,4 +157,6 @@ public class DataRequest {
     public String getEndAddress() {
         return endAddress;
     }
+
+    public GooglePlaceInfo getGooglePlaceInfo(){return new GooglePlaceInfo(destDetails,originDetails,mapResult);}
 }

@@ -139,7 +139,8 @@ public class ReadyTimeCalc implements Runnable {
                                           String originName, String destName, GregorianCalendar arrivalDateTime,
                                           String transport, int duration, int distance, double importantScale, double rating) {
         if (gotInfoSuccessfully) {
-            return new EventWithInfo(addressFrom, addressTo, eventName,
+            GooglePlaceInfo placeInfo = dataRequest.getGooglePlaceInfo();
+            return new EventWithInfo(placeInfo, addressFrom, addressTo, eventName,
                     originName, destName, arrivalDateTime, transport, duration, distance, importantScale, rating);
         } else {
             return new EventWithoutInfo(addressFrom, addressTo, eventName, arrivalDateTime, transport, importantScale);

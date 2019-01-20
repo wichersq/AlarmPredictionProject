@@ -11,6 +11,7 @@ public class EventWithInfo extends CalendarEvent {
     private double averageRating;
     protected int preparingTime;
     protected int travelTime;
+    private GooglePlaceInfo placeInfo;
 
 
     /**
@@ -28,12 +29,13 @@ public class EventWithInfo extends CalendarEvent {
      * @param averageRating   Rating of the ending destination
      */
 
-    public EventWithInfo(String addressFrom, String addressTo, String eventName,
+    public EventWithInfo(GooglePlaceInfo placeInfo,String addressFrom, String addressTo, String eventName,
                          String originName, String destName, GregorianCalendar arrivalDateTime,
                          String transport, int duration, int distance, double importantScale, double averageRating) {
         super(addressFrom, addressTo, eventName,
                 transport, duration, distance, arrivalDateTime, importantScale);
         setInfo(originName, destName, importantScale, averageRating);
+        this.placeInfo = placeInfo;
     }
 
     /**
@@ -123,6 +125,7 @@ public class EventWithInfo extends CalendarEvent {
         event.recommendedReadyMin = recommendedReadyMin;
         event.alarmTime = alarmTime;
         event.isAlarmCorrected = isAlarmCorrected;
+        event.placeInfo = placeInfo;
         return event;
     }
 
@@ -196,5 +199,6 @@ public class EventWithInfo extends CalendarEvent {
                 transport.equals(comparingEvent.transport));
     }
 
+    public GooglePlaceInfo getPlaceInfo(){return placeInfo;}
 
 }

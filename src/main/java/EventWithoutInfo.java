@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 public class EventWithoutInfo extends CalendarEvent {
     protected int preparingTime;
 
+
     /**
      * Constructor for the class takes in string of transportation
      *
@@ -23,6 +24,7 @@ public class EventWithoutInfo extends CalendarEvent {
                 transport, 0, 0,arrivalDateTime, importantScale);
         setTotalTime();
         calPrepareTime();
+
     }
 
     /**
