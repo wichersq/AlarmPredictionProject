@@ -171,7 +171,7 @@ public class OutputFrame extends JFrame implements Listener {
         eventInfo.append(",");
         eventInfo.append(getTranportValue(event.transport));
         eventInfo.append(",");
-        eventInfo.append(event.travelTime());
+        eventInfo.append(event.getTravelTime());
         eventInfo.append(",");
 
             try {

@@ -215,5 +215,6 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
             return "\n\nAlarm feed back was given";
         return " ";
     }
+    public double getImportantScale(){return importantScale;}
 }
 
