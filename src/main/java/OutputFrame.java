@@ -26,6 +26,7 @@ public class OutputFrame extends JFrame implements Listener {
     private int size;
     private FileWriter trainDataWriter;
     private File file;
+    private String[] transportType= {CalendarEvent.DRIVING_TYPE,CalendarEvent.TRANSIT_TYPE,CalendarEvent.BIKING_TYPE,CalendarEvent.WALKING_TYPE};
     /**
      * Constructor
      *
@@ -152,6 +153,27 @@ public class OutputFrame extends JFrame implements Listener {
      * @param event
      */
     public void writeToFile(EventWithInfo event){
+        GooglePlaceInfo info = event.getPlaceInfo();
+        StringBuilder eventInfo = new StringBuilder();
+        eventInfo.append(event.addressFrom);
+        eventInfo.append(",");
+        eventInfo.append(info.getOriginID());
+        eventInfo.append(",");
+        eventInfo.append(event.addressTo);
+        eventInfo.append(",");
+        eventInfo.append(info.getDestinationID());
+        eventInfo.append(",");
+        eventInfo.append(info.getDestinationRating());
+        eventInfo.append(",");
+        eventInfo.append(info.getOpeningPeriod());
+        eventInfo.append(",");
+        eventInfo.append(event.getImportantScale());
+        eventInfo.append(",");
+        eventInfo.append(getTranportValue(event.transport));
+        eventInfo.append(",");
+        eventInfo.append(event.travelTime());
+        eventInfo.append(",");
+
             try {
                 trainDataWriter.append("");
                 trainDataWriter.append(",");
@@ -172,15 +194,14 @@ public class OutputFrame extends JFrame implements Listener {
         try {
             trainDataWriter = new FileWriter(file, true);
             if (!doFileExist) {
-                String header = "Address From,Origin ID,Address To,Place ID,Rating,Open Period,Event Important Level," +
-                        "Driving,Transit,Biking,Walking,Duration,Distance";
+                String header = "Address From,Origin ID,Address To,Destination ID,Rating,Open Period,Event Important Level," +
+                        "CaledarEvent.Driving,Transit,CaledarEvent.Biking,CaledarEvent.Walking,Duration,Distance";
                 trainDataWriter.append(header);
                 trainDataWriter.flush();
             }
         }catch(IOException ex){
             ex.printStackTrace();
         }
-
     }
 
     /**
@@ -242,5 +263,22 @@ public class OutputFrame extends JFrame implements Listener {
     @Override
     public void update(Object ob) {
         listModel.updateList();
+    }
+
+    /**
+     * this method is only for collect ML training data
+     */
+    public String getTranportValue(Transportation trans){
+        StringBuilder str = new StringBuilder();
+        for(String s : transportType){
+            if(trans.toString().equalsIgnoreCase(s)){
+                str.append(1);
+            }else{
+                str.append(0);
+            }
+            str.append(",");
+        }
+        str.deleteCharAt(str.length()-1);
+        return str.toString();
     }
 }
