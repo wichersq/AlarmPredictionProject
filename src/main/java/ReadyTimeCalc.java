@@ -45,7 +45,7 @@ public class ReadyTimeCalc implements Runnable {
      */
     private static String readApiKey() {
         File input = new File("API_Key.txt");
-        Scanner scanner = null;
+        Scanner scanner;
         String apiKey = "";
         try {
             scanner = new Scanner(input);
@@ -56,6 +56,7 @@ public class ReadyTimeCalc implements Runnable {
         } catch(NoSuchElementException e){
             apiKey = "";
         }
+        System.out.println(apiKey);
         return apiKey;
     }
 
@@ -67,7 +68,9 @@ public class ReadyTimeCalc implements Runnable {
         while (true) {
             try {
                 requestData(model.getEventToProcess());
+                System.out.println("no Exception");
             } catch (Exception e) {
+                e.printStackTrace();
                 break;
             }
         }
@@ -84,7 +87,7 @@ public class ReadyTimeCalc implements Runnable {
         String destName;
         String originName;
         long durationSec;
-        int distanceInMile = 0;
+        int distanceInMile;
         double rating;
         String startAddress;
         String endAddress;
@@ -105,7 +108,9 @@ public class ReadyTimeCalc implements Runnable {
         else {
             gotInfoSuccessfully = dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
                     ob.getTransport(), arrivalDateTime);
+
             destName = dataRequest.getDestName();
+
             originName = dataRequest.getOriginName();
             durationSec = dataRequest.getDurationSec();
             distanceInMile = dataRequest.getDistance();
@@ -116,6 +121,7 @@ public class ReadyTimeCalc implements Runnable {
         currentEvent = createEventType(gotInfoSuccessfully, startAddress,
                 endAddress, ob.getName(), originName, destName, arrivalDateTime,
                 ob.getTransport(), (int) durationSec, distanceInMile, importantScale, rating);
+
         popUp = currentEvent.createPopUp();
         createsButtonOfPopUp();
     }
@@ -138,6 +144,7 @@ public class ReadyTimeCalc implements Runnable {
     private CalendarEvent createEventType(boolean gotInfoSuccessfully, String addressFrom, String addressTo, String eventName,
                                           String originName, String destName, GregorianCalendar arrivalDateTime,
                                           String transport, int duration, int distance, double importantScale, double rating) {
+
         if (gotInfoSuccessfully) {
             GooglePlaceInfo placeInfo = dataRequest.getGooglePlaceInfo();
             return new EventWithInfo(placeInfo, addressFrom, addressTo, eventName,

@@ -27,8 +27,9 @@ public class DataRequest {
     private float rating = 0;
     private String startAddress = "Invalid Address";
     private String endAddress = "Invalid Address";
-
-
+    private String[] openPeriod = {"NAN"};
+    private String priceLevel = "NAN";
+    private String destPlaceType = "NAN";
     /**
      * Constructor for the class.
      *
@@ -48,6 +49,7 @@ public class DataRequest {
      */
     public boolean requestMapData(String origin, String destination, String travelMode, GregorianCalendar arrivalTime) {
         Instant time = arrivalTime.toInstant();
+        resetDetail();
         try {
             DirectionsApiRequest mapRequest = DirectionsApi.getDirections(context, origin, destination)
                     .mode(TravelMode.valueOf(travelMode)).arrivalTime(time);
@@ -60,6 +62,21 @@ public class DataRequest {
 
     }
 
+    private void resetDetail(){
+        openPeriod = new String [1];
+        openPeriod[0] = "NAN";
+        priceLevel = "NAN";
+        destPlaceType = "NAN";
+        destinationID = "";
+        originID = "";
+        destName = "Invalid";
+        originName = "Invalid";
+        durationSec = 0;
+        distanceMeter = 0;
+        rating = 0;
+        startAddress = "Invalid Address";
+        endAddress = "Invalid Address";
+    }
     /**
      * Saves the destDetails of the event specified by the user.
      */
@@ -67,6 +84,19 @@ public class DataRequest {
         originName = originDetails.name;
         destName = destDetails.name;
         rating = destDetails.rating;
+
+        try {
+            openPeriod = destDetails.openingHours.weekdayText;
+        }catch(Exception e){
+        }
+        try {
+            priceLevel = destDetails.priceLevel.toString();
+        }catch(Exception e2){
+        }
+        try {
+            destPlaceType = mapResult.geocodedWaypoints[1].types.toString();
+        }catch(Exception e3){
+        }
     }
 
     /**
@@ -158,5 +188,6 @@ public class DataRequest {
         return endAddress;
     }
 
-    public GooglePlaceInfo getGooglePlaceInfo(){return new GooglePlaceInfo(destDetails,originDetails,mapResult);}
+    public GooglePlaceInfo getGooglePlaceInfo(){
+        return new GooglePlaceInfo(originID, destinationID, openPeriod,priceLevel,destPlaceType,rating);}
 }

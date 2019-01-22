@@ -26,7 +26,8 @@ public class OutputFrame extends JFrame implements Listener {
     private int size;
     private FileWriter trainDataWriter;
     private File file;
-    private String[] transportType= {CalendarEvent.DRIVING_TYPE,CalendarEvent.TRANSIT_TYPE,CalendarEvent.BIKING_TYPE,CalendarEvent.WALKING_TYPE};
+    private String[] transportType = {CalendarEvent.DRIVING_TYPE, CalendarEvent.TRANSIT_TYPE, CalendarEvent.BIKING_TYPE, CalendarEvent.WALKING_TYPE};
+
     /**
      * Constructor
      *
@@ -37,7 +38,7 @@ public class OutputFrame extends JFrame implements Listener {
         this.size = size;
         super.setTitle("Scheduled Events");
         super.setLayout(new FlowLayout());
-        super.setBounds(0, 0, size + (4*size/5), size);
+        super.setBounds(0, 0, size + (4 * size / 5), size);
         setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addCloseWindowOption(model);
@@ -70,7 +71,7 @@ public class OutputFrame extends JFrame implements Listener {
         calendarListElement.addListener(this);
         list.setCellRenderer(calendarListElement);
         scrollPane = new JScrollPane(list);
-        scrollPane.setPreferredSize(new Dimension(4*size/5, 4*size/5));
+        scrollPane.setPreferredSize(new Dimension(4 * size / 5, 4 * size / 5));
         listPanel.add(scrollPane, BorderLayout.CENTER);
         add(listPanel, BorderLayout.CENTER);
     }
@@ -83,18 +84,18 @@ public class OutputFrame extends JFrame implements Listener {
         textArea.setEditable(false);
 
         scrollPaneDetail = new JScrollPane(textArea);
-        scrollPaneDetail.setPreferredSize(new Dimension(4*size/5, 4*size/5));
+        scrollPaneDetail.setPreferredSize(new Dimension(4 * size / 5, 4 * size / 5));
 
         detailPanel = new JPanel();
         detailPanel.add(scrollPaneDetail, BorderLayout.CENTER);
     }
 
-    private void createPopUp(){
+    private void createPopUp() {
         popUp = new RealAlarmTimePopUp();
-        popUp.addActionSaveButton(ActionEvent ->{
+        popUp.addActionSaveButton(ActionEvent -> {
             CalendarEvent editingEvent = popUp.hidePopUp();
             int requestedChangeMin = popUp.getRequestedTotalMinAdj();
-            if(requestedChangeMin != 0) {
+            if (requestedChangeMin != 0) {
                 listModel.editEvents(editingEvent, requestedChangeMin);
                 textArea.setText("");
             }
@@ -114,7 +115,7 @@ public class OutputFrame extends JFrame implements Listener {
         deleteButton.addActionListener(ActionListener -> {
             try {
                 deleteEvents(getSelectionFromList());
-            }catch(NullPointerException e){
+            } catch (NullPointerException e) {
             }
             if (listModel.getSize() <= 0) {
                 clearTextDetail();
@@ -124,18 +125,19 @@ public class OutputFrame extends JFrame implements Listener {
         editButton.addActionListener(ActionListener -> {
             try {
                 popUp.showPopUp(getSelectionFromList());
-            }catch(NullPointerException e) {
+            } catch (NullPointerException e) {
             }
         });
     }
 
-    public void maybeGrayOutEditButton(Object ob){
-        if (ob.getClass() != EventWithInfo.class){
+    public void maybeGrayOutEditButton(Object ob) {
+        if (ob.getClass() != EventWithInfo.class) {
             editButton.setEnabled(false);
-        }else{
+        } else {
             editButton.setEnabled(true);
         }
     }
+
     /**
      * Deletes events in the event model.
      *
@@ -143,16 +145,18 @@ public class OutputFrame extends JFrame implements Listener {
      */
     public void deleteEvents(CalendarEvent ob) {
         listModel.remove(ob);
-        if(ob.getClass().equals(EventWithInfo.class))
-            writeToFile((EventWithInfo)ob);
+        if (ob.getClass().equals(EventWithInfo.class))
+            writeToFile((EventWithInfo) ob);
     }
 
-    //TODO: edit method to output event info
+    //TODO: add distance and the correct readytime
+
     /**
      * This method to collect training data only
+     *
      * @param event
      */
-    public void writeToFile(EventWithInfo event){
+    public void writeToFile(EventWithInfo event) {
         GooglePlaceInfo info = event.getPlaceInfo();
         StringBuilder eventInfo = new StringBuilder();
         eventInfo.append(event.addressFrom);
@@ -169,18 +173,23 @@ public class OutputFrame extends JFrame implements Listener {
         eventInfo.append(",");
         eventInfo.append(event.getImportantScale());
         eventInfo.append(",");
-        eventInfo.append(getTranportValue(event.transport));
+        eventInfo.append(info.getDestPriceLevel());
+        eventInfo.append(",");
+        eventInfo.append(info.getDestinationRating());
+        eventInfo.append(",");
+        eventInfo.append(getTransportValue(event.transport));
         eventInfo.append(",");
         eventInfo.append(event.getTravelTime());
         eventInfo.append(",");
-
-            try {
-                trainDataWriter.append("");
-                trainDataWriter.append(",");
-                trainDataWriter.flush();
-            }catch (IOException ex){
-                ex.printStackTrace();
-            }
+//        eventInfo.append(event.distance);
+//
+        try {
+            trainDataWriter.append("\n");
+            trainDataWriter.append(eventInfo);
+            trainDataWriter.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -194,12 +203,13 @@ public class OutputFrame extends JFrame implements Listener {
         try {
             trainDataWriter = new FileWriter(file, true);
             if (!doFileExist) {
-                String header = "Address From,Origin ID,Address To,Destination ID,Rating,Open Period,Event Important Level," +
-                        "CaledarEvent.Driving,Transit,CaledarEvent.Biking,CaledarEvent.Walking,Duration,Distance";
+                String header = "Address From,Origin ID,Address To,Destination ID,Departure Time,Date of Week," +
+                        "Rating,Open Period,Event Important Scale,Price Level,Rating" +
+                        "Driving,Transit,Biking,Walking,Duration,Distance,Time of Event,Minutes Ready";
                 trainDataWriter.append(header);
                 trainDataWriter.flush();
             }
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -238,7 +248,7 @@ public class OutputFrame extends JFrame implements Listener {
      */
     private CalendarEvent getSelectionFromList() throws NullPointerException {
         CalendarEvent selectedEvent = calendarListElement.getCurrentSelection();
-        if(selectedEvent == null){
+        if (selectedEvent == null) {
             throw new NullPointerException("No event pick");
         }
         return selectedEvent;
@@ -255,6 +265,7 @@ public class OutputFrame extends JFrame implements Listener {
             }
         });
     }
+
     /**
      * Updates the event list with the new event.
      *
@@ -268,17 +279,17 @@ public class OutputFrame extends JFrame implements Listener {
     /**
      * this method is only for collect ML training data
      */
-    public String getTranportValue(Transportation trans){
+    public String getTransportValue(Transportation trans) {
         StringBuilder str = new StringBuilder();
-        for(String s : transportType){
-            if(trans.toString().equalsIgnoreCase(s)){
+        for (String s : transportType) {
+            if (trans.toString().equalsIgnoreCase(s)) {
                 str.append(1);
-            }else{
+            } else {
                 str.append(0);
             }
             str.append(",");
         }
-        str.deleteCharAt(str.length()-1);
+        str.deleteCharAt(str.length() - 1);
         return str.toString();
     }
 }

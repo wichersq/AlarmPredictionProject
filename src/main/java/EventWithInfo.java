@@ -14,6 +14,7 @@ public class EventWithInfo extends CalendarEvent {
     private GooglePlaceInfo placeInfo;
 
 
+
     /**
      * Constructor for the class takes in string of transportation
      *
