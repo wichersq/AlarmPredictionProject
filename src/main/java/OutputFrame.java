@@ -149,9 +149,7 @@ public class OutputFrame extends JFrame implements Listener {
         if (ob.getClass().equals(EventWithInfo.class))
             writeToFile((EventWithInfo) ob);
     }
-
-    //TODO: add distance and the correct readytime
-
+    
     /**
      * This method to collect training data only
      *
