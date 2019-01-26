@@ -5,6 +5,7 @@ import com.google.maps.PlacesApi;
 import com.google.maps.DirectionsApi;
 import com.google.maps.model.PlaceDetails;
 import com.google.maps.model.TravelMode;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.GregorianCalendar;
@@ -30,6 +31,7 @@ public class DataRequest {
     private String[] openPeriod = {"NAN"};
     private String priceLevel = "NAN";
     private String destPlaceType = "NAN";
+
     /**
      * Constructor for the class.
      *
@@ -62,8 +64,8 @@ public class DataRequest {
 
     }
 
-    private void resetDetail(){
-        openPeriod = new String [1];
+    private void resetDetail() {
+        openPeriod = new String[1];
         openPeriod[0] = "NAN";
         priceLevel = "NAN";
         destPlaceType = "NAN";
@@ -77,25 +79,30 @@ public class DataRequest {
         startAddress = "Invalid Address";
         endAddress = "Invalid Address";
     }
+
     /**
      * Saves the destDetails of the event specified by the user.
      */
     private void savePlaceDetailsInfo() {
         originName = originDetails.name;
         destName = destDetails.name;
-        rating = destDetails.rating;
+
 
         try {
+            rating = destDetails.rating;
+        } catch (Exception e) {
+        }
+        try {
             openPeriod = destDetails.openingHours.weekdayText;
-        }catch(Exception e){
+        } catch (Exception e) {
         }
         try {
             priceLevel = destDetails.priceLevel.toString();
-        }catch(Exception e2){
+        } catch (Exception e2) {
         }
         try {
             destPlaceType = mapResult.geocodedWaypoints[1].types.toString();
-        }catch(Exception e3){
+        } catch (Exception e3) {
         }
     }
 
@@ -105,7 +112,7 @@ public class DataRequest {
     private boolean requestPlaceDetail() {
         try {
             destDetails = PlacesApi.placeDetails(context, destinationID).await();
-            originDetails = PlacesApi.placeDetails(context,originID).await();
+            originDetails = PlacesApi.placeDetails(context, originID).await();
             savePlaceDetailsInfo();
             return true;
         } catch (Exception e) {
@@ -140,7 +147,7 @@ public class DataRequest {
      * @return the distance from beginning destination to ending destination
      */
     public int getDistance() {
-        return (int) (distanceMeter/METER_PER_MILE);
+        return (int) (distanceMeter / METER_PER_MILE);
     }
 
     /**
@@ -188,6 +195,7 @@ public class DataRequest {
         return endAddress;
     }
 
-    public GooglePlaceInfo getGooglePlaceInfo(){
-        return new GooglePlaceInfo(originID, destinationID, openPeriod,priceLevel,destPlaceType,rating);}
+    public GooglePlaceInfo getGooglePlaceInfo() {
+        return new GooglePlaceInfo(originID, destinationID, openPeriod, priceLevel, destPlaceType, rating);
+    }
 }

@@ -106,6 +106,7 @@ public class ReadyTimeCalc implements Runnable {
         }
         //         This will need Api Key to run
         else {
+            System.out.println("in here");
             gotInfoSuccessfully = dataRequest.requestMapData(ob.getAddressFrom(), ob.getAddressTo(),
                     ob.getTransport(), arrivalDateTime);
 

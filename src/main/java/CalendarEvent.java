@@ -27,7 +27,7 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
     public final static String WALKING_TYPE = "WALKING";
     public final static String TRANSIT_TYPE = "TRANSIT";
     protected boolean isAlarmCorrected = false;
-//    protected int distance;
+    protected int distance;
     /**
      * Constructor.
      *
@@ -58,7 +58,7 @@ public abstract class CalendarEvent implements Serializable, Comparable<Calendar
     public CalendarEvent(String addressFrom, String addressTo, String eventName, String transport, int duration, int distance,
                          GregorianCalendar arrivalDateTime, double importantScale) {
         this(addressFrom, addressTo, eventName, arrivalDateTime, importantScale);
-//        this.distance = distance;
+        this.distance = distance;
         this.transport = createTransport(transport, duration, distance);
     }
     /**

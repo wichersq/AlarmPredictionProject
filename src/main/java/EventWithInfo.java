@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -202,4 +203,5 @@ public class EventWithInfo extends CalendarEvent {
 
     public GooglePlaceInfo getPlaceInfo(){return placeInfo;}
     public int getTravelTime(){return travelTime;}
+    public int getTravelDistance(){return distance;}
 }

@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
 
 /**
  * Class OutputFrame displays the event information and estimated time the user would need
@@ -159,15 +160,17 @@ public class OutputFrame extends JFrame implements Listener {
     public void writeToFile(EventWithInfo event) {
         GooglePlaceInfo info = event.getPlaceInfo();
         StringBuilder eventInfo = new StringBuilder();
-        eventInfo.append(event.addressFrom);
+        eventInfo.append(event.addressFrom.replace(",", " "));
         eventInfo.append(",");
         eventInfo.append(info.getOriginID());
         eventInfo.append(",");
-        eventInfo.append(event.addressTo);
+        eventInfo.append(event.addressTo.replace(",", " "));
         eventInfo.append(",");
         eventInfo.append(info.getDestinationID());
         eventInfo.append(",");
-        eventInfo.append(info.getDestinationRating());
+        eventInfo.append(event.getArrivalTimeString());
+        eventInfo.append(",");
+        eventInfo.append(event.arrivalDateTime.get(Calendar.DAY_OF_WEEK));
         eventInfo.append(",");
         eventInfo.append(info.getOpeningPeriod());
         eventInfo.append(",");
@@ -181,8 +184,9 @@ public class OutputFrame extends JFrame implements Listener {
         eventInfo.append(",");
         eventInfo.append(event.getTravelTime());
         eventInfo.append(",");
-//        eventInfo.append(event.distance);
-//
+        eventInfo.append(event.getTravelDistance());
+        eventInfo.append(",");
+        eventInfo.append(event.recommendedReadyMin);
         try {
             trainDataWriter.append("\n");
             trainDataWriter.append(eventInfo);
@@ -203,9 +207,9 @@ public class OutputFrame extends JFrame implements Listener {
         try {
             trainDataWriter = new FileWriter(file, true);
             if (!doFileExist) {
-                String header = "Address From,Origin ID,Address To,Destination ID,Departure Time,Date of Week," +
-                        "Rating,Open Period,Event Important Scale,Price Level,Rating" +
-                        "Driving,Transit,Biking,Walking,Duration,Distance,Time of Event,Minutes Ready";
+                String header = "Address From,Origin ID,Address To,Destination ID,Arrival Time,Date of Week," +
+                        "Open Period,Event Important Scale,Price Level,Rating," +
+                        "Driving,Transit,Biking,Walking,Duration,Distance,Minutes Ready";
                 trainDataWriter.append(header);
                 trainDataWriter.flush();
             }
