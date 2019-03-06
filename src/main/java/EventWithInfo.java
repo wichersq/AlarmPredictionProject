@@ -203,5 +203,5 @@ public class EventWithInfo extends CalendarEvent {
 
     public GooglePlaceInfo getPlaceInfo(){return placeInfo;}
     public int getTravelTime(){return travelTime;}
-    public int getTravelDistance(){return distance;}
+    public int getTravelDistance(){return transport.distance;}
 }

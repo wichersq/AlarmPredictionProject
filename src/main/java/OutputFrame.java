@@ -149,7 +149,7 @@ public class OutputFrame extends JFrame implements Listener {
         if (ob.getClass().equals(EventWithInfo.class))
             writeToFile((EventWithInfo) ob);
     }
-    
+
     /**
      * This method to collect training data only
      *
@@ -287,7 +287,7 @@ public class OutputFrame extends JFrame implements Listener {
             if (trans.toString().equalsIgnoreCase(s)) {
                 str.append(1);
             } else {
-                str.append(0);
+                str.append(-1);
             }
             str.append(",");
         }
