@@ -9,6 +9,7 @@
 
 ## Assignment Information
 - **Assignment**: Final Project
+- **Demo**: https://www.youtube.com/watch?v=e5p86HEVgQQ
 
 ## Additional Information
 
